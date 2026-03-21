@@ -1,4 +1,5 @@
-﻿@model FormTypeCategory
+﻿@using JobPortal.Web.Models
+@model FormTypeCategory
 @{
     ViewData["Title"] = (Model?.Id > 0 ? "Edit Category" : "Create Category");
     Layout = "_LayoutAdmin";
@@ -50,13 +51,22 @@
         </div>
 
         <div class="form-check mb-3">
-            <select asp-for="ForRole" class="form-check-select">
+            <div class="form-check mb-3">
+                @foreach (var itm in ViewBag.AllRoles as List<FormRoleMappings>)
+                {
+                    <input type="checkbox" name="chk_@itm.RoleId" id="chk_@itm.RoleId" />
+                    <label for="chk_@itm.RoleId">@itm.RoleName </label>
+                }
+
+
+            </div>
+            @* <select asp-for="ForRole" class="form-check-select">
                 <option value="1">JobSeeker</option>
                 <option value="2">Employer</option>
                 <option value="3">Academics</option>
                 <option value="4">Normal</option>
             </select>
-            <label asp-for="IsActive" class="form-check-label"></label>
+            <label asp-for="IsActive" class="form-check-label"></label> *@
         </div>
         <button type="submit" class="btn btn-primary">💾 Save</button>
         <a asp-action="Index" class="btn btn-secondary">⬅ Back</a>

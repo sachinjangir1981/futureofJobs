@@ -31,6 +31,8 @@ namespace JobPortal.Domain.Models
         public int ForRole { get; set; } // 1=JobSeeker, 2=Employer
 
         public bool IsPublic { get; set; } = false;
+
+       
     }
 
     public class FormSection

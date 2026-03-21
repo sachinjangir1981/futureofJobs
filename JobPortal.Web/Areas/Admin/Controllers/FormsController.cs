@@ -1,6 +1,7 @@
 ﻿using JobPortal.Domain.Models;
 using JobPortal.Infrastructure.Data;
 using JobPortal.Infrastructure.Services;
+using JobPortal.Web.Models;
 using JobPortal.Web.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -18,15 +19,17 @@ namespace JobPortal.Web.Areas.Admin.Controllers;
 //[Authorize(Roles = "Admin")]
 public class FormsController : Controller
 {
-
+    private readonly IMyform _myform;
     private readonly AppDbContext _db;
     private readonly ICompareServices _compareServices;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    public FormsController(AppDbContext db, ICompareServices compareServices, IWebHostEnvironment webHostEnvironment)
+    public FormsController(AppDbContext db, ICompareServices compareServices,
+        IWebHostEnvironment webHostEnvironment, IMyform myform)
     {
         _db = db;
         _compareServices = compareServices;
         _webHostEnvironment = webHostEnvironment;
+        _myform = myform;
     }
 
     // ========== Sections ==========
@@ -129,7 +132,7 @@ public class FormsController : Controller
     public IActionResult CreateQuestion(int sectionId, int layout = 1)
     {
         ViewBag.Layout = layout;
-        var q = new FormQuestion { SectionId = sectionId, QuestionType = QuestionType.Text };
+        var q = new FormQuestion { SectionId = sectionId, QuestionType = Domain.Models.QuestionType.Text };
         return View(q);
     }
 
@@ -308,12 +311,13 @@ public class FormsController : Controller
 
     public IActionResult CreateCategory()
     {
-      return   View( new FormTypeCategory());
+        ViewBag.AllRoles = _myform.GetAllRolesByFormId(0);
+        return   View( new FormTypeCategory());
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult CreateCategory(FormTypeCategory model, IFormFile fImageUrl, IFormFile fBgImageUrl)
+    public IActionResult CreateCategory(FormTypeCategory model, IFormFile fImageUrl, IFormFile fBgImageUrl, IFormCollection coll)
     {
          
             var allowedExtensions = new[] { ".jpg", ".png", ".jpg", ".jpeg" };
@@ -371,20 +375,46 @@ public class FormsController : Controller
             model.IsReadOnly = false;
             _db.FormTypeCategory.Add(model);
             _db.SaveChanges();
-            return RedirectToAction("Categories", "Forms");
+
+
+        string rolesIds = "";
+        var AllRoles = _myform.GetAllRolesByFormId(model.Id);
+
+        foreach (var sroleId in AllRoles)
+        {
+            var chkName = "chk_" + sroleId.RoleId.ToString();
+            string isChecked = coll[chkName].ToString();
+            if (isChecked == "on")
+            {
+                if (string.IsNullOrEmpty(rolesIds))
+                {
+                    rolesIds = sroleId.RoleId.ToString();
+                }
+                else
+                {
+                    rolesIds += "," + sroleId.RoleId.ToString();
+                }
+            }
+        }
+
+        _myform.UpdateFormRoles(model.Id, rolesIds);
+
+        return RedirectToAction("Categories", "Forms");
         
     }
 
     public IActionResult EditCategory(int id)
     {
+       
         var category = _db.FormTypeCategory.Find(id);
         if (category == null) return NotFound();
+        ViewBag.AllRoles = _myform.GetAllRolesByFormId(id);
         return View(category);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult EditCategory(FormTypeCategory model, IFormFile fImageUrl, IFormFile fBgImageUrl)
+    public IActionResult EditCategory(FormTypeCategory model, IFormFile fImageUrl, IFormFile fBgImageUrl, IFormCollection coll)
     {
         
             var allowedExtensions = new[] { ".jpg", ".png", ".jpg", ".jpeg" };
@@ -441,6 +471,28 @@ public class FormsController : Controller
             model.IsReadOnly = false;
             _db.Update(model);
             _db.SaveChanges();
+
+        string rolesIds = "";
+        var AllRoles = _myform.GetAllRolesByFormId(model.Id);
+
+        foreach (var sroleId in AllRoles)
+        {
+            var chkName = "chk_" + sroleId.RoleId.ToString();
+            string isChecked = coll[chkName].ToString();
+            if (isChecked == "on")
+            {
+                if (string.IsNullOrEmpty(rolesIds))
+                {
+                    rolesIds = sroleId.RoleId.ToString();
+                }
+                else
+                {
+                    rolesIds += "," + sroleId.RoleId.ToString();
+                }
+            }
+        }
+        
+            _myform.UpdateFormRoles(model.Id, rolesIds);
             return RedirectToAction("Categories","Forms");
         
          

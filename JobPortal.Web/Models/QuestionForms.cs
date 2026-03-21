@@ -19,13 +19,16 @@ namespace HelloKisan.Areas.WebAdmin.Controllers
     public class QuestionFormsController : Controller
     {
         private readonly IDForms _dForms;
+       
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IDFormCategory _formCategory;
-        public QuestionFormsController(IDForms dForms, IWebHostEnvironment webHostEnvironment, IDFormCategory formCategory)
+        public QuestionFormsController(IDForms dForms, IWebHostEnvironment webHostEnvironment, 
+            IDFormCategory formCategory)
         {
             _webHostEnvironment = webHostEnvironment;
             _dForms = dForms;
              _formCategory=formCategory;
+          
         }
 
         public IActionResult Index()

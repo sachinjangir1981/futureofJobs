@@ -1,4 +1,5 @@
-﻿@model FormTypeCategory
+﻿@using JobPortal.Web.Models
+@model FormTypeCategory
 @{
     ViewData["Title"] = (Model?.Id > 0 ? "Edit Category" : "Create Category");
     Layout = "_LayoutAdmin";
@@ -19,7 +20,7 @@
         <div class="mb-3">
             <label asp-for="Details" class="form-label"></label>
             @Html.TextAreaFor(m => m.Details, new { @class = "form-control summernote", rows = 4 })
-            
+
         </div>
         <div class="mb-3">
             <label asp-for="FooterNote" class="form-label"></label>
@@ -41,21 +42,27 @@
             <input asp-for="IsActive" class="form-check-input" />
             <label asp-for="IsActive" class="form-check-label"></label>
         </div>
-         <div class="form-check mb-3">
+        <div class="form-check mb-3">
             <input asp-for="IsPublic" class="form-check-input" />
             <label asp-for="IsPublic" class="form-check-label"></label>
         </div>
 
         <div class="form-check mb-3">
-            <select asp-for="ForRole" class="form-check-select">
-                <option value="1">Student/JobSeeker</option>
-                <option value="2">Employer</option>
-                <option value="3">Academics</option>
-                <option value="4">Intern</option>
-                <option value="5">Mid Career</option>
-                <option value="6">Silver Talent</option>
-            </select>
-            <label asp-for="IsActive" class="form-check-label"></label>
+            @foreach (var itm in ViewBag.AllRoles as List<FormRoleMappings>)
+            {
+                if (itm.IsChecked > 0)
+                {
+                    <input type="checkbox" name="chk_@itm.RoleId" id="chk_@itm.RoleId" checked />
+                }
+                else
+                {
+                    <input type="checkbox" name="chk_@itm.RoleId" id="chk_@itm.RoleId" />
+                }
+
+                <label for="chk_@itm.RoleId">@itm.RoleName </label>
+            }
+          
+           
         </div>
         <button type="submit" class="btn btn-primary">💾 Save</button>
         <a asp-action="Index" class="btn btn-secondary">⬅ Back</a>
@@ -64,6 +71,6 @@
 @section Scripts
 {
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="/js/summernote-bs4.min.js"></script>
-<script src="/js/summernote-local.js"></script>
+    <script src="/js/summernote-bs4.min.js"></script>
+    <script src="/js/summernote-local.js"></script>
 }
