@@ -1,0 +1,121 @@
+﻿@model JobPortal.Web.ViewModels.FormVm
+@using JobPortal.Domain.Models;
+
+@{
+
+    ViewData["Title"] = "Survey";
+    Layout = "_LayoutJobSeeker";
+
+    int i = 0;
+}
+ 
+
+<div class="card p-3 mb-4">
+    <h5>⭐ My Rating</h5>
+
+  @*   <div class="mb-3">
+        <strong>Overall Average:</strong>
+        <span class="badge bg-primary">@Model.AvgRating.ToString("0.0") / 10</span>
+    </div> *@
+
+    @if (Model.NewRatings != null && Model.NewRatings.Any())
+    {
+        i = 0;
+        <div>
+            <strong>Question List (Detailed Ratings):</strong>
+        </div>
+           <div class="outer">
+                            <div class="inner">
+                <table class="fixedtable">
+            <thead>
+
+                <tr>
+                    @foreach (var col in Model.NewRatings.First().Keys)
+                    {
+                                if (i == 0)
+                                {
+                                    <th class=fix>@col</th>
+                                }
+                                else
+                                {
+                                    <th>@col</th>
+                                }
+                       
+                    }
+                </tr>
+            </thead>
+                    @{
+                        i = 0;
+                    }
+            <tbody>
+                @foreach (var row in Model.NewRatings)
+                {
+                    <tr>
+                        @foreach (var col in row.Keys)
+                        {
+                                    if (i == 0)
+                                    {
+                                        <td class=fix>@row[col]</td>
+                                    }
+                                    else
+                                    {
+                                        <td>@row[col]</td>
+                                    }
+                            
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div></div>
+    }
+    else
+    {
+        <p>No data found.</p>
+    }
+
+
+    @*   <table class="table table-bordered table-striped">
+                        <tbody>
+                            @foreach (var rategroup in Model.Ratings.GroupBy(b => b.RatingByName))
+                            {
+                                <tr>
+                                    <td colspan="3">
+                                        <strong>
+                                            @(rategroup.Key == "Self" ? "My Ratings" : rategroup.Key )
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <table width="100%">
+
+
+                                            @foreach (var r in rategroup)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @r.Question.QuestionText
+                                                        </td>
+                                                    <td>
+                                                        <span class="badge @(r.RatedBy == "Self" ? "bg-info" : "bg-success")">
+                                                            @r.Score
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        @r.RatingByName
+
+                                                    </td>
+                                                    <td>@r.RatedAt.ToString("dd-MMM-yyyy HH:mm")</td>
+                                                </tr>
+                                            }
+
+                               </table>
+                                       </td>
+                                </tr>
+                                }
+                        </tbody>
+                    </table> *@
+
+
+</div>

@@ -1,0 +1,30 @@
+﻿
+@* Views/Shared/_Sidebar.cshtml *@
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<!-- Offcanvas for small screens -->
+<div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+    <div class="offcanvas-header bg-success text-white">
+        <h5 class="offcanvas-title" id="mobileSidebarLabel">Job Portal</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <nav class="nav flex-column p-3 bg-dark h-100 text-white">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a asp-controller="Dashboard" asp-action="Index" class="nav-link text-white">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+
+                <li><a asp-controller="Profile" asp-action="index" class="nav-link text-white"><i class="bi bi-person"></i> My Profile</a></li>
+                <li><a asp-controller="Surveys" asp-action="index" class="nav-link text-white"><i class="bi bi-search"></i> Surveys</a></li>
+
+            </ul>
+
+            <div class="mt-auto p-3">
+                <a asp-controller="Account" asp-area="/" asp-action="Logout" class="btn btn-outline-light w-100">Logout</a>
+            </div>
+        </nav>
+    </div>
+</div>

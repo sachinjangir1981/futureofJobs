@@ -1,0 +1,208 @@
+﻿@using JobPortal.Models;
+@model List<QuestionforServey>
+
+@{
+    ViewBag.Title = "Polls";
+    Layout = "/Views/Shared/_Layout.cshtml";
+    string bgColorcss = ".container-fluid  {";
+}
+@{
+    int i = 0;
+}
+@if (!string.IsNullOrEmpty(ViewBag.Header.BGColor))
+{
+    bgColorcss += "background-color:#" + ViewBag.Header.BGColor.Replace("#","") + ";";
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Header.BGImage))
+{
+    bgColorcss += " background-image:url('/images/polls/" + ViewBag.Header.BGImage + "');background-repeat: repeat-y;";
+}
+@{
+    bgColorcss += " }";
+}
+
+
+<link href="~/css/polls.css" rel="stylesheet" />
+<style>
+    @Html.Raw(bgColorcss)
+</style>
+<div style=" padding-left:10px; padding-right:10px;padding-top:10px;">
+
+<div style="text-align:center">
+    @if (!string.IsNullOrEmpty(ViewBag.Header.ImageUrl))
+    {
+        <a href="/"> <img src="/images/polls/@ViewBag.Header.ImageUrl" style="width:125px"></a>
+    }
+    <h2 class="heading" style="text-transform:uppercase">
+            <b>POLLS : @ViewBag.Header.ActionText </b>
+    </h2>
+
+    @if (Model.Count > 0)
+    {
+        <p  class="paraCommon" >@ViewBag.Header.SubHeading</p>
+    }
+        @if (Model.Count > 0)
+        {
+            <p class="paraCommon">@Html.Raw(ViewBag.Header.Details)</p>
+        }
+</div>
+
+    @if (Model != null && Model.Count > 0)
+    {
+<div class="dvpoll">
+    @foreach (var itm in Model)
+    {
+        i = i + 1;
+        //if (i == 1)
+        //{
+        <div class="row Question">
+            <div class="col-12 col-lg-12 col-sm-12 col-md-12">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-sm-12 col-md-12" style="border-bottom:1px solid #808080; padding-bottom:10px;font-size:18px">
+                        <div style="margin:0px auto; text-align:center"><b>@itm.PageNo of @itm.TotalPages  </b></div>    @Html.Raw(itm.Question)
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="flip-card-inner" id="dvflipInner_@itm.PKID">
+                        <div class="flip-card-front">
+
+                            <div class="row custom-radio-group" style="padding-top: 10px; -webkit-backface-visibility: hidden; /* Safari */ backface-visibility: hidden;" id="dvAnswerList_@itm.PKID">
+                                @Html.Partial("GetOptionsByQuestionId", itm.AnswerList)
+                            </div>
+                            <div class="row clearfix " id="dvButton_@itm.PKID" style="margin-top:15px">
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xm-12"></div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xm-12 col-12" style="margin:2px auto 2px auto;text-align:center;"><input type="button" value="Vote Now & see result" class="btnVote" onclick="Vote(@itm.PKID ,'chk_@itm.PKID.ToString()')" /></div>
+                                <div class="col-lg-4 col-md-4 col-sm-12 col-xm-12"></div>
+
+                            </div>
+                        </div>
+                        <div class="flip-card-back" id="dvflipbackInner_@itm.PKID">
+                            <div class="row" id="dvAnswerGraph_@itm.PKID" style="display: none; padding-top: 10px">
+
+                                <div class="poll_res_brdr clearfix">
+                                    <ul id="dvAnswerGraphDetail_@itm.PKID" class="poll_results">
+                                    </ul>
+                                    <div class="btmbrdr"></div>
+
+                                </div>
+                                    <div class="dvMainColorTop" id="dvAnswerGraphInner_@itm.PKID">
+                                </div>
+                                <div>
+                                    <div class="col-5 col-lg-5 col-md-5 col-sm-12">
+                                    </div>
+                                    <div class="col-4 col-lg-4 col-md-4 col-sm-12" style="text-align:center; display:inline-flex">
+                                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/Visitor/Poll/"+itm.CategoryId+"/1/"+itm.PKID)&title=@Html.Encode("Green Jobs")&description=@Html.Encode("Green Jobs POLLS: SHARE YOUR VOICE THAT MATTERS")"><img src="~/images/facebook.jpg" width="32" /> </a>
+                                        <a target="_blank" href="https://wa.me/?text=@Html.Encode("Green Jobs POLLS: SHARE YOUR VOICE THAT MATTERS")%20https://greenjobs.digital/Visitor/Poll/@itm.CategoryId/1/@itm.PKID"><img src="~/images/whatsapp.jpg" width="32" /> </a>
+                                        <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/Visitor/Poll/@itm.CategoryId/1/@itm.PKID&title=@Html.Encode("Green Jobs")&summary=@Html.Encode("Green Jobs POLLS: SHARE YOUR VOICE THAT MATTERS")&source=greenjobs.digital"><img src="~/images/linkedin.png" width="32" /> </a>
+                                        <a href="mailto:?subject=HELLO%20KISAN%20POLLS%3A%20SHARE%20YOUR%20VOICE%20THAT%20MATTERS&body=https://greenjobs.digital/Visitor/Poll/@itm.CategoryId/1/@itm.PKID"><img src="~/images/mail.png" width="32" /></a>
+                                    </div>
+                                    <div class="col-4 col-lg-4 col-md-4 col-sm-12">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+    <div class="row" style="width:100%;text-align:center">
+
+        <div class="col-12 col-lg-12 col-md-12 col-sm-12" style="text-align:center;margin:5px auto 5px auto">
+            <a href="javascript:void(0)" onclick="javascript: history.back(-1)" class="btn nextbtn">Back</a>
+            @if (Model[0].PageNo < Model[0].TotalPages)
+            {
+                int nextPage = @Model[0].PageNo + 1;
+                string nexturl = "/visitor/poll/" + Model[0].CategoryId.ToString() + "?page=" + @nextPage.ToString();
+
+                <a href="@nexturl" class="btn nextbtn">Next</a>
+
+            }
+
+        </div>
+
+    </div>
+</div>
+}
+</div>
+@section Scripts
+{
+<script>
+    //
+
+    $(document).ready(function () {
+        console.log("document loaded");
+        $('.flip-card-inner').css("height", $('.flip-card-front').height() + 20 + "px")
+    });
+
+
+    function Vote(questionId, chkName) {
+        var dvAnswer = "dvAnswerList_" + questionId;
+        var dvGraph = "dvAnswerGraph_" + questionId;
+        var dvButton = "dvButton_" + questionId;
+        var dvGraphInner = "dvAnswerGraphInner_" + questionId;
+        var dvGraphDetail = "dvAnswerGraphDetail_" + questionId;
+        var name = $('input[name="' + chkName + '"]:checked').val();
+        var colorCode = "";
+        var strHtml = "";
+
+        if (name != undefined) {
+            $.ajax({
+                type: "POST",
+                url: "/Visitor/Vote",
+                data: "questionId=" + questionId + "&answerId=" + name,
+                dataType: "json",
+                success: function (data) {
+
+                    $('#' + dvButton).hide();
+                    $('#' + dvGraph).show();
+                    $('#dvflipInner_' + questionId).css("transform", "rotateY(180deg)");
+                    $('#dvflipInner_' + questionId).css("transform", "rotateY(180deg)")
+
+                    data.result.forEach(myFunction)
+
+                    function myFunction(itm, index, arr) {
+
+                            colorCode = colorCode + "<div class='dvMainColor' ><div class='clColor' style='background-color:#" + itm.colorCode + "'></div> " + itm.answer + "  </div>"
+                        strHtml = strHtml + "<li class='clearfix'  ><div class='row'><div class='col-lg-11 col-md-11'> <div class='progress color2' style='background:#" + itm.colorCode + ";width:" + itm.ratio + "%'   ></div></div><div class='col-lg-1 col-md-1'> <div class='resultinfo'><span class='vote_prsnt'><optionperc>" + itm.ratio + "</optionperc>%</span></div></div></div></li>"
+
+                    }
+
+
+                    $('#' + dvGraphInner).html(colorCode);
+                    $('#' + dvGraphDetail).html(strHtml);
+
+                    $('#dvflipInner_' + questionId).css("height", $('#dvAnswerGraph_' + questionId).height() + 20 + "px");
+                    $('.flip-card-front').hide();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        }
+        else {
+
+        }
+
+    }
+
+    function toggleview() {
+        if ($('.dvLoadMore').hasClass("hide")) {
+            $('.dvLoadMore').removeClass("hide");
+            $('#btnLoadMore').text("Hide");
+
+        }
+        else {
+            $('.dvLoadMore').addClass("hide");
+            $('#btnLoadMore').text("Load More");
+
+        }
+
+    }
+
+</script>
+}
+
+

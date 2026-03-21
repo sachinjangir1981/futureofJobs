@@ -1,0 +1,235 @@
+﻿@using JobPortal.Web.Models;
+@model List<MyForms>
+
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+
+    string dvId = "";
+    string topcss = "genzlibrarytopbg";
+    string maincss = "bgGenzlibrary";
+    string allimagename = "/images/timepassbg.jpeg";
+    string myimagename = "/images/student.png";
+    if (ViewBag.Role==1)
+    {
+        topcss = "studenttopbg";
+        maincss = "studentbg";
+        allimagename = "/images/timepassbg.jpeg";
+        myimagename = "/images/student.png";
+
+    }
+    else if (ViewBag.Role == 2)
+    {
+        topcss = "employertopbg";
+        maincss = "employerbg";
+        allimagename = "/images/emp-bg-all.png";
+        myimagename = "/images/emp-bg.png";
+    }
+    else if (ViewBag.Role == 3)
+    {
+        topcss = "academictopbg";
+        maincss = "academicbg";
+        allimagename = "/images/academic-all-row-bg.png";
+        myimagename = "/images/academic-my-row-bg.png";
+    }
+     else if (ViewBag.Role == 4)
+    {
+        topcss = "Interntopbg";
+        maincss = "Internbg";
+        allimagename = "/images/academic-all-row-bg.png";
+        myimagename = "/images/intern-my-row-bg.png";
+    }
+     else if (ViewBag.Role == 5)
+    {
+        topcss = "midcareertopbg";  
+        maincss = "midcareerbg";
+        allimagename = "/images/student.png";
+        myimagename = "/images/academic-all-row-bg.png";
+    }
+    else if (ViewBag.Role == 6)
+    {
+        topcss = "silvertalenttopbg";
+        maincss = "silvertalentbg";
+        allimagename = "/images/silver-all-row-bg.png";
+        myimagename = "/images/silver-my-row-bg.png";
+    }
+    else
+    {
+        ViewBag.Title = "My Account - Visitor";
+    }
+}
+<style>
+    .tpbgNew {
+        background-image: url('@myimagename') !important;
+        background-size: cover;
+    }
+
+    .tpbg {
+        background-image: url('@allimagename') !important;
+        background-size: cover;
+    }
+
+</style>
+
+<link href="~/css/myaccount.css" rel="stylesheet" />
+<style>
+   
+</style>
+@section HeaderImage
+{
+<div class="headerImage2">
+    <img src="~/images/student.jpeg" />
+</div>
+}
+<div class="@topcss">
+</div>
+<div class="hometext @maincss" style="min-height:95vh;">
+    <ul class="ulBreadcrumb">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+
+    </ul>
+    <p class="paraCommon " style="">
+        <div class="logininfo text-overlay">Welcome  <br /> @ViewBag.UserName <br />
+
+            <div style="padding-top:20px">  <b>Please click to fill the form.</b> <br /></div>
+        </div>
+
+      
+    </p>
+    <p class="paraCommon" >
+       
+            @if (Model != null)
+            {
+                 <div id="dvAllForms"  >
+                <ul class="ulList" width="100%"  style="max-height:200px; overflow-y:auto">
+                    @foreach (var itm in Model)
+                    {
+                        string clname = itm.IsFilled > 0 ? "boldrow" : "";
+                        <li class="tpbg @clname">
+                             
+                            <a href="/visitor/opensurvey/@itm.Id" style="text-decoration:none;color:#000">
+                                @Html.Raw(itm.Title)</a>
+                        </li>
+                   
+                    }
+            </ul>
+            </div>
+            }
+    </p>
+     @if (Model != null && Model.Where(ma=>ma.IsFilled >0).Count() >0)
+            {
+        <p class="paraCommon">
+            <b>My Forms</b> <br />
+           
+            <div id="dvMyForms"  >
+                <ul class="ulList" width="100%">
+
+                    @foreach (var itm in Model)
+                    {
+                        if (itm.IsFilled > 0)
+                        {
+                            dvId = "dv_" + itm.Id.ToString();
+                            <li class="tpbgNew">
+                                
+                                    <a href="javascript:void(0)" onclick="javascript:getItemsById(@itm.Id)"   style="text-decoration:none;color:#000">  @Html.Raw(itm.Title) </a>
+                                    <div id="@dvId" class="dvItems" style="display:none"> </div>
+                                
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            
+
+
+
+        </p>
+        }
+        
+    <p class="paraCommon"></p>
+</div>
+<div class="modal fade" id="shareModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Share Section</h5>
+                <button type="button" class="close" onclick="closemodel()"  >&times;</button>
+            </div>
+
+            <div class="modal-body"> 
+                <div id="dvPopupData"></div>
+                <p>Copy and share this link:</p>
+
+                <input type="text" id="txturltoshare" class="form-control" value="https://example.com/section/1">
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="textcopy()" id="copyBtn" name="copyBtn">Copy Link</button>
+                <button class="btn btn-secondary  " onclick="closemodel()">Close</button>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div id="dvcopytext" style="display:none"></div>
+<script>
+         function getItemsById(formId) {
+
+        $.ajax({
+            url: '/home/getVersionsByFormId/'+formId,   // controller action
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log('Items loaded', data);
+                const ul = $("<ul >");
+
+                ul.empty(); // clear old items if any
+
+                $.each(data.items, function (index, item) {
+                    var url = '/visitor/opensurvey/'+item.formId+ '/'+item.id;
+                    console.log(url);
+                    ul.append('<li class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2 versionlist"><span>' + item.formVersion + ' - ' + item.createdDate +' </span><div class="d-flex gap-2"> <a href="'+url+'"  class="btn btn-sm btn-outline-primary" title="View"> <i class="bi bi-eye small-icon"></i> </a> <button onclick="showshare('+item.formId+ ','+item.id+')" class="btn btn-sm btn-outline-secondary" title="Share">  <i class="bi bi-share small-icon"></i> </button> <a href="'+url+'" class="btn btn-sm btn-outline-success" title="Edit">  <i class="bi bi-pencil small-icon"></i> </a>  </div></li>');
+                });
+                console.log(ul);
+                $('#dv_'+formId).empty();
+                $('#dv_'+formId).append(ul);
+                $('.dvItems').hide();
+                $('#dv_'+formId).show();
+            },
+            error: function (err) {
+                console.error('Error loading items', err);
+            }
+        });
+
+    };
+
+    function showshare(formid, id) {
+          var url = 'https://greenjobs.digital/visitor/opensurvey/'+formid+ '/'+id;
+         console.log(url);
+         var subject ="Green Jobs - Forms";
+
+         var html =  `<div style="text-align:center; display:inline-flex">
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=${url}&title=@Html.Encode("Green Jobs")&description=${subject}"><img src="/images/facebook.png" width="32" /> </a>
+                    <a target="_blank" href="https://wa.me/?text=${subject}%20${url}"><img src="/images/whatsapp.png" width="32" /> </a>
+                    <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=${url}&title=Green Jobs"&summary=${subject}&source=greenjobs.digital"><img src="/images/linkedin.png" width="32" /> </a>
+                    <a href="mailto:?subject=${subject}&body=${url}"><img src="/images/mail.png" width="32" /> </a>
+                </div> `; 
+                $('#txturltoshare').val(url);
+                $("#dvPopupData").html(html);
+                $("#shareModal").modal('show');
+    }
+
+        function textcopy() {
+            var copyText = document.getElementById("txturltoshare");
+             copyText.focus();
+            copyText.select();
+            document.execCommand("copy");
+    } ;
+
+         function closemodel() {
+        $('#shareModal').modal('hide');
+    } 
+</script>

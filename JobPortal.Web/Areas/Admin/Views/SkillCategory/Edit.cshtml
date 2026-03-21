@@ -1,0 +1,26 @@
+﻿@model JobPortal.Domain.Models.SkillCategory
+@{
+    ViewData["Title"] = "Edit Skill Category";
+    Layout = "_LayoutAdmin";
+}
+
+<h2>Add Skill Category</h2>
+
+<form asp-action="Edit" method="post">
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="DisplayOrder" class="form-label"></label>
+        <input asp-for="DisplayOrder" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label asp-for="IsActive" class="form-label">Active</label>
+        <input asp-for="IsActive" class="form-checkbox" />
+    </div>
+    
+
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>

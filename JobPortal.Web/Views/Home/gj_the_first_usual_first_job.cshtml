@@ -1,0 +1,76 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<TimePassCategories>
+@{
+    ViewBag.Title = "Time Pass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dvId = "";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+      <img src="~/images/jobprofile.png" />  
+    </div>
+}
+<link href="~/css/linecategory.css" rel="stylesheet" />
+<div class="firstjob_bg" >
+    @if (Model != null)
+    {
+        <div style="text-align:center;padding-top:100px">
+
+
+            <div class="paraHeader fjrowcatbg" style="margin-top: 60% ;color:#fff">The Usual First Job – People Start With…</div>
+
+            <div class="firstjob_tbl">
+                
+                    
+                    @foreach (var itm in Model)
+                    {
+                        dvId = "dv_" + itm.PKID.ToString();
+
+                    <div class="fjrowcatbg" style="text-align:left; padding:10px 10px 10px 15px;">
+                                <a href="javascript:void(0)" onclick="javascript:getItemsById(@itm.PKID)" style="text-decoration:none; color:#000"> @Html.Raw(itm.TPCategory) </a>
+                                
+                            </div>
+                    <div id="@dvId" class="dvItems" style="display:none"> </div>
+
+                    }
+                
+            </div>
+          
+        </div>
+
+
+    }
+
+</div>
+<script>
+         function getItemsById(catId) {
+
+        $.ajax({
+            url: '/visitor/getItemsById/'+catId,   // controller action
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log('Items loaded', data);
+                const ul = $("<div >");
+
+                ul.empty(); // clear old items if any
+
+                $.each(data.items, function (index, item) {
+                    ul.append('<div class="fjitembg">  <a href="/home/first_job_details/'+item.pkid+ '">' + item.title + '</a></div>');
+                });
+                console.log(ul);
+                $('#dv_'+catId).empty();
+                $('#dv_'+catId).append(ul);
+                $('.dvItems').hide();
+                $('#dv_'+catId).show();
+            },
+            error: function (err) {
+                console.error('Error loading items', err);
+            }
+        });
+
+    };
+</script>

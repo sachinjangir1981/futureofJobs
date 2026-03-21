@@ -1,0 +1,542 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/jobs-new.png" />
+    </div>
+}
+<style>
+    /* Accordion Header */
+    #accordion .card-header {
+        background-color: #b7e4c7; /* light green */
+        padding: 0;
+        border: none;
+    }
+
+    /* Remove blue link style */
+    #accordion .btn-link {
+        color: #1b4332;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+        #accordion .btn-link:hover,
+        #accordion .btn-link:focus {
+            text-decoration: none;
+            box-shadow: none;
+        }
+
+    /* Accordion Body */
+    #accordion .card-body {
+        background-color: #e9f9ee; /* lighter green */
+        border-top: 1px solid #d8f3dc;
+    }
+
+    /* Optional: Remove card border */
+    #accordion .card {
+        border: 1px solid #d8f3dc;
+    }
+</style>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<div class="candidateprofiletopbg">
+</div>
+<div class="hometext candidateprofile" style="margin-top:2px">
+    <ul class="ulBreadcrumb" style="padding-top:10px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+    <p class="commonPara" style="color:#fff"><b>Slow Down,</b> take a Breadth, you are Entering the <b>Career Identity Network</b></p>
+    <p class="commonPara paraHeader" style="color:#fff"><b>First-timers: Students and Job Seekers.</b></p>
+    <p class="commonPara">
+        <ul>
+            <li>Create your public professional identity</li>
+            <li>Build your profile in small steps</li>
+
+        </ul>
+    </p>
+    <p class="commonPara paraHeader" style="color:#fff;font-size:18px"><b>Control what the world sees...</b></p>
+    <p class="commonPara"><i>Start your journey... </i>  </p>
+</div>
+<div class="hometext candidateprofile" style="margin-top:2px">
+    <p class="commonPara paraHeader" style="color:#fff"><b></b></p>
+    <p class="commonPara paraHeader" style="color:#fff"><b>My Life in Colors – Identity to Legitimacy</b></p>
+    <p class="commonPara">
+        The TRUST in Life is determined by tools like KYC and Credit Rating. Employment is moving in the same direction.
+    </p><p class="commonPara">
+        Future Job opportunities will not depend on CVs, but on transparent, structured and verifiable information Systems. “Life in Colors” is like a KYC backed Trust Score in Job Ecosystem.
+    </p><p class="commonPara">
+        Candidates with complete, clear, layered, and consistent information will stand stronger in AI based selection processes.
+    </p><p class="commonPara">
+        At www.greenjobs.digital you can build your Trust Score by completing it step by step and update it anytime. Accuracy matters.
+    </p>
+    <div>
+        <div class="mt-4" style="max-width:500px;">
+
+            <!-- Item 1 (No Toggle) -->
+            @* <div class="p-3 border mb-2" style="background-color:#e9f9ee">
+                <table class="tbl" width="100%">
+                    <tr>
+                        <td>
+                            <a href="#">
+                              
+                            </a>
+                        </td>
+                    </tr>
+                    </table>
+               
+            </div> *@
+
+            <div id="accordion">
+                <!-- Item 2 -->
+                <div class="card">
+                    <div class="card-header p-0" id="heading1">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed"
+                                    data-toggle="collapse"
+                                    data-target="#collapse1"
+                                    aria-expanded="false"
+                                    aria-controls="collapse1">
+                                1. Identity & Contact Details
+                                <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span>
+                            </button>
+                        </h5>
+                    </div>
+
+                     
+                </div>
+
+                <!-- Item 2 -->
+                <div class="card">
+                    <div class="card-header p-0" id="heading2">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed"
+                                    data-toggle="collapse"
+                                    data-target="#collapse2"
+                                    aria-expanded="false"
+                                    >
+                                2. Educational Details
+                                <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="collapse2"
+                         class="collapse"
+                         aria-labelledby="heading2"
+                         data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="tbl" width="100%">
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            2.1 School Education & Early Formation
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                         <a href="#" >2.2 Graduate College Education
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                         </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#" >2.3  Postgraduate Education
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#" >2.4  Additional Qualifications With College Education
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#" >2.5  Learnings from Seminars & Workshops
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#" >2.6 Co-Curricular Activities
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#" >2.7 Awards & Recognitions During Education 
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="card">
+                    <div class="card-header p-0" id="heading3">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link btn-block text-left collapsed"
+                                    data-toggle="collapse"
+                                    data-target="#collapse3">
+                                3. Contextual Influences – Head & Heart Mapping (KYC)
+                                <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="collapse3"
+                         class="collapse"
+                         data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="tbl" width="100%">
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            3.1 Contextual Influences – Head & Heart Mapping (KYC)
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            3.2 Competitive Exams – Pressure, Performance & Personal Formation
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            3.3 College Education – Decision, Direction & Personal Formation
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            3.4 Career Exploration & Internship Readiness copy
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            3.5 Gen Z Worldview – Choice, Pressure & Inner Narrative
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="card">
+                    <div class="card-header p-0">
+                        <button class="btn btn-link btn-block text-left collapsed"
+                                data-toggle="collapse"
+                                data-target="#collapse4">
+                           4. Employment – Roles, Responsibilities  and Aspirations
+                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span>
+                        </button>
+                    </div>
+                    <div id="collapse4" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="tbl" width="100%">
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.1 Employment – Roles, Responsibilities  and Aspirations
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.2 Seminars, Trainings & Workshops During Employment
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.3 Technology Landscape Awareness
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.4 Membership in Professional Associations & Bodies
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.5 Regulatory & Governance Awareness
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.6 Digital, Data & AI Readinessss
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            4.7 Communication & Influence Ecosystem Readiness
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="card">
+                    <div class="card-header p-0">
+                        <button class="btn btn-link btn-block text-left collapsed"
+                                data-toggle="collapse"
+                                data-target="#collapse5">
+                           5. Time Management, Goal Setting & Prioritization
+                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span>
+                        </button>
+                    </div>
+                    <div id="collapse5" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="tbl" width="100%">
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.1 Time Management, Goal Setting & Prioritization
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.2 Resource Management Abilities
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.3 Risk & Crisis Management and Problem-Solving Skills
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.4 Relational Leadership & Talent Stewardship
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.5 Administrative & Operational Mastery
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.6 Leadership Architecture & Personal Mastery
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.7 AI Fluency, Governance & Industry Application Readiness
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="card">
+                    <div class="card-header p-0">
+                        <button class="btn btn-link btn-block text-left collapsed"
+                                data-toggle="collapse"
+                                data-target="#collapse6">
+                           6. Character Architecture & Foundational Leadership Integrity
+                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span>
+                        </button>
+                    </div>
+                    <div id="collapse6" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <table class="tbl" width="100%">
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            6.1 Character Architecture & Foundational Leadership Integrity
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            6.2 Societal Engagement & Civic Leadership Architecture
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            6.3 Contextual Comprehension & Strategic Situational Intelligence
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <a href="#">
+                                            5.4 Relational Leadership & Talent Stewardship
+                                            <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="60px" /></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                                 
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="hometext candidateprofile" style="margin-top:3px">
+    <p class="commonPara paraHeader" style="color:#fff"><b>The Making of My Work Identity</b></p>
+    <p class="commonPara">
+
+        This section is not about achievements or polished answers.
+    </p> <p class="commonPara">
+        It is about understanding how I became the kind of professional I am.
+    </p> <p class="commonPara">
+        Where I started, how I was shaped, how I act under pressure, how I work with people, what I lead, and what I can truly deliver - all of this forms my work identity.
+        This is not a performance.
+    </p> <p class="commonPara">
+        It is a reflection.
+    </p> <p class="commonPara">
+        Because clarity about who I am at work is more powerful than any résumé.
+    </p>
+
+    <p class="commonPara">
+        <table class="tbl" width="100%">
+            <tr>
+                <td>
+                    <a href="/visitor/opensurvey/17">SECTION 1 – WHERE I STARTED  <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/18">SECTION 2 – HOW I WAS SHAPED <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/19">SECTION 3 – HOW I LEARNED TO ACT <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/20">SECTION 4 – HOW I DEAL WITH PEOPLE <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/21">SECTION 5 – HOW I HANDLE PRESSURE <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/22">SECTION 6 – HOW I LEAD & CONTRIBUTE <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/23">SECTION 7 – WHERE I’M HEADED <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+            <tr>
+                <td><a href="/visitor/opensurvey/24">SECTION 8 – WHAT I CAN PROFESSIONALLY DELIVER<br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="50px" /></span></a></td>
+            </tr>
+           @*  <tr>
+                <td><a href="#">Profile and Contact Details<br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="60px" /></span></a></td>
+            </tr> *@
+        </table>
+    </p>
+
+    <p class="commonPara"></p>
+    <p class="commonPara"></p>
+</div>
+
+
+@*  <p class="commonPara paraHeader" style="color:#fff">We're open, but not careless</p>
+    <p class="commonPara">
+        <ul>
+            <li>Employer’s requiring and browsing talent</li>
+            <li>Mentors scouting potential</li>
+            <li>Parents, Institutions, Collaborators</li>
+            <li>Even Students stalking other profiles quietly</li>
+
+        </ul>
+    </p>
+    <p class="commonPara">
+        <i>Public profiles only... </i>
+        <span> <a href="/account/register/1" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></span>
+    </p>
+    <p class="commonPara"></p>
+    <p class="commonPara paraHeader" style="color:#fff">I already have a profile. <br /> I want to continue.</p>
+    <p class="commonPara">
+        <ul>
+            <li>Resume your profile</li>
+            <li>Edit, refine, unlock next sections</li>
+            <li>First Time - Check AI insights & recommendations </li>
+
+        </ul>
+    </p>
+    <p class="commonPara">
+       <b>No drama -</b> <i>Just continuity...</i>
+        <span> <a href="/account/register/1" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></span>
+    </p> *@

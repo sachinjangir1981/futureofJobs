@@ -1,0 +1,18 @@
+﻿@using JobPortal.Models;
+@using System.Text.RegularExpressions;
+@model List<Answers>
+
+@{
+    string pattern = @"^<p>(.*)</p>$";
+    string replacewith = "$1";
+}
+
+@foreach (var itmInner in Model)
+{
+     
+    string st = Regex.Replace(itmInner.Answer, pattern, replacewith);
+    <div class="col-12 col-lg-12 col-sm-12 col-md-12 custom-radio-group row-separator">
+        <input type="radio" id="chk_@itmInner.QuestionId.ToString()_@itmInner.PKID.ToString()" name="chk_@itmInner.QuestionId.ToString()" value="@itmInner.PKID" /><label for="chk_@itmInner.QuestionId.ToString()_@itmInner.PKID.ToString()">@Html.Raw(st) </label>
+    </div>
+}
+

@@ -1,0 +1,98 @@
+﻿
+@* Views/Shared/_Sidebar.cshtml *@
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+<!-- Offcanvas for small screens -->
+<div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
+    <div class="offcanvas-header bg-success text-white">
+        <h5 class="offcanvas-title" id="mobileSidebarLabel">Job Portal</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+        <nav class="nav flex-column p-3 bg-dark h-100 text-white">
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a asp-controller="Dashboard" asp-action="Index" class="nav-link text-white">
+                        <i class="bi bi-speedometer2"></i> Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex justify-content-between align-items-center"
+                       data-bs-toggle="collapse" href="#formsMenu" role="button" aria-expanded="false" aria-controls="formsMenu">
+                        <span><i class="bi bi-briefcase"></i> Forms</span>
+                        <i class="bi bi-caret-down-fill small"></i>
+                    </a>
+                    <div class="collapse ms-3" id="formsMenu">
+                        <ul class="nav flex-column">
+                            <li><a class="nav-link" href="/Admin/Forms/Sections/1">Students</a></li>
+                            <li><a class="nav-link" href="/Admin/Forms/Sections/2">Academic Institutes</a></li>
+                            <li><a class="nav-link" href="/Admin/Forms/Sections/3">Consultants</a></li>
+                            <li><a class="nav-link" href="/Admin/Forms/Sections/4">Professionals</a></li>
+                            <li><a class="nav-link" href="/Admin/Forms/Sections/5">Employers</a></li>
+                            <li><a class="nav-link" href="/Admin/Forms/Categories">Others</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex justify-content-between align-items-center"
+                       data-bs-toggle="collapse" href="#masterMenu" role="button" aria-expanded="false" aria-controls="masterMenu">
+                        <span><i class="bi bi-briefcase"></i> Masters</span>
+                        <i class="bi bi-caret-down-fill small"></i>
+                    </a>
+                    <div class="collapse ms-3" id="masterMenu">
+                        <ul class="nav flex-column">
+                            <li><a class="nav-link" href="/Admin/SkillCategory/">Skill Categories</a></li>
+                            <li><a class="nav-link" href="/Admin/Skill/">Skills</a></li>
+
+                        </ul>
+                    </div>
+                </li>
+
+                <!-- Applications with Submenu -->
+
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex justify-content-between align-items-center"
+                       data-bs-toggle="collapse" href="#pollMenu" role="button" aria-expanded="false" aria-controls="pollMenu">
+                        <span><i class="bi bi-person-badge"></i> Polls</span>
+                        <i class="bi bi-caret-down-fill small"></i>
+                    </a>
+                    <div class="collapse ms-3" id="pollMenu">
+                        <ul class="nav flex-column">
+                            <li><a class="nav-link" href="/admin/QuestionCategory/index">Category</a></li>
+                            <li><a class="nav-link" href="/admin/Polls/Index">Polls</a></li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-flex justify-content-between align-items-center"
+                       data-bs-toggle="collapse" href="#libraryMenu" role="button" aria-expanded="false" aria-controls="libraryMenu">
+                        <span><i class="bi bi-person-badge"></i> CMS</span>
+                        <i class="bi bi-caret-down-fill small"></i>
+                    </a>
+                    <div class="collapse ms-3" id="libraryMenu">
+                        <ul class="nav flex-column">
+                            <li><a class="nav-link" href="/admin/Library/Categories">Library Category</a></li>
+                            <li><a class="nav-link" href="/admin/Library/Index">Library</a></li>
+                            <li><a class="nav-link" href="/admin/QuestionForms/Index">Survey</a></li>
+                            <li><a class="nav-link" href="/admin/Timepass/Index">Timepass</a></li>
+                            <li><a class="nav-link" href="/admin/OneMinute/Index">One Minute</a></li>
+                            <li><a class="nav-link" href="/admin/MyPoint/Index">My Point</a></li>
+                            <li><a class="nav-link" href="/admin/TNCategory/Index">Trending News Category</a></li>
+                            <li><a class="nav-link" href="/admin/TrendingNews/Index">Trending News</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item"><a asp-controller="Profiles" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>User Porfiles</a></li>
+                <li class="nav-item"><a asp-controller="Admin" asp-action="ManageJobs" class="nav-link "><i class="bi bi-briefcase-fill"></i> Manage Jobs</a></li>
+            </ul>
+
+            <div class="mt-auto p-3">
+                <a asp-controller="Account" asp-area="/" asp-action="Logout" class="btn btn-outline-light w-100">Logout</a>
+            </div>
+        </nav>
+    </div>
+</div>

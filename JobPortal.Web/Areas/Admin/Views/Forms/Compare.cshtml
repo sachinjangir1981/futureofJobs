@@ -1,0 +1,179 @@
+﻿@model CompareFormData
+@{
+
+    ViewData["Title"] = "View Categories";
+    Layout = "_LayoutAdmin";
+    List<UserListForCompare> userList = ViewBag.UserList;
+}
+<div class="container py-4">
+    <h2>Compare - @Model.FormDetails.FirstOrDefault().FormName</h2>
+
+    @{
+
+        var sectionlist = Model.FormDetails.DistinctBy(mb => mb.SectionId).ToList();
+    }
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th width="300">Question</th>
+
+                <th width="200">User 1</th>
+                <th width="200">Rating</th>
+                <th width="200">User 2</th>
+                <th width="200">Rating</th>
+                <th width="200">User 3</th>
+                <th width="200">Rating</th>
+                <th width="200">User 4</th>
+                <th width="200">Rating</th>
+            </tr>
+            <tr>
+                <th width="300">
+                    
+                </th>
+                <th width="200">@Html.DropDownList("User1", new SelectList(ViewBag.UserList, "CompleteUserId", "CompleteProfile"), "-- select --", new { @onchange = "LoadDataByUserId(" + @Model.FormDetails.FirstOrDefault().Id + ", this)" }) </th>
+                <th width="200">
+                    <select id="User1Rating" name="User1Rating" onchange="LoadRatings(@Model.FormDetails.FirstOrDefault().Id, this)">
+                        <option value="0">-- select --</option>
+                        
+                    </select> 
+                    </th>
+                <th width="200">@Html.DropDownList("User2", new SelectList(ViewBag.UserList, "CompleteUserId", "CompleteProfile"), "-- select --", new { @onchange = "LoadDataByUserId(" + @Model.FormDetails.FirstOrDefault().Id + ", this)" })</th>
+                <th width="200">
+                    <select id="User2Rating" name="User2Rating" onchange="LoadRatings(@Model.FormDetails.FirstOrDefault().Id, this)">
+                        <option value="0">-- select --</option>
+                       
+                        </select> 
+                    </th>
+                <th width="200">@Html.DropDownList("User3", new SelectList(ViewBag.UserList, "CompleteUserId", "CompleteProfile"), "-- select --", new { @onchange = "LoadDataByUserId(" + @Model.FormDetails.FirstOrDefault().Id + ", this)" })</th>
+                <th width="200">
+                    <select id="User3Rating" name="User3Rating" onchange="LoadRatings(@Model.FormDetails.FirstOrDefault().Id , this)">
+                        <option value="0">-- select --</option>
+                       
+                        </select> 
+                    </th>
+                <th width="200">@Html.DropDownList("User4", new SelectList(ViewBag.UserList, "CompleteUserId", "CompleteProfile"), "-- select --", new { @onchange = "LoadDataByUserId(" + @Model.FormDetails.FirstOrDefault().Id + ", this)" })</th>
+                <th width="200">
+                    <select name="myDropdown" id="myDropdown" onchange="LoadRatings(@Model.FormDetails.FirstOrDefault().Id, this)">
+                        <option value="0">-- select --</option>
+                      
+                    </select>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var itm in sectionlist)
+            {
+                <tr>
+                    <td colspan="9" style="background-color:#198754;color:#fff">@itm.Title </td>
+                </tr>
+                @foreach (var item in Model.FormDetails.Where(mb => mb.SectionId == itm.SectionId).ToList())
+                {
+                    <tr>
+                        <td width="300">@Html.Raw(item.QuestionText)</td>
+                        <td id="tdUser1_@item.QuestionId" width="200"> </td>
+                        <td id="tdRatingUser1_@item.QuestionId" width="200"></td>
+                        <td id="tdUser2_@item.QuestionId" width="200"> </td>
+                        <td id="tdRatingUser2_@item.QuestionId" width="200"></td>
+                        <td id="tdUser3_@item.QuestionId" width="200"> </td>
+                        <td id="tdRatingUser3_@item.QuestionId" width="200"></td>
+                        <td id="tdUser4_@item.QuestionId" width="200"> </td>
+                        <td id="tdRatingUser4_@item.QuestionId" width="200" ></td>
+                    </tr>
+                }
+
+            }
+
+
+
+        </tbody>
+    </table>
+</div>
+@section Scripts
+{
+    <script>
+
+       
+
+
+        function LoadDataByUserId(formId, ddl)
+        {
+
+             var ddlId =  $(ddl).attr("id");
+            var ddlRatingId =  $(ddl).attr("id") + "Rating";
+            $.ajax({
+            type: 'POST',
+            url: '/Admin/Forms/GetDataByFormandUserId',
+            data: { id: formId, userId: $('#'+ddlId).val() },
+            dataType: 'json', // Expected data type from the server
+            success: function(response){
+                 
+                $.each(response.formDatas, function(index, item) {
+                   
+                    var tdid = "td"+ddlId +"_"+item.questionId;
+                   
+                    $('#'+tdid).html(item.answerText);
+                    
+                });
+
+                  var ratingDdl = document.getElementById(ddlRatingId);
+                    ratingDdl.innerHTML = '';
+                    var doption = document.createElement("option");
+                        doption.value = "0";
+                        doption.text = "-- Select --";
+                        ratingDdl.appendChild(doption);
+
+                    $.each(response.users, function(index, item) {
+
+                         var option = document.createElement("option");
+                        option.value = item.userId;
+                            option.text = item.userName;
+                        ratingDdl.appendChild(option);
+
+                        });
+
+                   
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.error("Error submitting data:", textStatus, errorThrown);
+            },
+            complete: function(){
+                console.log("Request completed.");
+            }
+        });
+        }
+
+
+            function LoadRatings(formId, ddl)
+            {
+                   
+             var ddlRatingId =  $(ddl).attr("id");
+            var ddlId =  $(ddl).attr("id").replace("Rating","") ;
+
+            console.log(ddlRatingId);
+            console.log(ddlId);
+            $.ajax({
+            type: 'POST',
+            url: '/Admin/Forms/GetRatingDataByFormandUserId',
+            data: { id: formId, userId: $('#'+ddlRatingId).val() },
+            dataType: 'json', // Expected data type from the server
+            success: function(response){
+                console.log(response);
+                $.each(response, function(index, item) {
+
+                    var tdid = "tdRating"+ddlId +"_"+item.questionId;
+                    $('#'+tdid).html(item.score);
+
+                });
+ 
+            },
+            error: function(jqXHR, textStatus, errorThrown){
+                console.error("Error submitting data:", textStatus, errorThrown);
+            },
+            complete: function(){
+                console.log("Request completed.");
+            }
+        });
+                        
+            }
+    </script>
+}

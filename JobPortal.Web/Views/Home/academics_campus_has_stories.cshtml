@@ -1,0 +1,55 @@
+﻿@using JobPortal.Models;
+@model List<Questionnaires>
+
+
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+    int i = 1;
+}
+
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/academics.jpeg" />
+    </div>
+}
+<div class="bgacademicCampusTopbg">
+</div>
+<div class="hometext bgacademicCampusbg">
+    <ul class="ulBreadcrumb">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/academics">Academics <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+    @if (Model != null)
+    {
+        <p class="paraCommon paraHeader"> <b>Campus Has Stories. Let’s See Which One’s are Living in Yours’s. </b> </p>
+        <p class="paraCommon">
+            <b>Take this fun reality check and find out which campus characters secretly resemble you. </b>
+        </p>
+        @foreach (var itm in Model)
+        {
+            <div class="video-item">
+                @* <div class="video-thumbnail-container">
+                    <a href="/visitor/poll/@itm.PKID">  <img src="/images/polls/@itm.ImageUrl" alt="Video Thumbnail" class="video-thumbnail"></a>
+
+                </div> *@
+                <div class="video-content">
+                    <div class="video-header">
+
+                        <h5 class="video-title">
+                            <a href="/visitor/poll/@itm.PKID" style="text-decoration:none;color:#000"> <b>@i.ToString(). @Html.Raw(itm.ActionText)</b> @itm.SubHeading <br /><span style="display:block; padding-top:7px;"><img src="~/images/audience-poll.png" width="45px" /></span></a>
+                        </h5>
+
+
+                    </div>
+                </div>
+            </div>
+            i++;
+        }
+    }
+</div>

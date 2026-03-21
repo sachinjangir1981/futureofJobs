@@ -1,0 +1,72 @@
+﻿ @using JobPortal.Models;
+@model List<Questionnaires>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/student.jpeg" />
+    </div>
+}
+<div class="genztopbg">
+</div>
+<div class="hometext bgGenzpolls">
+    <ul class="ulBreadcrumb">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/hellogenz">Welcome to Your Inner Operating System <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+    <p class="paraCommon paraHeader">
+        <b>Welcome to Your Inner Operating System.</b>
+        <span style="display:block; font-size:18px"><i>For Students • Job Seekers • Early - Career Professionals (17–30 Years)</i></span>
+    </p>
+
+     <p class="paraCommon">
+        @if (Model != null)
+        {
+            @foreach (var itm in Model)
+            {
+            <div class="video-item">
+                <div class="video-thumbnail-container">
+                        <a href="/visitor/poll/@itm.PKID">  <img src="/images/polls/@itm.ImageUrl" alt="Video Thumbnail" class="video-thumbnail"></a>
+
+                </div>
+                <div class="video-content">
+                    <div class="video-header">
+
+                            <h5 class="video-title">
+                                <a href="/visitor/poll/@itm.PKID" style="text-decoration:none;color:#000"> <b>@itm.DisplayOrder. @Html.Raw(itm.ActionText)</b> @itm.SubHeading <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                           </h5>
+                         
+                        
+                    </div>
+                </div>
+            </div>
+            }
+           @*  <table class="tbl" width="100%">
+
+
+                @foreach (var itm in Model)
+                {
+
+                    <tr>
+                        <td>
+                            <img src="~/images/polls/@itm.ImageUrl" width="30px" />
+                        </td>
+                        <td>
+                            <a href="/visitor/poll/@itm.PKID" style="text-decoration:none;color:#000"><b>@itm.DisplayOrder. @Html.Raw(itm.ActionText)</b> @itm.SubHeading </a>
+                        </td>
+                    </tr>
+                }
+
+            </table> *@
+        }
+        
+    </p> 
+   
+    
+   
+ 
+    <p class="paraCommon"></p>
+</div>

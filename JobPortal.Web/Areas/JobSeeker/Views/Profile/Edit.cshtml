@@ -1,0 +1,234 @@
+@model JobPortal.Domain.Models.JobSeekerProfile
+@{
+    Layout = "/Views/Shared/_LayoutJobSeeker.cshtml";
+}
+<h2>Edit Profile</h2>
+<form method="post" enctype="multipart/form-data">
+
+    @if (Model.Id == 0)
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Profile</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Added On</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var itm in ViewBag.Profilelist)
+                {
+                    <tr>
+                        <td>@itm.ProfileName</td>
+                        <td>@itm.FullName</td>
+
+                        <td>@itm.Phone</td>
+
+                        <td>
+
+                            <span>@string.Format("{0:dd/MM/yyyy hh:mm}", itm.RcdInsTs.AddMinutes(330))  </span>
+
+                        </td>
+                        <td><a class="btn btn-secondary" href="/JobSeeker/Profile/Edit/@itm.Id">Edit</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+    <input type="hidden" asp-for="Id"  />
+    <div class="mb-3"><label>Profile Name</label><input asp-for="ProfileName" class="form-control" /></div>
+    <div class="mb-3"><label>Full Name</label><input asp-for="FullName" class="form-control" /></div>
+    <div class="mb-3"><label>Phone</label><input asp-for="Phone" class="form-control" /></div>
+    <div class="mb-3"><label>Experience</label><input asp-for="Experience" class="form-control"></input></div>
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Current State</label>
+            <select id="CurrentStateId" name="CurrentStateId" class="form-select" onchange="fillCurrentCity()">
+                <option value="">-- Select State --</option>
+                @foreach (var s in ViewBag.States as List<State>)
+                {
+
+                    if (s.Id == Model.CurrentStateId)
+                    {
+                        <option value="@s.Id" selected="selected">@s.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@s.Id"  >@s.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label>Current City</label>
+            <select id="CurrentCityId" name="CurrentCityId" class="form-select">
+                <option value="">-- Select City --</option>
+                @foreach (var c in ViewBag.CurrentCities as List<City>)
+                {
+                    if (c.Id == Model.CurrentCityId)
+                    {
+                        <option value="@c.Id" selected="selected">@c.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label>Desired State</label>
+            <select id="DesiredStateId" name="DesiredStateId" class="form-select" onchange="fillDesiredCity()">
+                <option value="">-- Select State --</option>
+                @foreach (var s in ViewBag.States as List<State>)
+                {
+                    if (s.Id == Model.DesiredStateId)
+                    {
+                        <option value="@s.Id" selected="selected">@s.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@s.Id">@s.Name</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label>Desired City</label>
+            <select id="DesiredCityId" name="DesiredCityId" class="form-select">
+                <option value="">-- Select City --</option>
+                @foreach (var c in ViewBag.DesiredCities as List<City>)
+                {
+                    if (c.Id == Model.DesiredCityId)
+                    {
+                        <option value="@c.Id" selected="selected">@c.Name</option>
+                    }
+                    else
+                    {
+                        <option value="@c.Id">@c.Name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    @foreach (var q in ViewBag.Sections)
+    {
+
+        var existingText = ViewBag.AnswersText.ContainsKey(q.Id) ? ViewBag.AnswersText[q.Id] : null;
+        var existingFile = ViewBag.AnswersFile.ContainsKey(q.Id) ? ViewBag.AnswersFile[q.Id] : null;
+        <div class="row">
+            <div class="mb-3 col-9">
+                <label class="form-label">@q.QuestionText</label>
+
+                @switch (q.QuestionType)
+                {
+                    case QuestionType.Text:
+                        <input type="text" name="answers[@q.Id]" value="@existingText" class="form-control" />
+                        break;
+
+                    case QuestionType.Multiline:
+                        <textarea name="answers[@q.Id]" class="form-control">@existingText</textarea>
+                        break;
+
+                    case QuestionType.SingleChoice:
+                        foreach (var opt in q.Options)
+                        {
+                            <div class="form-check">
+                                <input type="radio" name="answers[@q.Id]" @(existingText == opt.OptionText ? "checked" : "") value="@opt.OptionText"
+                                       class="form-check-input" />
+                                <label>@opt.OptionText</label>
+                            </div>
+                        }
+                        break;
+
+                    case QuestionType.MultipleChoice:
+                        foreach (var opt in q.Options)
+                        {
+                            var selected = (existingText ?? "").Split('|', System.StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                            <div class="form-check">
+                                <input type="checkbox" name="answers[@q.Id]" value="@opt.OptionText" @(selected.Contains(opt.OptionText) ? "checked" : "")
+                                       class="form-check-input" />
+                                <label>@opt.OptionText</label>
+                            </div>
+                        }
+                        break;
+
+                    case QuestionType.FileUpload:
+                        if (!string.IsNullOrWhiteSpace(existingFile))
+                        {
+                            <div class="mb-2">
+                                <a href="@existingFile" target="_blank" class="btn btn-sm btn-outline-secondary">View current file</a>
+                            </div>
+                        }
+                        <input type="file" name="file_@q.Id" class="form-control" />
+                        break;
+                }
+            </div>
+            <div class="col-3 top-0 end-0 mt-1">
+                @if (q.IsRating)
+                {
+                    <label class="form-label fw-bold">Rate yourself (out of @q.Marks)</label>
+                    <input type="number" id="selfRating" class="form-control self-rating" data-qid="@q.Id" min="1" max="@q.Marks" step="1" />
+
+                    <div id="msg_@q.Id" class="mt-2 text-success"></div>
+                }
+            </div>
+        </div>
+    }
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+        
+         function fillCurrentCity() {
+         
+            var stateId = $("#CurrentStateId").val();
+               
+           $.getJSON('/Location/GetCities', { stateId: stateId }, function (data) {
+                var items = '<option value="">-- Select City --</option>';
+                $.each(data, function (i, city) {
+                    items += "<option value='" + city.id + "'>" + city.name + "</option>";
+                });
+                $("#CurrentCityId").html(items);
+            });
+        } ;
+
+     function fillDesiredCity() {
+           var stateId = $("#DesiredStateId").val();
+            
+           $.getJSON('/Location/GetCities', { stateId: stateId }, function (data) {
+                var items = '<option value="">-- Select City --</option>';
+                $.each(data, function (i, city) {
+                    items += "<option value='" + city.id + "'>" + city.name + "</option>";
+                });
+                $("#DesiredCityId").html(items);
+            });
+        } ;
+   
+         $(document).on("change", ".self-rating", function () {
+        var $sel = $(this);
+        var profId = @Model.Id;
+        var questionId = $sel.data("qid");
+        var score = $sel.val();
+        var maxscore = $(this).attr("max");
+        console.log(maxscore);
+        $.post("/JobSeeker/Profile/RateSelfAjax", { questionId: questionId, score: score, profileId:profId }, function (res) {
+            if (res.success) {
+                $("#msg_" + questionId).text("Saved (" + res.score + "/"+maxscore+")");
+                // optional: update admin avg shown:
+                if (res.averageOther !== null) {
+                    $sel.closest("tr").find("span.badge.bg-success").text(res.averageOther.toFixed(1));
+                }
+            } else {
+                $("#msg_" + questionId).text("Error saving");
+            }
+        });
+    });
+</script>

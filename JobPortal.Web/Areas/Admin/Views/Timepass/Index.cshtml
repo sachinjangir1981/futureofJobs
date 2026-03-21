@@ -1,0 +1,107 @@
+﻿@using JobPortal.Web.Models;
+@model List<OneMinuteItem>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int i = 0;
+}
+
+
+<div style="float:right">
+    <a href="/admin/timepass/Create" class="btn btn-primary">Create</a>
+
+</div>
+<table>
+    <tr>
+        <td>
+            <form id="frm" method="get" action="/admin/timepass/Index">
+                <select id="id" name="id" onchange="submitform()">
+                    @if (@ViewBag.LanguageId == 1)
+                    {
+                        <option value="1" selected>Time Pass</option>
+                    }
+                    else
+                    {
+                        <option value="1">Time Pass</option>
+                    }
+                    @if (@ViewBag.LanguageId == 4)
+                    {
+                        <option value="4" selected>Time Pass For Students</option>
+                    }
+                    else
+                    {
+                        <option value="4">Time Pass For Students</option>
+                    }
+
+                    @if (@ViewBag.LanguageId == 5)
+                    {
+                        <option value="5" selected>Time Pass For Employability(Having said that...) </option>
+                    }
+                    else
+                    {
+                        <option value="5">Time Pass For Employability(Having said that...)</option>
+                    }
+                    
+                </select>
+            </form>
+        </td>
+    </tr>
+</table>
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th width="40">SNO</th>
+            <th>Interesting Snippet</th>
+
+            <th>Card</th>
+
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var itm in Model)
+        {
+            i++;
+            <tr>
+                <td width="40">@i </td>
+                <td>@Html.Raw(itm.NewsSubject)</td>
+
+                <td><a href="/visitor/TimePass/@itm.PKID" class="btn btn-info">Create Card</a> </td>
+                <td><a href="/admin/timepass/Edit/@itm.PKID" class="btn btn-success">Edit</a> </td>
+                <td><a href="javascript:void(0);" onclick="javascript:deleteCustomer(@itm.PKID);" class="btn btn-danger">Delete</a> </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+
+    <script>
+
+        function deleteCustomer(id) {
+            if (confirm("Are you sure you want to delete this timepass article?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/timepass/Delete",
+                    data: "id=" + id,
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+            }
+        }
+
+
+        function submitform()
+        {
+           document.getElementById("frm").submit();
+        }
+
+    </script>
+}

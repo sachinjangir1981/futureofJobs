@@ -1,0 +1,37 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<OneMinuteItem>
+@{
+    ViewBag.Title = "Survery";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+    @*  <img src="~/images/employer.jpeg" /> *@
+    </div>
+}
+<div class="bglogin" style="min-height:90vh; margin-top:-90px">
+@if (Model != null)
+{
+        <div style="text-align:center;padding-top:65px">
+            <span class="tpheading1" style="color:#C40C0C; font-size:33px">One Minute</span> <br />
+            <img src="~/images/oneminutemain.png" id="imgLogo" style=" max-width:80px" /><br />
+            <span class="tpheading1">Why We Work</span><br />
+            <div class="oneminutebg" style="height:2px; margin:5px 10px 0px 10px !important; "></div>
+            <div class="oneminutebg" style="height:3px; margin:3px 10px 0px 10px !important"></div>
+            <ul class="ulList">
+                    @foreach (var itm in Model)
+                    {
+                    <li class="oneminutebg">
+                            <a href="/visitor/OneMinute/@itm.PKID"> @Html.Raw(itm.Title) </a>
+                        </li>
+                    }
+                </ul>
+       
+         
+    </div>
+}
+</div>

@@ -1,0 +1,93 @@
+﻿  @using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/Silver_Talent.png"   />
+    </div>
+}
+<div class="bgsilverbgtop">
+</div>
+<div class="hometext bgsilverbgbelow">
+    <ul class="ulBreadcrumb" style="padding-top:10px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+
+    <p class="paraCommon" style="text-align:center">
+        <img src="~/images/silvertalent-landing.png" width="50%" />
+    </p>
+    <p class="paraCommon paraHeader"  >
+        <b>SILVER TALENT 55+ - THE MOST UNDERRATED POWERHOUSE OF THE GREEN ECONOMY</b>
+        <i>From Redundancy to Relevance in the Age of AI</i>
+    </p>
+    <p class="paraCommon">We are entering a strange, exciting, slightly scary era. People are living longer. Jobs are shrinking faster. AI is learning quicker. And the corporate world is quietly accelerating the expiry date of “experienced professionals.”</p>
+    <p class="paraCommon">Earlier, “senior career phase” began at 60. Today it begins at 55+. And very soon, it may begin at 50 or even 45.  </p>
+    <p class="paraCommon">Welcome to one of the biggest future-of-work challenges nobody is prepared for. But here’s the twist — this is not a doomsday story. This is a reinvention story.</p>
+    <p class="paraCommon">
+        @if (Model != null)
+        {
+                <table class="tbl" width="100%">
+
+
+                @foreach (var itm in Model)
+                {
+
+                            <tr>
+                                <td>
+                            @if (itm.IsCategory == 0)
+                            {
+                                            <a href="/visitor/library/@itm.PKID" style="text-decoration:none;color:#000">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title)  <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span>   </a>
+                            }
+                            else
+                            {
+                                            <a href="/visitor/librarylist/@itm.PKID" style="text-decoration:none;color:#000">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <span class="fa fa-angle-right"></span> <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                            }
+                                </td>
+                            </tr>
+                }
+
+
+                </table>
+        }
+
+
+      </p>
+</div>
+
+<div class="hometext bgsilverbgbelow" style="padding-top:10px; padding-bottom:10px">
+    <p class="paraHeader">
+        <a href="/visitor/opensurvey/12" style="text-decoration:none;">Silver Talent Profile – Reflection Of Intent & Readiness. <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="45px" /></span> </a>
+          </p>
+    </div>
+    <div class="hometext bgsilverbgbelow" style="padding-top:10px; padding-bottom:10px">
+    <p class="paraHeader">
+        <a href="/home/st_competency_delivery_framework" style="text-decoration:none;">Silver Talent – Competency & Delivery Framework - Grid <br /><span style="display:block; padding-top:7px;"><img src="~/images/profile.png" width="45px" /></span> </a>
+             </p>
+    </div>
+<div class="fowbottom hometext" style="padding-left:15px; padding-right:10px">
+    <a href="/visitor/trendingnewslist/12" style="text-decoration:none">
+        <div class="paraCommon trendingnewsbutton">
+            <table class="trendingnewstbl">
+                <tr>
+                    <td>
+                        <img src="~/images/news-icon.png" width="60" />
+                    </td>
+                    <td>
+                        <div style="background-color:#91D050; height:50px;width:4px;margin: 0px 10px 0px 10px;"></div>
+                    </td>
+                    <td>
+                        <span style="font-size:18px; font-weight:600; text-decoration:none">Stories</span> <br />that mean something <br /><span style="font-size:18px; font-weight:600">to us…</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </a>
+</div>

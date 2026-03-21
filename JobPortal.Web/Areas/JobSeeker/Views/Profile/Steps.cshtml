@@ -1,0 +1,306 @@
+﻿@model JobPortal.Web.ViewModels.FormVm
+@using JobPortal.Domain.Models;
+
+@{
+
+    ViewData["Title"] = "My Profile";
+    Layout = "_LayoutJobSeeker";
+
+    int i = 0;
+}
+
+@if (TempData["Saved"] != null)
+{
+    <div class="alert alert-success">@TempData["Saved"]</div>
+
+}
+<style>
+    .nav-tabs .nav-link {
+    font-weight: 500;
+    color: #333;
+    }
+
+    .nav-tabs .nav-link.active {
+    background-color: #28a745;
+    color: white !important;
+    }
+
+    .nav-tabs .nav-link:hover {
+    background-color: #d4edda;
+    }
+
+
+   
+
+</style>
+
+
+
+
+<div class="jobseeker-form container py-4">
+    <!-- Section Tabs -->
+    <ul class="nav nav-tabs" id="sectionTabs" role="tablist">
+        @foreach (var sect in Model.Sections)
+        {
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link @(i == 0 ? "active" : "")"
+                id="tab-@sect.Id"
+                data-bs-toggle="tab"
+                data-bs-target="#section-@sect.Id"
+                type="button" role="tab">
+                    @sect.Title
+                </button>
+            </li>
+            i++;
+        }
+        <li class="nav-item" role="presentation">
+            <button class="nav-link"
+            id="tab-rate"
+            data-bs-toggle="tab"
+            data-bs-target="#section-rate"
+            type="button" role="tab">
+                Rate
+            </button>
+        </li>
+    </ul>
+    @{
+        i = 0;
+    }
+    <!-- Section Content -->
+    <form method="post" asp-action="SaveForm" asp-controller="Profile" enctype="multipart/form-data">
+        <input type="hidden" asp-for="ProfileId" value="@Model.ProfileId" />
+        <div class="tab-content mt-3" id="sectionTabContent">
+
+            @foreach (var sect in Model.Sections)
+            {
+
+                <div class="tab-pane fade @(i == 0 ? "show active" : "")"
+                id="section-@sect.Id" role="tabpanel">
+
+                    @foreach (var q in sect.Questions)
+                    {
+                        var existingText = Model.AnswersText.ContainsKey(q.Id) ? Model.AnswersText[q.Id] : null;
+                        var existingFile = Model.AnswersFile.ContainsKey(q.Id) ? Model.AnswersFile[q.Id] : null;
+                        <div class="row">
+                            <div class="mb-3 col-9">
+                                <label class="form-label fw-bold">@q.QuestionText</label>
+
+                                @switch (q.QuestionType)
+                                {
+                                    case QuestionType.Text:
+                                        <input type="text" name="answers[@q.Id]" value="@existingText" class="form-control" />
+                                        break;
+
+                                    case QuestionType.Multiline:
+                                        <textarea name="answers[@q.Id]" class="form-control">@existingText</textarea>
+                                        break;
+
+                                    case QuestionType.SingleChoice:
+                                        foreach (var opt in q.Options)
+                                        {
+                                            <div class="form-check">
+                                                <input type="radio" name="answers[@q.Id]" @(existingText == opt.OptionText ? "checked" : "") value="@opt.OptionText"
+                                                class="form-check-input" />
+                                                <label>@opt.OptionText</label>
+                                            </div>
+                                        }
+                                        break;
+
+                                    case QuestionType.MultipleChoice:
+                                        foreach (var opt in q.Options)
+                                        {
+                                            var selected = (existingText ?? "").Split('|', System.StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                                            <div class="form-check">
+                                                <input type="checkbox" name="answers[@q.Id]" value="@opt.OptionText" @(selected.Contains(opt.OptionText) ? "checked" : "")
+                                                class="form-check-input" />
+                                                <label>@opt.OptionText</label>
+                                            </div>
+                                        }
+                                        break;
+
+                                    case QuestionType.FileUpload:
+                                        if (!string.IsNullOrWhiteSpace(existingFile))
+                                        {
+                                            <div class="mb-2">
+                                                <a href="@existingFile" target="_blank" class="btn btn-sm btn-outline-secondary">View current file</a>
+                                            </div>
+                                        }
+                                        <input type="file" name="file_@q.Id" class="form-control" />
+                                        break;
+                                }
+                            </div>
+                            <div class="col-3 top-0 end-0 mt-1">
+                                @if (q.IsRating)
+                                {
+                                    <label class="form-label fw-bold">Rate yourself (out of @q.Marks)</label>
+                                    <input type="number" id="selfRating" class="form-control self-rating" data-qid="@q.Id" min="1" max="@q.Marks" step="1" />
+                                  
+                                    <div id="msg_@q.Id" class="mt-2 text-success"></div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                i++;
+            }
+            <div class="tab-pane fade" id="section-rate" role="tabpanel">
+                <div class="card p-3 mb-4">
+                    <h5>⭐ My Rating</h5>
+
+                    @*  <div class="mb-3">
+                        <strong>Overall Average:</strong>
+                        <span class="badge bg-primary">@Model.AvgRating.ToString("0.0") / 10</span>
+                    </div> *@
+
+                    @if (Model.NewRatings != null && Model.NewRatings.Any())
+                    {
+                        i = 0;
+                        <div>
+                            <strong>Question List (Detailed Ratings):</strong>
+                        </div>
+                     
+                        <table class="table table-bordered ">
+                            <thead>
+
+                                <tr>
+                                    @foreach (var col in Model.NewRatings.First().Keys)
+                                    {
+                                        <th>@col</th>
+                                        
+                                    }
+                                </tr>
+                            </thead>
+                          
+                            <tbody>
+                               
+                                @foreach (var row in Model.NewRatings)
+                                {
+                                    <tr>
+                                        @foreach (var col in row.Keys)
+                                        {
+                                            <td>@row[col]</td>
+                                            
+                                        }
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                       
+                    }
+                    else
+                    {
+                        <p>No data found.</p>
+                    }
+
+
+                  @*   <table class="table table-bordered table-striped">
+                        <tbody>
+                            @foreach (var rategroup in Model.Ratings.GroupBy(b => b.RatingByName))
+                            {
+                                <tr>
+                                    <td colspan="3">
+                                        <strong>
+                                            @(rategroup.Key == "Self" ? "My Ratings" : rategroup.Key )
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">
+                                        <table width="100%">
+                                            
+                                         
+                                            @foreach (var r in rategroup)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @r.Question.QuestionText
+                                                        </td>
+                                                    <td>
+                                                        <span class="badge @(r.RatedBy == "Self" ? "bg-info" : "bg-success")">
+                                                            @r.Score
+                                                        </span>
+                                                    </td>
+                                                    <td>
+                                                        @r.RatingByName
+                                                      
+                                                    </td>
+                                                    <td>@r.RatedAt.ToString("dd-MMM-yyyy HH:mm")</td>
+                                                </tr>
+                                            }
+                            
+                               </table>
+                                       </td>
+                                </tr>
+                                }
+                        </tbody>
+                    </table> *@
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="mt-3 text-end">
+            <button type="submit" name="actionType" value="draft" class="btn btn-secondary me-2">Save as Draft</button>
+            <button type="submit" name="actionType" value="final" class="btn btn-success">Submit Final</button>
+        </div>
+        @*    <div class="mt-3 text-end">
+            <button type="submit" class="btn btn-success px-4">Submit Application</button>
+        </div> *@
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+
+        $(document).on("blur", "input, textarea, select", function () {
+        var form = $("form");
+        var formData = new FormData(form[0]);
+        formData.append("actionType", "draft");
+
+        $.ajax({
+            url: form.attr("action"),
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                console.log("Draft auto-saved");
+            }
+        });
+    });
+
+    //     $(document).on("change", "#selfRating", function () {
+    //     var score = $(this).val();
+
+    //     $.post("/JobSeeker/Profile/RateSelfAjax", { score: score }, function (res) {
+    //         if (res.success) {
+    //             $("#selfRatingMessage").text("✅ " + res.message + " (Score: " + res.score + ")");
+    //         } else {
+    //             $("#selfRatingMessage").text("❌ Error saving rating.");
+    //         }
+    //     });
+    // });
+
+        $(document).on("change", ".self-rating", function () {
+        var $sel = $(this);
+        var profileId = @Model.ProfileId;
+        var questionId = $sel.data("qid");
+        var score = $sel.val();
+        var maxscore = $(this).attr("max");
+        console.log(maxscore);
+        $.post("/JobSeeker/Profile/RateSelfAjax", { questionId: questionId, score: score, profileId:profileId }, function (res) {
+            if (res.success) {
+                $("#msg_" + questionId).text("✅ Saved (" + res.score + "/"+maxscore+")");
+                // optional: update admin avg shown:
+                if (res.averageOther !== null) {
+                    $sel.closest("tr").find("span.badge.bg-success").text(res.averageOther.toFixed(1));
+                }
+            } else {
+                $("#msg_" + questionId).text("❌ Error saving");
+            }
+        });
+    });
+
+
+</script>

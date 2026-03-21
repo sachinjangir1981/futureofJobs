@@ -1,0 +1,52 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<OneMinuteItem>
+@{
+    ViewBag.Title = "Time Pass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+       @*  <img src="~/images/employer.jpeg" /> *@
+    </div>
+}
+<div class="bglogin" style="min-height:90vh; margin-top:-90px">
+    @if (Model != null)
+    {
+        <div style="text-align:center;padding-top:65px">
+            <table style="margin:0 auto">
+                <tr>
+                    <td style="border-right:1px solid blue">
+                        <img src="~/images/timepass.png" id="imgLogo" style=" max-width:100px" />
+                    </td>
+                    <td style="text-align:left; padding-left:10px">
+                        <span class="tpheading1">Time Pass</span> <br />
+                        <span class="tpheading1">Learning Life Lessons</span><br />
+                        <a href="/visitor/Timepassdetails" class="homeImage" style="margin-top:10px"><img src="~/images/click_here_3.png" width="70px" /></a>
+                    </td>
+                </tr>
+            </table>
+            
+            
+            <div class="tpbg" style="height:2px; margin:5px 10px 0px 10px !important; "></div>
+            <div class="tpbg" style="height:3px; margin:3px 10px 0px 10px !important"></div>
+            <ul class="ulList">
+                <li class="tpbg">
+                    <span class="tpheading1" style="color:red">Life Lessons...</span>
+                </li>
+                @foreach (var itm in Model)
+                {
+                    <li class="tpbg">
+                        <a href="/visitor/timepass/@itm.PKID"> @Html.Raw(itm.NewsSubject) </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+
+    }
+
+</div>

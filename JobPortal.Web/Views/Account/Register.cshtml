@@ -1,0 +1,119 @@
+@model JobPortal.Web.ViewModels.RegisterModel;
+@{ Layout = "/Views/Shared/_Layout.cshtml"; }
+
+@section HeaderImage
+{
+<div class="headerImage2">
+
+</div>
+}
+<form id="frmLoginregister" method="post">
+    <div class="bgregister row" style="margin-top:-90px; padding:20px 10px 20px 10px; height:95vh;">
+
+        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:60px;padding-left:8%; padding-right:8%;">
+
+            @Html.ValidationSummary(true, "Please fix the following errors.", new { @class = "text-danger" })
+            
+            <div class="mb-3">
+                <label></label>
+                <input asp-for="Name" class="input-form-control txtwhobg" placeholder="Name" required />
+
+            </div>
+            <div class="mb-3">
+                <label></label>
+                <select name="Role" class="form-control txtwhobg">
+                    <option value="0"  >Select</option>
+                    @if (ViewBag.RoleId == 1)
+                    {
+                        <option value="1" selected>Student / Job Seeker</option>
+                    }
+                    else
+                    {
+                        <option value="1" >Student / Job Seeker</option>
+                    }
+                     @if (ViewBag.RoleId == 4)
+                    {
+                    <option value="4" selected>Intern</option>
+                    }
+                    else
+                    {
+                        <option value="4">Intern</option>
+                    }
+                     @if (ViewBag.RoleId == 5)
+                    {
+                    <option value="5" selected>Mid Career</option>
+                    }
+                    else
+                    {
+                        <option value="5">Mid Career</option>
+                    }
+                    @if (ViewBag.RoleId == 6)
+                    {
+                    <option value="6" selected>Silver Talent</option>
+                    }
+                    else
+                    {
+                        <option value="6">Silver Talent</option>
+                    }
+                     @if (ViewBag.RoleId == 2)
+                    {
+                    <option value="2" selected>Employer</option>
+                    }
+                    else
+                    {
+                        <option value="2">Employer</option>
+                    }
+                     @if (ViewBag.RoleId == 3)
+                    {
+                   <option value="3" selected>Academics</option>
+                    }
+                    else
+                    {
+                        <option value="3">Academics</option>
+                    }
+                            
+                       </select>
+   
+          </div>
+         
+           <div class="mb-3">
+            <label></label>
+             <input asp-for=Phone  class="input-form-control txtwhobg" placeholder="Mobile" required />
+    
+          </div>
+              <div class="mb-3">
+                  <label></label><input asp-for="Email" class="input-form-control txtwhobg" placeholder="Email"  required />
+                 
+                  </div>
+          <div class="mb-3">
+              <label></label>
+              <input asp-for="Password"   type="password" placeholder="Password" class="input-form-control txtwhobg" />
+       
+          </div>
+ 
+          <div class="buttondv ">
+               <button class="btn" style="display:none" type="submit">Register</button>
+                <button type="button" id="btnLogin" onclick="login()" class="btnregister btn">Log In</button>  <span class="btnregister btn">|</span>
+                <button type="button" id="btnRegister" onclick="register()" class="btnregister btn">Register</button>
+            </div>
+       </div>
+       
+
+    </div>
+ 
+</form>
+@section Scripts
+{
+    <script type="text/javascript">
+     function login()
+     {
+       $('#frmLoginregister').attr('action', 'login');
+        $('#frmLoginregister').submit();
+     }
+
+     function register(){
+         $('#frmLoginregister').attr('action', 'register');
+        $('#frmLoginregister').submit();
+    }  
+    </script>
+}

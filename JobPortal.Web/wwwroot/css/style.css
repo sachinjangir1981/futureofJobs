@@ -1,0 +1,2825 @@
+﻿/* Head Line : 24px
+   Head Link Spacing : 30px;
+  Sub Headline :18 px
+*/
+
+.navbar-toggler {
+    border: none !important;
+    margin-left: auto;
+}
+
+.navbar-toggler-icon {
+    border: none !important;
+    margin-left: auto;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none !important;
+}
+
+.ulCat {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.text-overlay {
+    /* The semi-opaque background */
+    background-color: rgba(246,246,246,  0.8); /* 0,0,0 is black, 0.6 is 60% opacity */
+    color: #ffffff; /* White text for high contrast */
+    /* Spacing and styling */
+    padding: 20px 30px;
+    border-radius: 8px; /* Optional: rounds the corners */
+    max-width: 80%;
+}
+
+.ulBreadcrumb {
+    
+    list-style-type: none;
+    /*margin: 10px 10px 40px 10px;*/
+    overflow: hidden;
+    border-radius: 5px;
+    display:flex;
+    padding-top:20px;
+    padding-left:0px;
+    flex-wrap:wrap;
+}
+
+.subhead
+{
+    padding:20px 0px 20px 0px;
+    font-size:24px;
+    line-height:30px;
+}
+
+.f22 {
+    font-size: 22px;
+}
+
+.f21 {
+    font-size: 21px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+.f18 {
+    font-size: 18px;
+}
+.ulBreadcrumb li {
+    text-decoration: none;
+    color: #000;
+}
+
+        .ulBreadcrumb li a {
+            text-decoration: none;
+            color: #000;
+            padding-left: 5px;
+        }
+
+        .ulBreadcrumb li a span{
+            padding-left:2px;
+        }
+
+    .container-fluid {
+        --bs-gutter-x: 0px !important;
+    }
+
+.container {
+    --bs-gutter-x: 0px !important;
+}
+
+.bg-light {
+    background-color: transparent !important;
+}
+
+
+.headerlogoHome {
+    font-size: 11px;
+}
+
+    .headerlogoHome img {
+        width: 110px;
+    }
+
+.headerlogo {
+    font-size: 12px;
+}
+
+    .headerlogo img {
+        padding-top: 20px;
+        width: 82px;
+    }
+
+.headerImage2 img {
+   /* padding-top: 13px;*/
+    width: 42px;
+}
+
+.headerImage3 {
+    width: 55px;
+}
+
+.onlyMobile {
+    display: block;
+    padding-top: 3px;
+    padding-bottom: 2px;
+}
+
+.homeImage {
+    /*padding: 0px 10px 10px 10px;*/
+    display: block;
+}
+
+.homebg {
+    /*background-image: url('/images/gjhomebanner_new.png');
+        background-image: url('/images/greenjob_newhome.jpeg');*/
+    /* background-image: url('/images/greenjob_newhome.jpg');*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 500px;
+    margin-top: -15px;
+}
+
+.homeheading {
+    font-family: "Baloo 2", "Fredoka One", system-ui, Arial, sans-serif;
+    padding-top: 80px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 28px;
+}
+
+.last-line {
+    padding-right: 40px; /* Adjust as needed */
+    /* display: inline-block;  Allows padding to be applied correctly */
+}
+
+.homesubheading {
+    font-family: "Mukta Mahee", sans-serif;
+    /* "Baloo 2", "Fredoka One", system-ui, Arial, sans-serif; #F2DC8B*/
+    padding-top: 15px;
+    color: #000;
+    font-weight: 600;
+    font-size: 22px;
+    text-align: left;
+    padding-left: 20px;
+    /*text-shadow: 2px 2px 2px #FFF;*/
+    /*  text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;*/
+}
+
+.homesubheading2 {
+    /*font-family: "Inter","Baloo 2", "Fredoka One", system-ui, Arial, sans-serif;*/
+    font-family: "Mukta Mahee", sans-serif;
+    color: #fff;
+    font-weight: 500;
+    font-size: 21px;
+    padding-bottom: 4px;
+    margin-top: -14px;
+    /*text-shadow: 2px 2px 2px #FFF;*/
+    /*text-shadow: 2px 0 #000, -2px 0 #000, 0 2px #000, 0 -2px #000, 1px 1px #000, -1px -1px #000, 1px -1px #000, -1px 1px #000;*/
+}
+
+.hometext {
+    color: #000 !important;
+    text-align: left !important;
+    padding: 0px 15px 6px 15px;
+    line-height: 20px;
+    text-decoration: none !important;
+    /* display: flex;
+        flex-direction: column;*/
+}
+
+    .hometext a {
+        color: #000 !important;
+    }
+
+.bgHomeUperText {
+    margin-top: -100px;
+    height: 130px; /* Set a height for the element */
+    background-image: linear-gradient(to top, #92ABC3, #fff);
+    /* Starts red at the bottom, transitions to blue at the top */
+}
+
+.bgHomeLowerText {
+    min-height: 130px; /* Set a height for the element */
+    background-image: linear-gradient(to bottom, #C37137, #fff);
+}
+
+.bgHomeUpper {
+    background-image: url('/images/greenjob_newhomeUpper.jpg');
+}
+
+.bgHomeLower {
+    background-image: url('/images/greenjob_newhomeLower.jpg');
+}
+
+.bgbrown {
+    background-image: url('/images/bgbrown1.png');
+}
+
+.bggreen {
+    background-image: url('/images/bggreen.png');
+}
+
+.bgblack {
+    background-color: #000;
+}
+
+.bgwhite {
+    background-color: #ccc;
+}
+
+.bgskyblue {
+    background-color: #BFDADA;
+}
+
+.bgOrange {
+    background-color: #F8AA60;
+    background-image: linear-gradient(to right, #F8AA60, #F9CC93);
+}
+
+.bggreen1 {
+    background-color: #62967F; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #62967F, #9AB997);
+}
+
+.bggreenDesigned {
+    background-color: #62967F; /* For browsers that do not support gradients */
+    background-image: url('/images/emp_header_new.jpeg');
+}
+
+.bggreenDesigned2 {
+    background-color: #62967F; /* For browsers that do not support gradients */
+    background-image: url('/images/employer_footer.jpeg');
+}
+
+
+.bggreenskill {
+    background-color: #62967F; /* For browsers that do not support gradients */
+    background-image: url('/images/skill-below.jpeg');
+}
+
+.bgStudentAbove {
+    font-family: Georgia, "Times New Roman", serif;
+    height: 200px;
+    background-color: #F8AA60; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #F8AA60, #F9CC93);
+    height: 120px;
+    color: #000;
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+}
+
+.bgStudentBelow {
+    background-color: #62967F; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to right, #62967F, #9AB997);
+    height: 160px;
+    padding: 10px 10px 10px 20px;
+    font-size: 19px;
+    color: #000;
+    margin-top: 2px;
+}
+
+.bgEmpAbove {
+    font-family: Georgia, "Times New Roman", serif;
+    height: 200px;
+    background-image: url('/images/employer-top-new.jpeg');
+    height: 120px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 23px;
+    color: #000;
+}
+
+.bgEmpBelow {
+    background-image: url('/images/employer-bottom-new.jpeg');
+    height: 170px;
+    padding: 10px 10px 10px 20px;
+    line-height: normal;
+    /*  color: #197d53;*/
+    color: #000;
+    margin-top: 2px;
+}
+
+.bgConsultAbove {
+    font-family: Georgia, "Times New Roman", serif;
+    height: 200px;
+    background-color: #fff; /* For browsers that do not support gradients */
+    background-image: url('/images/academics_top_bg.jpeg');
+    background-position: center center; /* 3. Center the image horizontally and vertically */
+    background-size: cover;
+    height: 120px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #000;
+}
+
+.bgConsultBelow {
+    height: 200px;
+    background-image: url('/images/academics-bottom.jpeg');
+    background-position: center center; /* 3. Center the image horizontally and vertically */
+    background-size: cover;
+    background-color: #fff; /* For browsers that do not support gradients */
+    height: 165px;
+    padding: 10px 10px 10px 20px;
+    font-size: 20px;
+    color: #000;
+    margin-top: 2px;
+}
+
+
+.bgConsultup {
+    background-image: url('/images/academics-top.jpeg');
+}
+
+.bgConsultdwn {
+    background-image: url('/images/academics-bottom.jpeg');
+}
+
+.bgSkillAbove {
+    background-image: url('/images/skill-above.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    height: 200px;
+    background-color: #BFDADA; /* For browsers that do not support gradients */
+    font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;
+    height: 120px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #000;
+}
+
+.bgSkillbelow {
+    background-image: url('/images/skill-below.jpeg');
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color:#fff;
+}
+
+.bgJobProfileAbove {
+    background-image: url('/images/jobprofileabove.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #000;
+}
+
+.bgJobProfilebelow {
+    background-image: url('/images/jobprofilebelow.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color:#fff;
+}
+
+.bgjobprofileup {
+    background-image: url('/images/jobprofileabove.jpeg');
+}
+
+.bgjobprofiledwn {
+    background-image: url('/images/jobprofilebelow.jpeg');
+}
+
+.bgJobSearchAbove {
+    background-image: url('/images/jobsearchabove.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #fff;
+}
+
+.bgJobSearchbelow {
+    background-image: url('/images/jobsearchbelow.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color: #fff;
+}
+
+.bgjobsearchup {
+    background-image: url('/images/jobsearchabove.jpeg');
+}
+
+.bgjobsearchdwn {
+    background-image: url('/images/jobsearchbelow.jpeg');
+}
+
+/*.bgJbSearch1UperText {
+      
+        
+        background-image: url('/images/js1top.jpeg');
+        background-size: cover;
+        background-position: center;*/
+/* Fade from bottom (opaque) to top (transparent) */
+/*mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+    }*/
+
+.bgJbSearch1UperText {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: -140px;
+    margin-bottom: 2px;
+}
+
+    .bgJbSearch1UperText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/js1top.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgJbSearch1LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgJbSearch1LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/js1bottom.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgJbSearch2UperText {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: #000; /* your text color */
+    min-height: 100px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+}
+
+    .bgJbSearch2UperText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/js2top.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgJbSearch2LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgJbSearch2LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/js2bottom.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgJbSearch3UperText {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: #000; /* your text color */
+    min-height: 100px;
+    margin-bottom: 2px;
+    vertical-align: middle;
+}
+
+    .bgJbSearch3UperText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/js3top.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgJbSearch3LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgJbSearch3LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/js3bottom.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.paraCommon {
+    padding: 5px 5px 5px 5px;
+    margin-bottom: 0px !important;
+}
+
+.paraHeader {
+    font-size: 24px;
+    line-height: 28px
+}
+
+.table a {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+
+.bgCVAbove {
+    background-image: url('/images/cv_top.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #fff;
+}
+
+.bgCVbelow {
+    background-image: url('/images/cv_bottom.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color: #fff;
+}
+
+.bgCVup {
+    background-image: url('/images/cv_top.jpeg');
+}
+
+.bgCVdwn {
+    background-image: url('/images/cv_bottom.jpeg');
+}
+
+
+
+.bgCVLangingUper {
+    /*position: relative;*/
+    color: #000; /* your text color */
+     background-image: linear-gradient(to top, #429B92, #fff); 
+    margin-top: -70px;
+    padding-left: 15px;
+    padding-right: 10px;
+    height:100px;
+    
+
+}
+
+    .bgCVLangingUper::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, #429B92, #fff);
+        -webkit-mask-image: linear-gradient(to top, #429B92, #fff);
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgCVLangingLower {
+    position: relative;
+    color: #000; /* your text color */
+    background-image: linear-gradient(to bottom, #429B92, #fff);
+    margin-top: 2px;
+    padding-left: 15px;
+    padding-right: 10px;
+}
+
+.bgInternAbove {
+    background-image: url('/images/intern-top.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #000;
+}
+
+.bgInternbelow {
+    /*background-image: url('/images/intern-bottom.jpeg');*/
+    background-image: url('/images/internship-bg.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color: #fff;
+}
+
+.bgInternup {
+    background-image: url('/images/intern-top.jpeg');
+}
+
+.bgInterndwn {
+    background-image: url('/images/internship-bg.jpeg');
+}
+
+.bgCareerAbove {
+    background-image: url('/images/mid-career-top.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #000;
+}
+
+.bgCareerbelow {
+    background-image: url('/images/mid-career-bottom.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+   /* font-weight: 600;*/
+    margin-top: 2px;
+    color: #000;
+}
+
+.bgCareerup {
+    background-image: url('/images/mid-career-top.jpeg');
+}
+
+.bgCareerdwn {
+    background-image: url('/images/mid-career-bottom.jpeg');
+}
+
+.bgSilverAbove {
+    background-image: url('/images/SilverTalent_Top.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #fff;
+}
+
+.bgSilverbelow {
+    background-image: url('/images/SilverTalent_bottom.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 15px 10px 10px 20px;
+    /*font-weight: 600;*/
+    margin-top: -10px;
+    color: #fff;
+}
+
+.bgSilverup {
+    background-image: url('/images/SilverTalent_Top.jpeg');
+}
+
+.bgSilverdwn {
+    background-image: url('/images/SilverTalent_bottom.jpeg');
+}
+
+.bgSilver1LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver1LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b1.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver2LowerText {
+    position: relative;
+    color: #000; /* your text color */
+    padding-top: 15px;
+    margin-top: 2px;
+}
+
+    .bgSilver2LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b2.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver3LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver3LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b3.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver4LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver4LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b4.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver5LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver5LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b5.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver6LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver6LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b6.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver7LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver7LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b7.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgSilver8LowerText {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgSilver8LowerText::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/talent-b8.png') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgTalentHiringAbove {
+    background-image: url('/images/talenthiring-top.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #fff;
+}
+
+.bgTalentHiringbelow {
+    background-image: url('/images/talenthiring-bottom.jpeg');
+    background-size: cover;
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color: #fff;
+}
+
+.bgTalentHiringup {
+    background-image: url('/images/talenthiring-top.jpeg');
+}
+
+.bgTalentHiringdwn {
+    background-image: url('/images/talenthiring-bottom.jpeg');
+}
+
+
+.bgHRAbove {
+    background-image: url('/images/HR_Policy_Top.jpeg');
+    font-family: Georgia, "Times New Roman", serif;
+    /* font-family: "Nunito Sans", "Helvetica Neue", Arial, sans-serif;*/
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 22px;
+    color: #000;
+}
+
+.bgHRbelow {
+    background-image: url('/images/HR_Policy_Bottom.jpeg');
+    /* background-size: cover;*/
+    font-size: 18px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 600;
+    margin-top: 2px;
+    color: #fff;
+}
+
+.bgHRup {
+    background-image: url('/images/HR_Policy_Top.jpeg');
+}
+
+.bgHRdwn {
+    background-image: url('/images/HR_Policy_Bottom.jpeg');
+}
+
+.bgHrPolicyLanding {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgHrPolicyLanding::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/HR_Policy_Landing_Shade.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.tbl {
+}
+
+    .tbl tr {
+        padding: 5px 0px 5px 0px;
+    }
+
+        .tbl tr td {
+            text-align: left;
+            padding: 15px 5px 15px 5px;
+            border-bottom: 1px solid #000;
+        }
+
+            .tbl tr td a {
+                text-decoration: none;
+               padding: 15px 0px 15px 0px;
+               font-size:18px;
+            }
+
+
+
+.bgEmployabilityAbove {
+    font-family: Georgia, "Times New Roman", serif;
+    min-height: 170px;
+    background-color: #000;
+    height: 120px;
+    padding: 10px 10px 10px 20px;
+    font-weight: 800;
+    font-size: 23px;
+    color: #F6F6CC;
+}
+
+    .bgEmployabilityAbove span {
+        color: #fff;
+    }
+
+.bgEmployabilityBelow {
+    background-color: #000;
+    min-height: 160px;
+    padding: 10px 10px 10px 20px;
+    font-size: 17px;
+    /*  color: #197d53;*/
+    color: #F6F6CC;
+    margin-top: 2px;
+}
+
+    .bgEmployabilityBelow span {
+        color: #fff;
+    }
+
+.bgEmployibilityIndex {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibilityIndex::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/employabilityindex.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgEmployibilityIndex {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibilityIndex::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/employabilityindex.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility1 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibility1::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/ei1.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility2 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibility2::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/ei2.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility3 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibility3::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/ei3.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility4 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibility4::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/ei4.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility5 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibility5::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/ei5.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility6 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .bgEmployibility6::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/ei6.jpeg') center/cover no-repeat;
+        /* Fade bottom → top 
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+            -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.image-container {
+    display: flex; /* Makes the child elements line up horizontally */
+    justify-content: space-around; /* Distributes space evenly between images */
+    flex-wrap: wrap; /* Allows items to wrap to a new line if the screen is too small */
+    gap: 0px; /* Adds space between images */
+}
+
+.image-row {
+    display: flex;
+    width: 100%;
+}
+
+    .image-row a {
+        /*max-width: 33.3333%;  Always 3 in a row */
+        display: block;
+    }
+
+    .image-row img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+.image-row-gjr {
+    display: flex;
+    width: 100%;
+    background-image: url("/images/greenjobready.png");
+    background-size: cover;
+    padding: 5% 5% 5% 5%;
+    gap: 5px;
+}
+
+.block1 {
+    padding: 20px;
+    color: #fff;
+    background-image: url("/images/greenjobready-bl1.png");
+    display: block;
+    min-width: 30%;
+    text-decoration: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.block2 {
+    padding: 20px;
+    color: #fff;
+    background-image: url("/images/greenjobready-bl2.png");
+    display: block;
+    min-width: 30%;
+    text-decoration: none;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+
+.block3 {
+    padding: 20px;
+    color: #fff;
+    background-image: url("/images/greenjobready-bl3.png");
+    display: block;
+    min-width: 30%;
+    min-height: 240px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-decoration: none;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.blockspn {
+    position: relative;
+    display:block;
+    bottom:5px;
+    padding-top:40px;
+}
+
+.blockspn {
+    position: relative;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+    .blockspn::after {
+        content: "→";
+        margin-left: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .blockspn:hover::after {
+        transform: translateX(5px);
+    }
+
+
+.bgEmployebilityup {
+    background-image: url('/images/jobs-top.jpeg');
+}
+
+.bgEmployebilitydwn {
+    background-image: url('/images/jobs-top.jpeg');
+}
+
+.bgJobsTop {
+    background-image: url('/images/jobs-top.jpeg');
+    background-position:center center;
+    background-size: cover;
+    min-height:30px;
+    padding:2% 5% 2% 5%;
+    
+}
+
+.bgJobsCenter {
+    background-image: url('/images/jobs-central.jpeg');
+    background-position: center center;
+    background-size: cover;
+    text-align: center;
+    padding: 4% 5% 4% 5%;
+}
+.candidateprofile {
+    background-image: url('/images/candidareprofile.jpeg');
+    background-position: center center;
+    background-size: cover;
+    padding-top:1rem;
+     
+}
+
+.employerregprofile {
+    background-image: url('/images/employer-bg.jpeg');
+    background-position: center center;
+    background-size: cover;
+    padding-top: 1rem;
+}
+
+.academicregprofile {
+    background-image: url('/images/academic-bg.jpeg');
+    background-position: center center;
+    background-size: cover;
+    padding-top: 1rem;
+}
+
+
+/*.fowbottom {
+    background-image: url('/images/fuw-bottom.jpeg');
+    background-position: center center;
+    background-size: cover;
+}*/
+
+/*.fowinner {
+    background-image: url('/images/fow-innerpage.jpeg');
+    background-position: center center;
+    background-size: cover;
+}*/
+
+.fowbottom {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .fowbottom::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/fuw-bottom.jpeg');
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.fowtop {
+    position: relative;
+    color: #000; /* your text color */
+     
+    min-height:40px;
+    margin-top:-60px;
+    z-index:-1;
+}
+
+    .fowtop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/fuw-bottom.jpeg');
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.fowinner {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+   
+}
+
+    .fowinner::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/fow-innerpage1.jpeg');
+        background-repeat: repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.fowinnertop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index:-1;
+}
+
+    .fowinnertop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/fow-innerpage1.jpeg');
+        background-repeat: repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+
+
+.genzpt1 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    padding-bottom: 30px
+}
+    .genzpt1 ::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/genzbg1.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.genzpt2 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+    .genzpt2 ::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/genzbg2.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.genzpt3 {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    padding-bottom: 30px;
+    padding-top: 10px;
+}
+    .genzpt3::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/genzbg3.jpeg');
+        background-size:cover;
+        
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+
+
+.video-item {
+    display: flex;
+    margin-bottom: 15px;
+   /* background-color: #fff;*/
+    border-radius: 8px;
+    overflow: hidden; /* Ensures border-radius applies to content */
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1); /* Subtle shadow for each item */
+}
+
+.video-thumbnail-container {
+    position: relative;
+    flex-shrink: 0; /* Prevents thumbnail from shrinking */
+    width: 80px; /* Adjust as needed */
+   /* Standard 16:9 aspect ratio for 160px width */
+    border-radius: 8px; /* Match parent */
+    overflow: hidden; /* Ensures image respects border-radius */
+}
+
+.video-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.video-duration {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+}
+
+.video-content {
+    flex-grow: 1;
+    padding: 8px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Pushes dots to the top */
+}
+
+.video-title {
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: 3px;
+    color: #030303; /* YouTube's primary text color */
+    text-decoration: none !important;
+}
+
+    .video-title a {
+        font-size: 0.95rem;
+        font-weight: 500;
+        line-height: 1.3;
+        margin-bottom: 3px;
+        color: #030303; /* YouTube's primary text color */
+        text-decoration: none !important;
+    }
+
+.video-meta {
+    font-size: 0.8rem;
+    color: #606060; /* YouTube's secondary text color */
+    margin-bottom: 0;
+}
+
+    .video-meta span:not(:last-child):after {
+        content: " • ";
+    }
+
+.more-options {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 1.2rem;
+    color: #606060;
+    cursor: pointer;
+}
+
+.playlist-badge {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 3px 6px;
+    border-top-right-radius: 4px;
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+}
+
+    .playlist-badge .bi-collection-play-fill {
+        margin-right: 4px;
+    }
+
+.badge-new {
+    background-color: #eee;
+    color: #606060;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    margin-left: 5px;
+}
+/* Flex adjustments for alignment of title/dots */
+.video-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns dots with the top of the title */
+}
+
+    .video-header .video-title {
+        flex-grow: 1;
+        margin-right: 15px; /* Space for the dots */
+    }
+
+
+.bgGenzpolls {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgGenzpolls::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/genz-polls.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgGenzlibrary {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgGenzlibrary::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/genzlibrarybg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgemployerlanging {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgemployerlanging::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/emplpoyerLanding.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgemployervibecheck {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgemployervibecheck::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/employer_vibe_check.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgemployercompendium {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgemployercompendium::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/compendiumoffuturework.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgacademiclandingbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgacademiclandingbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/academics-bg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgacademiclandingbgNew {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgacademiclandingbgNew::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/academic-landing-bg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgacademicSacredbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgacademicSacredbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/academic-sacred-bg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgacademicReluctantbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgacademicReluctantbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/academic-reluctant-bg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgacademicCampusbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgacademicCampusbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/academic-reluctant-bg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.bggreeneducationtopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+.bggreeneducationtopbg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/green-education.png');
+    background-size: cover;
+    /* Fade bottom → top */
+    mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+    z-index: -1; /* keeps text above the fading image */
+}
+.bggreeneducationbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bggreeneducationbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/green-education.png') ;
+        width:100%;
+        mask-repeat:repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bglogin {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bglogin::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/login_bg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.4));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.4));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgregister {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgregister::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/login_bg.jpeg') center/cover no-repeat;
+        
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bglogintop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bglogintop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/login_bg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.txtwhobg {
+    display:block;
+    background-color: transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 3px solid #fff;
+    border-radius: 0px;
+}
+
+.txtwhobg::placeholder {
+    color:#000;
+
+}
+
+    .txtwhobg :focus {
+        background-color: transparent !important;
+        outline: none;
+        border-bottom: 1px solid #fff;
+        border-radius: 0px;
+    }
+    .txtwhobg :focus-visible {
+        background-color: transparent;
+        outline: none;
+        border-bottom: 1px solid #fff;
+        border-radius: 0px;
+    }
+
+    .txtwhobg :focus-within {
+        background-color: transparent;
+        outline: none;
+        border-bottom: 1px solid #fff;
+        border-radius: 0px;
+    }
+
+.bglibraryitem {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bglibraryitem::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/library-bg1.png') center/cover no-repeat;
+        background-repeat: repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.9), rgba(0,0,0,0.2));
+        mask-image: linear-gradient(to right, rgba(0,0,0,.9), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,.9), rgba(0,0,0,0.2));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+   
+
+
+.bglibraryitemtop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bglibraryitemtop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/library-bg1.png');
+        background-repeat: repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,.2));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,.2));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.genztopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .genztopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/genzbg2.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.genzlibrarytopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .genzlibrarytopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/genzlibrarybg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgemployerlandingtop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgemployerlandingtop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/emplpoyerLanding.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgemployervibechecktop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgemployervibechecktop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/employer_vibe_check.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgemployercompendiumtop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgemployercompendiumtop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/compendiumoffuturework.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgacademiclandingTop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgacademiclandingTop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/academics-bg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.bgacademicSacredTopBg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgacademicSacredTopBg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/academic-sacred-bg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.bgacademicReluctantTopBg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgacademicReluctantTopBg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/academic-reluctant-bg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgacademicCampusTopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgacademicCampusTopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/academic-reluctant-bg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.academicregprofiletopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .academicregprofiletopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/academicregistrationtop.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.employerregprofiletopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .employerregprofiletopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/employeeregistationtop.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.candidateprofiletopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .candidateprofiletopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/candidateregistrationtop.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibilityIndexTop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibilityIndexTop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/employbilityindextop.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibilityIndexTop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibilityIndexTop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/employbilityindextop.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility1Top {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibility1Top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/ei1.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+.bgEmployibility2Top {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibility2Top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/ei2.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.bgEmployibility3Top {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibility3Top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/ei3.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility4Top {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibility4Top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/ei4.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility5Top {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibility5Top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/ei5.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgEmployibility6Top {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgEmployibility6Top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/ei6.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bghrpolicytop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bghrpolicytop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/HR_Policy_Landing_Shade.jpeg');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.ulList {
+    list-style: none;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: left;
+    /*max-height:400px;*/
+    max-height:90vh;
+    overflow-y:auto;
+}
+
+    .ulList li {
+        padding: 10px 10px 10px 10px !important;
+       
+        
+        margin-top:5px;
+        margin-bottom:5px;
+
+    }
+
+        .ulList li a {
+            color:#000;
+            text-decoration:none;
+            font-weight:500;
+        }
+
+.tnbg {
+    background-image: url('/images/listitembg.jpeg');
+    background-size: cover;
+}
+
+.tpheading1
+{
+    color:#fff;
+    font-weight:900;
+    font-size:22px;
+}
+.tpheading2 {
+    color: #fff;
+    font-weight: 900;
+    font-size: 22px;
+}
+
+.tpbg {
+    background-image: url('/images/timepassbg.jpeg');
+    background-size: cover;
+}
+
+.dygmpbg {
+    background-image: url('/images/dygmpbg.jpeg');
+    background-size: cover;
+}
+.sphead {
+    font-size: 18px;
+    font-weight: 700;
+    color:red;
+}
+
+.timepassheading1 {
+    color: red;
+    font-weight: 900;
+    font-size: 35px;
+    line-height:38px;
+}
+.timepassheading2 {
+    color: #fff;
+    font-weight: 900;
+    font-size: 20px;
+    margin-top:-10px;
+}
+
+.oneminutebg {
+    background-image: url('/images/oneminutebg.jpeg');
+    background-size: cover;
+}
+
+.trendingnewsbutton {
+    background-image: url('/images/news-bg-btn.jpeg');
+    background-size: cover;
+}
+.trendingnewstbl
+{
+    background:none;
+}
+
+.tnheading  {
+    color: #000;
+    font-weight: 500;
+    font-size: 19px;
+}
+
+.input-form-control {
+    width: 100%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+
+
+.btnregister {
+    color: #fff !important;
+    align-items: center;
+    padding: 0px 10px 0px 10px;
+    font-size:20px;
+    cursor:crosshair;
+}
+
+.buttondv {
+    justify-content: center;
+    align-items: center;
+    padding-top:30px;
+    display: flex; 
+}
+
+.modern-table {
+    border-collapse: collapse;
+    
+    font-family: sans-serif;
+    
+    border: 1px solid #000;
+}
+
+    .modern-table th {
+        
+        border: 1px solid #000;
+        font-weight: bold;
+    }
+
+    .modern-table td {
+        border: 1px solid #000;
+        padding: 8px;
+        vertical-align: top;
+
+    }
+
+.tdovrflow {
+    background: #E2FEA0;
+    overflow-y: auto
+}
+.modern-table-header {
+    background: #E2FEA0;
+    height: 140px;
+    overflow-y: auto;
+    font-weight: 600;
+    font-size: 14px;
+}
+.modern-table-row-header {
+    background: #F0F8A4;
+    font-weight: 600;
+    
+}
+.modern-table-row-div {
+    background: #F0F8A4;
+    font-weight: 600;
+    height: 80px;
+    overflow-y: auto;
+    font-size: 14px;
+}
+.modern-table-bg-txtarea {
+    border: 0px;
+    background: none;
+    width: 100%;
+    height: 100%;
+    font-size: 11px
+}
+.modern-table-bg-txtarea::placeholder
+{
+    color:#000;
+}
+    .modern-table-bg-txtarea:focus {
+        border: 2px solid #fff;
+        outline: none;
+    }
+    .txtwhobg:focus {
+        border-bottom: 3px solid #fff;
+        outline: none;
+    }
+.tdContent {
+    background-color: #F2F2F2;
+}
+
+.notetxt {
+    font-size: 12px;
+}
+
+.headright{
+    font-size:1rem;
+    font-weight:600;
+}
+
+.paraHeaderNew {
+    font-size: 1.4rem;
+   
+}
+
+
+.opensureveyTitle{
+    font-size:24px !important;
+    font-weight:bold;
+}
+
+.opensureveyDetails {
+    font-size: 16px !important;
+}
+
+.opensureveyFooterNote {
+    font-size: 16px !important;
+    
+}
+
+.opensureveyQuestion {
+    font-size: 18px !important;
+}
+
+.opensureveyQuestionExplanation {
+    font-size: 16px !important;
+}
+
+.opensureveyAnswer {
+    font-size: 16px !important;
+}
+
+.opensureveyAnswerExplanation {
+    font-size: 14px !important;
+}
+.opensurveybackbtn {
+    width: 50%;
+    border: 1px solid green;
+    background: green;
+    color: rgb(255, 255, 255);
+    margin:0 auto;
+}
+
+
+.bgsunset {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgsunset::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/login_bg.jpeg');
+        background-size: cover;
+        /* Fade bottom → top */
+       /* mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0));*/
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+
+.gstcbgstrip {
+    background-image: url('/images/studentcampus_strip.jpeg');
+    background-size: cover;
+}
+
+.gstcbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .gstcbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/gstcbg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.4));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.4));
+        z-index: -1; /* keeps text above the fading image */
+        transform: scaleX(-1); /* Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+    }
+.internlandinglist {
+    font-size: 19px;
+    padding-top:8px;
+}
+
+.internbg {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .internbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/commonstudybg.jpeg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.1));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.1));
+        z-index: -1; /* keeps text above the fading image */
+        transform: scaleX(-1); /* Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+    }
+
+
+.bgMidCareerStep1Up2{
+    position: relative;
+     
+    color: #000; /* your text color */
+    min-height: 100px;
+    
+ 
+}
+
+    .bgMidCareerStep1Up2::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/midcareerbg.png');
+        background-size: cover;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgMidCareerStep1lower {
+    position: relative;
+    color: #000; /* your text color */
+    padding-left:15px;
+    padding-right:10px;
+    margin-top: 0px;
+}
+
+    .bgMidCareerStep1lower::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/midcareerbg.png') center repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.homeheadingnew {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.homecommon {
+    font-size: 21px;
+    font-weight: 600;
+}
+.homeGenzcommon {
+    font-size: 21px;
+    font-weight: normal;
+}
+
+
+
+.bgtphAbove {
+    font-family: Georgia, "Times New Roman", serif;
+    min-height: 120px;
+    background-color: #000;
+    background-image: url("/images/tpabove.png");
+    background-size: cover;
+    height: 120px;
+    padding: 10px 10px 10px 20px;
+ 
+    
+    color: #FFF;
+}
+
+.bgtphBelow span {
+    color: #fff;
+}
+
+.bgtphBelow {
+    background-image: url("/images/tpbelow.png");
+    background-size: cover;
+    background-color: #000;
+    min-height: 160px;
+    padding: 10px 10px 10px 20px;
+    font-size: 17px;
+    /*  color: #197d53;*/
+    color: #fff;;
+    font-weight:600;
+    margin-top: 2px;
+}
+
+.bgsilverbgtop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgsilverbgtop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/silver-bg.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+.bgsilverbgbelow {
+    position: relative;
+    color: #000; /* your text color */
+
+    margin-top: 2px;
+}
+
+    .bgsilverbgbelow::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/silver-bg.png');
+        background-repeat:repeat-y; 
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgtalenthiringbgtop {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 50px;
+    margin-top: -70px;
+    z-index: -1;
+}
+
+    .bgtalenthiringbgtop::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: url('/images/silver-bg.png');
+        background-size: cover;
+        background-repeat: repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.bgtalenthiringbelow {
+    position: relative;
+    color: #000; /* your text color */
+    padding-top: 40px;
+    margin-top: 2px;
+}
+
+    .bgtalenthiringbelow::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/silver-bg.png');
+        background-repeat: repeat-y;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0));
+        z-index: -1; /* keeps text above the fading image */
+    }

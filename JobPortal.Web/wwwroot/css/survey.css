@@ -1,0 +1,133 @@
+﻿body {
+    
+    font-size: 14px;
+    background: #D9F3CD;
+   /* padding-top: 10px !important;*/
+}
+.container {
+    width: 850px;
+    /*padding: 0px 0px 0px 0px !important;*/
+}
+
+.container {
+    max-width: 720px !important;
+    padding-top: 5px;
+    background: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.row > * {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.row {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+
+
+.ulTP {
+    margin-top: 10px;
+    list-style: none;
+    max-height: 500px;
+    overflow-y: scroll;
+    padding-left: 0px;
+    text-align: left;
+}
+
+    .ulTP li {
+        padding: 10px 0px 10px 10px;
+        border-bottom: 1px solid #000;
+    }
+
+        .ulTP li a {
+            color: #000;
+            text-decoration: none;
+            text-align: left
+        }
+
+.tbl {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    background-color: #fff;
+}
+
+    .tbl tr td {
+        border: 1px solid #000;
+        border-collapse: collapse;
+       
+    }
+
+.tblwithoutoutbdr {
+    border: none !important;
+}
+
+    .tblwithoutoutbdr tr td {
+        border: 1px solid #000;
+        border-collapse: collapse;
+    }
+
+.rightalign {
+    text-align: right;
+    margin-right: 10px;
+}
+
+.sheetheading {
+    font-size: 28px;
+    text-align: center;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.heading {
+    font-size: 24px;
+    text-align: left;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.subheading {
+    font-size: 18px;
+    text-align: left;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.note {
+    font-size: 14px;
+    text-align: left;
+    font-weight: 600;
+    padding: 4px;
+}
+.answer {
+    font-size: 14px;
+    text-align: left;
+    font-weight: 600;
+    padding: 4px;
+}
+
+.answerdesc {
+    font-size: 12px;
+    text-align: left;
+    
+    padding: 2px;
+}
+
+.tablehead {
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.tablebody {
+    font-size: 14px;
+    padding: 2px;
+}
+
+.txtbx {
+    width: 80px;
+    border: none;
+    background-color: #D9F3CD;
+}

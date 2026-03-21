@@ -1,0 +1,86 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+    int i = 0;
+}
+<link href="~/css/timepass.css" rel="stylesheet" />
+<style>
+    .ulCat
+    {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+    border-radius: 5px;
+    }
+</style>
+<div class="bglibraryitemtop">
+</div>
+@if (Model != null)
+{
+    <div class="rounded-3 bglibraryitem" style="min-height:90vh;">
+        <div class="timepass-details">
+            <table width="100%">
+                <tr>
+                    <td style="text-align:center; width:100%; " class="head head-particular margin18">
+                        Library
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <ul class="ulCat">
+                            @if (ViewBag.Parentcats != null)
+                            {
+                                i++;
+                                foreach (LibraryCategoryModel itm in ViewBag.Parentcats)
+                                {
+                                    if (i > 1)
+                                    {
+                                    padding = padding+10;
+                                    paddingstr = padding + "px;";
+                                    serialNo = serialNo + itm.DisplayOrder + ".";
+                                    }
+                                    <li style="padding-left:@paddingstr"><a href="/visitor/librarylist/@itm.PKID"> @serialNo @itm.Title</a><span class="fa fa-angle-right"></span> </li>
+                                
+                                }
+                            }
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            <div>
+
+                <ul class="ulTP">
+                    @foreach (var itm in Model)
+                    {
+
+                        <li>
+                            @if (itm.IsCategory == 1)
+                            {
+
+                                <a href="/visitor/librarylist/@itm.PKID">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <span class="fa fa-angle-right"></span> <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+
+                               
+                            } 
+                            else
+                            {
+                                <a href="/visitor/library/@itm.PKID">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                            }
+                            
+
+                            </li>    
+                    }
+                </ul>
+            </div>
+        </div>
+
+    </div>
+}

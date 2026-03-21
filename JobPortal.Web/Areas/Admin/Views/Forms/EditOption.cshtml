@@ -1,0 +1,54 @@
+﻿@model JobPortal.Domain.Models.FormOption
+@{
+    ViewData["Title"] = (Model?.Id > 0 ? "Edit Option" : "Create Option");
+    Layout = ViewBag.Layout == 1 ? "_LayoutAdmin" : "_LayoutNone";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+<h3>@ViewData["Title"]</h3>
+<form method="post" asp-action="EditOption" asp-asp-controller="Forms" class="card p-3">
+    <input type="hidden" asp-for="QuestionId" />
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+        <label class="form-label">Option Text</label>
+        <textarea asp-for="OptionText" class="form-control summernote" rows="4"></textarea>
+        <span asp-validation-for="OptionText" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Explanation</label>
+        <textarea asp-for="Explanation" class="form-control summernote" rows="4"></textarea>
+        <span asp-validation-for="Explanation" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Display Order</label>
+        <input asp-for="DisplayOrder" type="number" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Marks</label>
+        <input asp-for="Marks" type="number" step="1" min="1" max="100" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Weightage</label>
+        <input asp-for="Weightage" type="number" step=".1" min=".1" max="5" class="form-control" />
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label asp-for="IsActive" class="form-check-label">Active</label>
+    </div>
+    <input type="hidden" id="layout" name="layout" value="@ViewBag.Layout" />
+    @if (ViewBag.Layout == 1)
+    {
+        <button class="btn btn-success">Save</button>
+        <a asp-action="Options" asp-route-questionId="@Model.QuestionId" class="btn btn-outline-secondary">Back</a>
+    }
+    else
+    {
+        <button type="button" onclick="Save()" class="btn btn-success">Save</button>
+    }
+</form>
+@section Scripts
+{
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="/js/summernote-bs4.min.js"></script>
+    <script src="/js/summernote-local.js"></script>
+}

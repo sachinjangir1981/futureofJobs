@@ -1,0 +1,103 @@
+﻿@using JobPortal.Web.Models;
+@model List<CuratedJob>
+    @{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/job-search.png" />
+    </div>
+}
+<div class="">
+     <div class="bgJbSearch1UperText ">
+       <div class="hometext">  
+     <ul class="ulBreadcrumb" style="margin-top:120px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+         <li><a href="/home/greenjob_Search">Green Job Search</a></li>
+    </ul>
+
+   
+        <p class="paraCommon paraHeader" style="padding-bottom:15px" >
+        <b>Curated Job Listings</b> <br />
+         
+    </p>
+    </div>
+    </div>
+    <div class="bgJbSearch1LowerText hometext">
+        <p class="paraCommon" style="text-align:center">
+            <img src="/images/job-search1.jpg" width="50%" />
+        </p>
+    
+        <p class="paraCommon"> <i>Because real green jobs shouldn’t feel like a scavenger hunt.</i></p>
+        <p class="paraCommon">The Curated Green Jobs Network is a free, advisory-led service that scouts green career opportunities from across the web and brings them into one clean, trusted space.</p>
+        <p class="paraCommon">While <a href="www.greenjobs.digital">www.greenjobs.digital</a> focuses deeply on education pathways, internships, fellowships, and select verified roles, this Network widens the lens. </p>
+        <p class="paraCommon">It continuously curates relevant job openings from sustainability-focused companies, social enterprises, research institutions, NGOs, and mission-driven organisations - so you don’t have to jump across portals, filters, and dead links.</p>
+        <p class="paraCommon">This is not an algorithm dumping random listings.</p>
+
+        <p class="paraCommon">It’s a <b>human-curated, context-aware network</b> built for people who genuinely want to work in the green economy.</p>
+        <p class="paraCommon">For job seekers, it means faster discovery, less noise, and more signal.</p>
+        <p class="paraCommon">For employers, it means visibility among a motivated, values-aligned talent pool that is already thinking “green” — not just clicking “apply”.</p>
+        <p class="paraCommon">No fees. No gatekeeping.</p>
+        <p class="paraCommon">Just relevant green opportunities, collected responsibly, and shared openly. </p>
+   
+     
+     <div class="">
+         <p class="paraCommon">These roles are sourced from external platforms for awareness and exploration. 
+             <br /><br />Applications are handled on the original source website.</p>
+                <p class="paraCommon">
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th style="text-align:center">Post / Source Date</th>
+                                <th style="text-align:center">Job Title</th>
+                                <th style="text-align:center">Organisation Name</th>
+                                <th style="text-align:center">Broad Domain Tag</th>
+                                <th style="text-align:center">Source Link</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                @if(Model != null && Model.Count > 0)
+                                {
+                                    foreach(var job in Model)
+                                    {
+                                        <tr>
+                                            <td>@job.PostedDate.ToString("dd/MM/yyyy")</td>
+                                            <td>@job.JobTitle</td>
+                                            <td>@job.CompanyName </td>
+                                            <td>@job.DomainTag</td>
+                                            <td><a href="@job.SourceLink" target="_blank">View Job</a></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                { 
+                                <tr>
+                                    <td colspan="5" style="text-align:center"> No curated job found. </td>
+                                     
+                                </tr>
+                                }
+                                </tbody>
+                    </table>
+                </p>
+                
+                <p class="paraCommon"></p>
+    </div>
+
+     </div>
+
+ 
+     
+
+
+
+     
+
+    @* <p class="paraCommon">
+        <i>Discover job profiles and pathways…</i>
+        <a href="#" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a>
+    </p> *@
+    <p class="paraCommon"></p>
+
+</div>

@@ -1,0 +1,78 @@
+﻿@using JobPortal.Web.Models;
+@model TimePassCategories
+@{
+    Layout = "_LayoutAdmin";
+
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+@using (Html.BeginForm("ManageCategory", "TPCategory", FormMethod.Post, new { id = "frmFormpaper", @enctype = "multipart/form-data" }))
+{
+
+
+
+    <div class="form-horizontal" style="padding:15px">
+        <h4> Add/Edit Library Category</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (!string.IsNullOrEmpty(ViewBag.msg))
+        {
+            <div class="alert-success">
+                @ViewBag.msg
+            </div>
+        }
+        <div class="row">
+            <div class="col-12">
+                @Html.HiddenFor(model => model.PKID)
+                Title
+                @Html.EditorFor(model => model.TPCategory, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TPCategory, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-12">
+
+                Parent Category
+                @Html.DropDownListFor(model => model.ParentId, new SelectList(ViewBag.ParentCategories, "PKID", "Path"), new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-12">
+
+                Display Order
+                @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control", Type = "number" } })
+                @Html.ValidationMessageFor(model => model.ParentId, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-6">
+                @Html.CheckBoxFor(model => model.IsActive)
+                Is Active
+
+            </div>
+
+            <div class="col-6">
+                @Html.CheckBoxFor(model => model.IsFiveLine)
+                Is Five Line
+
+            </div>
+
+            
+             
+        </div>
+
+
+
+
+
+
+        <div class="row" style="padding-top:30px">
+            <div class="col-md-12">
+
+                <input id="btnSubmitContent" type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+

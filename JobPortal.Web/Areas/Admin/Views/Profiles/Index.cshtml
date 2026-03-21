@@ -1,0 +1,236 @@
+﻿@model Dictionary<int, List<FormAnswer>>
+@{
+
+
+
+    var users = ViewBag.Users as Dictionary<Guid, string> ;
+    var status = ViewBag.Status as string;
+    var myRatings = ViewBag.MyRatings as Dictionary<string, int?>;
+    var avgRatings = ViewBag.AvgRatings as Dictionary<string, double>;
+
+    var Profiles = ViewBag.Profiles as Dictionary<int, string>;
+}
+
+@{
+    ViewData["Title"] = "Profiles";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">User Profiles</h2>
+
+    <div class="mb-3">
+        <a asp-action="index" asp-route-status="all" class="btn btn-sm @(status=="all"?"btn-primary":"btn-outline-primary")">All</a>
+        <a asp-action="index" asp-route-status="draft" class="btn btn-sm @(status=="draft"?"btn-warning":"btn-outline-warning")">Draft</a>
+        <a asp-action="index" asp-route-status="final" class="btn btn-sm @(status=="final"?"btn-success":"btn-outline-success")">Final</a>
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="accordion" id="userAccordion">
+            @foreach (var singleuser in Model)
+            {
+                var userId = singleuser.Key;
+                var profileId = singleuser.Key;
+
+                var userEmailId = "";
+                List<FormAnswer> answers = singleuser.Value;
+                if (answers !=null && answers.Count >0)
+                {
+
+                    userEmailId = @users.FirstOrDefault(u => u.Key.ToString() == answers[0].UserId).Value;
+                }
+                <div class="accordion-item mb-2">
+                    <h2 class="accordion-header" id="heading-@userId">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse-@userId">
+                            👤  @userEmailId -  @Profiles.FirstOrDefault(u => u.Key == profileId).Value
+                            <span class="ms-3">
+                                @if (answers.Any(a => a.IsDraft == false))
+                                {
+                                    <span class="badge bg-success">Final</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning text-dark">Draft</span>
+                                }
+                            </span>
+                            @{
+
+                                int? myScore =0; //(myRatings != null && myRatings.ContainsKey(profileId)) ? myRatings[userId] : null;
+
+                                double? avgScore = 0;// (avgRatings != null && avgRatings.ContainsKey(userId)) ? avgRatings[userId] : (double?)null;
+                            }
+                            <div class="ms-3 d-flex align-items-center">
+                                <a href="javascript:void(0)" id="loadDataButton" class="btn btn-sm" data-item-id="@userId">Ratings</a>
+                            </div>
+                           @*  <div class="ms-3 d-flex align-items-center">
+                                <label class="me-2">Rating:</label>
+                                <select class="form-select form-select-sm d-inline-block w-auto rate-profile"
+                                        data-user="@userId">
+                                    <option value="">--</option>
+                                    @for (int i = 0; i <= 10; i++)
+                                    {
+                                        if (myScore == i)
+                                        {
+                                            <option value="@i" selected>@i</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@i">@i</option>
+                                        }
+
+                                    }
+                                </select>
+                                <span class="ms-2 small text-muted">
+                                    Avg: @(avgScore.HasValue ? avgScore.Value.ToString("0.0") : "-")
+                                </span>
+                            </div> *@
+                        </button>
+                        
+                    </h2>
+                    <div id="collapse-@userId" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <div class="accordion" id="sectionAccordion-@userId">
+                                @foreach (var sect in answers.GroupBy(a => a.Question.Section.Title))
+                                {
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#collapse-@userId-@sect.Key.GetHashCode()">
+                                                📑 @sect.Key
+                                            </button>
+                                        </h2>
+                                        <div id="collapse-@userId-@sect.Key.GetHashCode()" class="accordion-collapse collapse">
+                                            <div class="accordion-body">
+                                                <ul class="list-group">
+                                                    @foreach (var ans in sect)
+                                                    {
+                                                        <li class="list-group-item">
+                                                            <div class="row">
+                                                                <div class="col-9">
+                                                                    <strong>@ans.Question.QuestionText</strong><br />
+
+                                                                    @if (!string.IsNullOrEmpty(ans.AnswerText))
+                                                                    {
+                                                                        <span>@ans.AnswerText</span>
+                                                                    }
+                                                                    else if (!string.IsNullOrEmpty(ans.FilePath))
+                                                                    {
+                                                                        <a href="@ans.FilePath" target="_blank">📎 View File</a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <em>No answer</em>
+                                                                    }
+                                                                </div>
+                                                                <div class="col-3 top-0 end-0 mt-1">
+                                                                    @if (ans.Question.IsRating)
+                                                                    {
+                                                                        <label class="form-label fw-bold">Rate (out of @ans.Question.Marks)</label>
+                                                                        <select id="selfRating" class="form-select self-rating" data-qid="@ans.Question.Id" data-profileid="@userId" data-user="@ans.UserId">
+                                                                            <option value="">--</option>
+                                                                            @for (int i = 0; i <= ans.Question.Marks; i++)
+                                                                            {
+                                                                                <option value="@i">@i</option>
+                                                                            }
+                                                                        </select>
+                                                                        <div id="msg_@ans.Question.Id.ToString()_@profileId" class="mt-2 text-success"></div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                            
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>No submissions found.</p>
+    }
+</div>
+
+<div id="partialViewContainer">
+</div>
+
+ 
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+
+        $(document).on("change", ".rate-profile", function () {
+        var $sel = $(this);
+        var userId = $sel.data("user");
+        var score = $sel.val();
+
+        // $.post("/admin/profiles/RateProfile", { userId: userId, score: score }, function (res) {
+        //     if (res.success) {
+        //         // find sibling avg span and update
+        //         $sel.closest("div").find("span.small.text-muted").text("Avg: " + (+res.average).toFixed(1));
+        //     } else {
+        //         alert("Error saving rating");
+        //     }
+        // });
+
+     
+    });
+
+        $(document).on("change", ".self-rating", function () {
+        var $sel = $(this);
+        var userId = $sel.data("user");
+        var questionId = $sel.data("qid");
+         var profileIds = $sel.data("profileid");
+         console.log(profileIds);
+        var score = $sel.val();
+
+        $.post("/admin/profiles/RateProfile", { userId: userId,questionId: questionId, score: score,profileId:profileIds }, function (res) {
+            if (res.success) {
+                $("#msg_" + questionId+"_"+profileIds).text("✅ Saved (" + res.score + "/10)");
+                // optional: update admin avg shown:
+                if (res.average !== null) {
+                    $sel.closest("tr").find("span.badge.bg-success").text(res.average.toFixed(1));
+                }
+            } else {
+                $("#msg_" + questionId).text("❌ Error saving");
+            }
+        });
+    });
+
+
+    $(document).ready(function () {
+            $('#loadDataButton').click(function () {
+                var itemId = $(this).data('item-id');
+                 var profileid = $(this).data('profileid');
+                var url = '@Url.Action("LoadRatings", "Profiles")'; // Get the URL for the controller action
+
+                // 1. AJAX Request
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    data: { userId: itemId,profileId:profileid }, // Pass the itemId as a query parameter
+                    beforeSend: function() {
+                        // Optional: Show a loading indicator
+                        $('#partialViewContainer').html('<p>Loading...</p>');
+                    },
+                    success: function (result) {
+                        // 2. On success, inject the HTML returned by the PartialView into the container
+                        $('#partialViewContainer').html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        // Optional: Handle errors
+                        $('#partialViewContainer').html('<p>Error loading data: ' + error + '</p>');
+                    }
+                });
+            });
+        });
+
+</script>

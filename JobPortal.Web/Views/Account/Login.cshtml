@@ -1,0 +1,57 @@
+@model JobPortal.Web.ViewModels.RegisterModel;
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+    </div>
+}
+<form id="frmLoginregister" method="post">
+    <div class="bgregister row" style="margin-top:-90px; padding:20px 10px 20px 10px; height:95vh;">
+
+        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:60px;padding-left:8%; padding-right:8%;">
+
+            @Html.ValidationSummary(true, "Please fix the following errors.", new { @class = "text-danger" })
+            <div class="mb-3">
+                <input type="hidden" name="Role" id="Role" value="@ViewBag.RoleId" />
+
+            </div>
+             
+            <div class="mb-3">
+                <label></label><input asp-for="Email" class="input-form-control txtwhobg" placeholder="Email" required />
+
+            </div>
+            <div class="mb-3">
+                <label></label>
+                <input asp-for="Password" type="password" placeholder="Password" class="input-form-control txtwhobg" />
+
+            </div>
+
+            <div class="buttondv ">
+                <button class="btn" style="display:none" type="submit">Register</button>
+                <button type="button" id="btnLogin" onclick="login()" class="btnregister btn">Log In</button>  
+               
+            </div>
+        </div>
+
+
+    </div>
+
+</form>
+@section Scripts
+{
+    <script type="text/javascript">
+         function login()
+         {
+           $('#frmLoginregister').attr('action', 'login');
+            $('#frmLoginregister').submit();
+         }
+
+         function register(){
+             $('#frmLoginregister').attr('action', 'register');
+            $('#frmLoginregister').submit();
+        }
+    </script>
+}

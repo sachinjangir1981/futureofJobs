@@ -1,0 +1,41 @@
+﻿@model List<UserListForCompare>
+@{
+
+    ViewData["Title"] = "View Entries";
+    Layout = "_LayoutAdmin";
+
+}
+<div class="container py-4">
+    <h2>Data Entries -  </h2>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>User</th>
+
+                <th style="width:150;">Actions</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            @foreach (var itm in Model)
+            {
+                <tr>
+                    <td>@itm.UserName </td>
+
+                    <td width="150">   <a asp-action="ViewData" asp-route-id="@ViewBag.FormId" asp-route-userId="@itm.UserId" class="btn btn-sm btn-secondary"> View Data</a>  </td>
+                </tr>
+
+
+            }
+
+
+
+        </tbody>
+    </table>
+</div>
+@section Scripts
+{
+  
+}

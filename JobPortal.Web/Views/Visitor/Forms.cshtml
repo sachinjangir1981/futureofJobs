@@ -1,0 +1,592 @@
+﻿ @using JobPortal.Web.Models;
+
+@model DynamicForm
+@{
+    ViewBag.Title = "Question";
+    Layout = "~/Views/Shared/_LayoutQuestion.cshtml";
+
+    List<DAnswerRecord> recordedAnswer = ViewBag.RecordedAnser;
+    int iSheetCount = 0;
+    int totalSections = Model.Sections.Count;
+    int i = 0;
+    int j = 0;
+    string divclass = "animate-fade-in";
+
+    string SurveyFormatHeaderBG = "background-color:" + Model.CommonCSS.SurveyFormatHeaderBG ?? "#ffffff";
+    string SurveyFormatHeadDetailsBG = "background-color:" + Model.CommonCSS.SurveyFormatHeadDetailsBG ?? "#ffffff";
+    string SurveyFormatFooterBG = "background-color:" + Model.CommonCSS.SurveyFormatFooterBG ?? "#ffffff";
+    string SurveyFormatSectionBG = "background-color:" + Model.CommonCSS.SurveyFormatSectionBG ?? "#ffffff";
+    string SurveyFormatSectionDetailsBG = "background-color:" + Model.CommonCSS.SurveyFormatSectionDetailsBG ?? "#ffffff";
+    string SurveyFormatSectionFooterBG = "background-color:" + Model.CommonCSS.SurveyFormatSectionFooterBG ?? "#ffffff";
+    string QuestionBG = "background-color:" + Model.CommonCSS.QuestionBG ?? "#ffffff";
+    string AnswerBG = " background-color:" + Model.CommonCSS.AnswerBG ?? "#ffffff";
+    string bgImage = "/images/dforms/" + (string.IsNullOrEmpty(Model.BGUrl) == true ? "default_bg.jpg" : Model.BGUrl);
+
+//     Model.User.IsBootStrap = false;
+ }
+
+@section HeaderStyle {
+    <link href="~/css/radiobtncss.css" rel="stylesheet" />
+    <link href="~/css/register.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('@bgImage') !important;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            font-family: Math Calibri;
+            font-size: 18px;
+            /* font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important; */
+        }
+
+        .sheetheading {
+            font-size: 28px;
+            text-align: center;
+            font-weight: 600;
+            padding: 2px;
+        }
+
+        .sectionheading {
+            font-size: 24px;
+            text-align: left;
+            font-weight: 600;
+            padding: 2px;
+        }
+
+        .font-sans {
+            /*  font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"; */
+            font-family: "Times New Roman", Times, serif !important;
+        }
+      
+
+        @@media only screen and (max-width: 480px) {
+            .options {
+                
+                margin-top: 10px;
+                display: block;
+                clear: both;
+            }
+
+            .paddinglr10
+            {
+                padding-left:10px !important;
+                padding-right: 10px !important;
+            }
+        }
+
+        @@media only screen and (min-width: 480px) {
+            .options {
+                margin-top: 10px;
+                display: block;
+                clear: both;
+            }
+        }
+
+    </style>
+   }
+
+<div style="@SurveyFormatHeaderBG">
+    <div class="grid grid-cols-5 p-2">
+        <div class="rounded-full">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="~/images/dforms/@Model.ImageUrlLeft" style="width:50px; height :50px" />
+            }
+        </div>
+        <div class="col-span-3 text-center">
+            @*   <div class="mb-2 p-2 text-center "> *@
+            <h1 class=" mb-2 sheetheading" style="@SurveyFormatHeaderBG"> @Model.Title</h1>
+
+
+            @*  </div> *@
+        </div>
+        <div class="rounded-full">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="~/images/dforms/@Model.ImageUrl" style="width:50px; height :50px;float:right" />
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<div style="@SurveyFormatHeadDetailsBG">
+    <div style="padding-left:10px !important; padding-right:10px !important;">@Html.Raw(Model.Header)</div>
+</div>
+<div class="mb-1 text-center"  >
+    <p style="@SurveyFormatHeadDetailsBG" class="text-gray-600 p-1" id="step-indicator">Step 1 of 4</p>
+</div>
+<div class="w-full  rounded-full h-2.5 "  >
+    <div id="progress-bar" class="bg-green-600 h-1.5 rounded-full transition-all duration-500 ease-in-out" style="width: 25%;"></div>
+</div>
+
+<div class="overflow-hidden relative">
+    <form id="frmForms" name="frmForms" asp-action="Forms" asp-controller="Visitor" enctype="multipart/form-data" method="post">
+        @foreach (var formsection in Model.Sections)
+        {
+            iSheetCount++;
+            j = 0;
+            var steps = formsection.Questions.DistinctBy(mbox => mbox.Step).ToList();
+            //var sectionRecordedAnswer = recordedAnswer.Where(x => x.SectionId == formsection.PKID).ToList();
+
+            string formid = "frm" + formsection.PKID;
+
+            <div id="form-step-container" class="form-step-container" style="max-height:450px;  overflow-y:scroll">
+                @Html.HiddenFor(m => formsection.PKID)
+
+                @foreach (var step in steps)
+                {
+                    var stepquestions = formsection.Questions.Where(x => x.Step == step.Step).ToList();
+                    i++;
+                    j++;
+                    if (i > 1)
+                    {
+                        divclass = "hidden";
+                    }
+                    else
+                    {
+                        divclass = "animate-fade-in";
+                    }
+                    <div id="step-@i" class="form-step   @divclass ">
+                        <div class="mb-1"  >
+                            <h3 class="mb-1 p-1 sectionheading paddinglr10" style="@SurveyFormatSectionBG">@formsection.Section</h3>
+                            <div style="@SurveyFormatSectionDetailsBG" class="p-1 paddinglr10">  @Html.Raw(formsection.Detail)</div>
+                        </div>
+
+                        @foreach (var question in stepquestions)
+                        {
+                            <div class="mb-1 p-1" style="@QuestionBG">
+                                <label for="name" class="text-gray-700 mb-2" style="width:100%;padding-left:10px; padding-right:10px;">
+                                    @Html.HiddenFor(m => question.PKID)
+                                    @Html.HiddenFor(m => question.QuestionType)
+                                    @Html.Raw(question.Question)
+                                </label>
+                                @if (question.QuestionType == 1)
+                                {
+                                    <div class="p-2 options" style="@AnswerBG">
+                                        @foreach (var answer in question.Answers)
+                                        {
+                                            string answerId = question.PKID.ToString() + "_" + answer.PKID.ToString();
+                                            <div style="display:block;" class="custom-radio-group">
+                                                @Html.RadioButton(question.PKID.ToString(), answer.PKID.ToString(), new { @id = answerId })
+
+                                                <label for="@answerId" style="display:inline-block" class="text-gray-700 text-sm   mb-2">@Html.Raw(answer.Answer)</label>
+                                            </div>
+
+                                        }
+                                    </div>
+                                }
+                                else if (question.QuestionType == 2)
+                                {
+                                    <div class="p-2  options" style="width:100%; display:inline-block; @AnswerBG">
+                                        @foreach (var answer in question.Answers)
+                                        {
+                                            string answerId = question.PKID.ToString() + "_" + answer.PKID.ToString();
+                                            <div style="display:block;">
+                                                <label class="checkbox-container">
+                                                    @Html.Raw(answer.Answer)
+                                                    <input id="@answerId" value="@answer.PKID.ToString()" style="margin:4px" type="checkbox" name="@question.PKID" />
+                                                    <span class="checkmark"></span>
+                                                </label>
+
+                                                @*  
+
+                                                <input id="@answerId" value="@answer.PKID.ToString()" style="margin:4px" type="checkbox" name="@question.PKID" />
+                                                <label for="@answerId" class="text-gray-700 text-sm   mb-2">@Html.Raw(answer.Answer)</label>
+                                            *@
+                                            </div>
+                                        }
+                                    </div>
+
+                                }
+                                else if (question.QuestionType == 3)
+                                {
+                                    var answer = question.Answers[0];
+                                    string answerId = question.PKID.ToString() + "_" + answer.PKID.ToString();
+                                    <div class="p-4  options" style="@AnswerBG">
+                                        <input id="@answerId" type="range" min="@answer.RMin" max="@answer.RMax" value="@answer.Rincrement" class="form-range shadow appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+                                    </div>
+                                }
+                                else if (question.QuestionType == 4)
+                                {
+                                    string answerId = question.PKID.ToString();
+                                    <div class="p-1  options" style="@AnswerBG">
+                                        <input id="@answerId" name="@answerId" type="text" class="shadow appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+                                    </div>
+                                }
+                                else if (question.QuestionType == 5)
+                                {
+                                    string answerId = question.PKID.ToString();
+                                    <div class="p-1  options" style="@AnswerBG">
+                                        <input id="@answerId" name="@answerId" type="file" class="shadow appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200" />
+                                    </div>
+                                }
+
+                                @* <input type="text" id="name" name="name" placeholder="Enter full name"
+                                       class="shadow appearance-none border border-gray-300 rounded-xl w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"> *@
+                                <p class="text-red-500 text-xs italic mt-2 hidden" id="error-name"></p>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(formsection.Footer))
+                        {
+                            <div class="mb-8 p-1 sectionfooter paddinglr10" style="@SurveyFormatSectionFooterBG">
+
+                                <p>  @Html.Raw(formsection.Footer)</p>
+                            </div>
+                        }
+
+                    </div>
+
+
+                }
+
+
+
+            </div>
+
+        }
+
+        <input type="hidden" id="hidBtnclickfrom" name="hidBtnclickfrom" value="0" />
+
+
+    </form>
+    @if (iSheetCount == totalSections)
+    {
+        i++;
+        <div>
+            <div id="dvReview" class="hidden" style="max-height:450px;  overflow-y:scroll">
+
+
+                <div class="mb-1">
+                    <h3 class="mb-1 p-1 sectionheading text-center">Review</h3>
+
+                    @foreach (var formsection in Model.Sections)
+                    {
+                        iSheetCount++;
+                        j = 0;
+                        var steps = formsection.Questions.DistinctBy(mbox => mbox.Step).ToList();
+                        var sectionRecordedAnswer = recordedAnswer.Where(x => x.SectionId == formsection.PKID).ToList();
+
+                        string formid = "frm" + formsection.PKID;
+
+
+                        @Html.HiddenFor(m => formsection.PKID)
+
+                        @foreach (var step in steps)
+                        {
+                            var stepquestions = formsection.Questions.Where(x => x.Step == step.Step).ToList();
+
+                            i++;
+                            j++;
+                            if (i > 1)
+                            {
+                                divclass = "hidden";
+                            }
+                            else
+                            {
+                                divclass = "animate-fade-in";
+                            }
+
+                            <div class="mb-1">
+                                <h3 class="mb-1 p-1 sectionheading" style="@SurveyFormatSectionBG">@formsection.Section</h3>
+
+                            </div>
+
+                            @foreach (var question in stepquestions)
+                            {
+                                var itm = sectionRecordedAnswer.Count > 0 ? sectionRecordedAnswer.Where(q => q.QuestionId == question.PKID).FirstOrDefault() : null;
+                                string questionanswer = itm != null ? itm.Answer : "";
+                                <div class="mb-1 p-1" style="@QuestionBG">
+                                    <label for="name" class="block text-gray-700 mb-2">
+                                        <b>Question : @Html.Raw(question.Question)</b>
+                                    </label>
+                                    @if (question.QuestionType == 1)
+                                    {
+                                        <div class="p-2" style="@AnswerBG">
+                                            @foreach (var answer in question.Answers)
+                                            {
+                                                string answerId = question.PKID.ToString() + "_" + answer.PKID.ToString();
+                                                <div style="display:block;" class="custom-radio-group">
+                                                    @Html.RadioButton(question.PKID.ToString(), answer.PKID.ToString(), new { @id = answerId })
+
+                                                    <label for="@answerId" style="display:inline-block" class="text-gray-700 text-sm   mb-2">@Html.Raw(answer.Answer)</label>
+                                                </div>
+
+                                            }
+                                        </div>
+
+                                        <div class="dvReviewAnswer">
+                                            Your Answer:  @Html.Raw(questionanswer)
+                                        </div>
+                                    }
+                                    else if (question.QuestionType == 2)
+                                    {
+                                        <div class="p-2" style="width:100%; display:inline-block; @AnswerBG">
+                                            @foreach (var answer in question.Answers)
+                                            {
+                                                string answerId = question.PKID.ToString() + "_" + answer.PKID.ToString();
+                                                <div style="display:block;">
+                                                    <label class="checkbox-container">
+                                                        @Html.Raw(answer.Answer)
+                                                        <input id="@answerId" value="@answer.PKID.ToString()" style="margin:4px" type="checkbox" name="@question.PKID" />
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="dvReviewAnswer">
+                                            Your Answer:   @Html.Raw(questionanswer)
+                                        </div>
+                                    }
+                                    else if (question.QuestionType == 3)
+                                    {
+                                        var answer = question.Answers[0];
+                                        string answerId = question.PKID.ToString() + "_" + answer.PKID.ToString();
+
+                                        <div class="dvReviewAnswer">
+                                            Your Answer:   @Html.Raw(questionanswer)
+                                        </div>
+                                    }
+                                    else if (question.QuestionType == 4)
+                                    {
+                                        string answerId = question.PKID.ToString();
+
+                                        <div class="dvReviewAnswer">
+                                            Your Answer:   @Html.Raw(questionanswer)
+                                        </div>
+                                    }
+                                    else if (question.QuestionType == 5)
+                                    {
+                                        string answerId = question.PKID.ToString();
+
+                                        <div class="dvReviewAnswer">
+                                            Your Answer:  <img src="@questionanswer" width="100" height="70" />
+                                        </div>
+                                    }
+
+
+                                </div>
+                            }
+
+                        }
+
+
+
+
+
+                    }
+
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<div style="clear:both">
+    <div class="flex justify-between mt-1 mb-1">
+
+        <button id="prev-button"
+                class="text-white rounded-xl font-semibold   transition-colors duration-300   hidden" style="background-color:#FFFF00; color: #16a34a !important; padding:1px 10px 1px  10px !important; font-size:15px;">
+            Previous
+        </button>
+        <a id="review-button"
+           class="hidden    ml-auto">
+            <img src="~/images/survey-result-btn.png" style="height:40px; border-radius:10%" />
+        </a>
+        <button id="next-button"
+                class="bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300   ml-auto" style="color:#FFFF00 !important; padding:1px  10px 1px  10px !important">
+            Next
+        </button>
+        <button id="submit-button"
+                class="bg-green-600 text-white rounded-xl font-semibold hover:bg-green-700 transition-colors duration-300   hidden ml-auto" style="color:#FFFF00 !important; padding:1px  10px 1px  10px !important; font-size:15px;">
+            Save & Result; 
+        </button>
+    </div>
+    <div class="modal-backdrop-custom">
+        <div id="dvLogin" class="modal-content-custom">
+        </div>
+
+    </div>
+</div>
+
+<div class="text-center mb-2 p-1 formfooter" style="@SurveyFormatFooterBG">
+    <div class="p-1">@Html.Raw(Model.Footer) </div>
+</div>
+
+
+
+<div class="text-center">
+    <div class="grid grid-cols-3 mb-2 p-1">
+        <div>
+        </div>
+        <div class="text-center " style="width:150px; display:flex">
+            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("http://hellokisan.org/Visitor/Forms/"+Model.PKID)&title=@Html.Encode("Hello Kisan")&description=@Html.Encode("HELLO KISAN FORMS")"><img src="~/images/facebook.jpg" width="32" /> </a>
+            <a target="_blank" href="https://wa.me/?text=@Html.Encode("HELLO KISAN FORMS")%20http://hellokisan.org/Visitor/Forms/@Model.PKID"><img src="~/images/whatsapp.jpg" width="32" /> </a>
+            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http://hellokisan.org/Visitor/Forms/@Model.PKID&title=@Html.Encode("Hello Kisan")&summary=@Html.Encode("HELLO KISAN FORMS")&source=hellokisan.org"><img src="~/images/linkedin.png" width="32" /> </a>
+            <a href="mailto:?subject=HELLO%20KISAN%20FORMS%3A%20SHARE%20YOUR%20VOICE%20THAT%20MATTERS&body=http://hellokisan.org/Visitor/Forms/@Model.PKID"><img src="~/images/mail.png" width="32" /></a>
+        </div>
+        <div>
+        </div>
+    </div>
+</div>
+ 
+@section Scripts
+{
+    <script src="~/js/multi-step-form.js"></script>
+
+
+    <script>
+
+        function afterLogin()
+        {
+             $("#myPopup").hide();
+                $('#overlay').hide();
+             $('#submit-button').show();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+          var stepId = @ViewBag.StepId;
+          if(stepId == null || stepId == 0)
+          {
+              stepId = 1;
+          }
+          else
+          {
+             $("#prev-button").hide();
+             $('#next-button').hide()
+             $('#submit-button').show()
+             $('#review-button').hide()
+              animatedbg();
+          }
+
+        });
+        function animatedbg(){
+            $('.form-step').hide();
+             $('#dvReview').show();
+
+            // Get the container for the dots
+            const dotCurtain = document.getElementById('dot-curtain');
+
+            // --- Customizable Parameters ---
+            const numberOfDots = 400; // Total number of dots on the screen (Increased for denser impression)
+            // Array of lighter grey/pastel colors for multi-color dots
+            const dotColors = [
+                'rgba(200, 200, 200, 0.6)', // Light Grey
+                'rgba(173, 216, 230, 0.6)', // Light Blue (similar to previous)
+                'rgba(255, 223, 186, 0.6)', // Pale Peach
+                'rgba(186, 255, 186, 0.6)', // Pale Green
+                'rgba(230, 190, 230, 0.6)'  // Pale Purple
+            ];
+            const minDotSize = 2; // Minimum dot size in pixels
+            const maxDotSize = 8; // Maximum dot size in pixels
+            const dotSpeed = 0.4; // Speed of dots moving left to right (pixels per frame)
+            const waveAmplitude = 40; // Max vertical displacement for the wave effect (pixels)
+            const waveFrequency = 0.005; // How spread out the waves are (smaller = more spread out)
+            const dispersionFactor = 0.001; // Controls how much dots gather/disperse based on their X position
+            // --- End Customizable Parameters ---
+
+            let dots = []; // Array to hold all dot elements
+            let animationFrameId; // To store the requestAnimationFrame ID
+            let time = 0; // Global time variable for wave calculation
+
+            // Function to create and initialize a single dot element
+            function createDot() {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+
+                // Set initial random size and color
+                const size = Math.random() * (maxDotSize - minDotSize) + minDotSize;
+                dot.style.width = `${size}px`;
+                dot.style.height = `${size}px`;
+
+                // Randomly pick a color from the dotColors array
+                const randomColor = dotColors[Math.floor(Math.random() * dotColors.length)];
+                dot.style.backgroundColor = randomColor;
+
+                // Store dot properties for animation
+                // x and y are the current positions, initialY is the baseline for wave
+                dot.x = Math.random() * window.innerWidth;
+                dot.y = Math.random() * window.innerHeight;
+                dot.initialY = dot.y;
+
+                // Random phase offset for each dot's wave to make it look less uniform
+                dot.waveOffset = Math.random() * Math.PI * 2;
+                // Random multiplier for wave amplitude to create varying wave intensity
+                dot.amplitudeMultiplier = 0.5 + Math.random() * 0.5; // From 0.5 to 1.0
+
+                // Append dot to the curtain container
+                dotCurtain.appendChild(dot);
+                dots.push(dot);
+
+                // Smoothly fade in the dot after a short random delay
+                setTimeout(() => dot.style.opacity = 1, Math.random() * 800);
+            }
+
+            // Populate the curtain with dots
+            for (let i = 0; i < numberOfDots; i++) {
+                createDot();
+            }
+
+            // The main animation loop using requestAnimationFrame for smoothness
+            function animate() {
+                // Increment global time for wave progression
+                time += 0.01;
+
+                dots.forEach(dot => {
+                    // Move dot from left to right
+                    dot.x += dotSpeed;
+
+                    // Calculate the vertical position (Y) to create the wave effect
+                    // Combines global time, dot's X position, and individual wave offsets
+                    const currentWaveAmplitude = waveAmplitude * dot.amplitudeMultiplier;
+                    const waveY = Math.sin(dot.x * waveFrequency + dot.waveOffset + time) * currentWaveAmplitude;
+
+                    // Add a dispersion/gathering effect:
+                    // Introduce a slight additional Y offset based on X position to make dots
+                    // appear to gather and disperse in "blocks"
+                    const dispersionY = Math.sin(dot.x * dispersionFactor) * (currentWaveAmplitude * 0.5);
+
+                    dot.y = dot.initialY + waveY + dispersionY;
+
+                    // If dot moves off the right side of the screen, reset its position to the left
+                    if (dot.x > window.innerWidth + maxDotSize) {
+                        dot.x = -maxDotSize; // Reset to just off the left edge
+                        dot.initialY = Math.random() * window.innerHeight; // New random initial Y for variety
+                        dot.waveOffset = Math.random() * Math.PI * 2; // New random wave phase
+                        dot.amplitudeMultiplier = 0.5 + Math.random() * 0.5; // New random amplitude multiplier
+                    }
+
+                    // Apply the new position using CSS transform for performance
+                    dot.style.transform = `translate(${dot.x}px, ${dot.y}px)`;
+                });
+
+                // Request the next animation frame
+                animationFrameId = requestAnimationFrame(animate);
+            }
+
+            // Start the animation as soon as the DOM is ready (moved from window.onload)
+            animate();
+
+            // Handle window resizing: Adjust initial dot positions if they are out of bounds
+            window.addEventListener('resize', () => {
+                dots.forEach(dot => {
+                    // If a dot's x or y is now outside the new window dimensions, reposition it
+                    if (dot.x > window.innerWidth || dot.y > window.innerHeight) {
+                        dot.x = Math.random() * window.innerWidth;
+                        dot.y = Math.random() * window.innerHeight;
+                        dot.initialY = dot.y; // Update initialY for new baseline
+                    }
+                    // Ensure transform is applied after resize
+                    dot.style.transform = `translate(${dot.x}px, ${dot.y}px)`;
+                });
+            });
+        };
+    </script>
+
+
+
+    }

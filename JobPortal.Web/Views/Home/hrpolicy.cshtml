@@ -1,0 +1,79 @@
+﻿@using JobPortal.Web.Models;
+@model List<LibraryModel>
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/HR_Home.png" />
+    </div>
+}
+<div class="bghrpolicytop">
+   
+</div>
+<div class="hometext bgHrPolicyLanding">
+    <ul class="ulBreadcrumb" style="padding-top:10px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+    <p class="paraCommon" style="text-align:center">
+        <img src="~/images/hr-landing.png" width="50%" />
+    </p>
+   
+    <div class="">
+        
+        <p class="paraCommon paraHeader"> <b>The Evolution of Work: A Modern HR Policy Framework for a Changing Workforce</p>
+        <p class="paraCommon">Workplaces have travelled a long way.  </p>
+        <p class="paraCommon">From cave-fire coordination to digital collaboration to tomorrow’s eco-conscious offices. </p>
+        <p class="paraCommon">Today’s workforce spans four generations, each with its own rhythm, rights and expectations. </p>
+        <p class="paraCommon">This 11-part HR Policy Framework rewrites how employers and employees work together with dignity, clarity and future-readiness at the core. </p>
+
+        <p class="paraCommon">
+            <table class="tbl" width="100%">
+
+
+                @foreach (var itm in Model)
+                {
+
+                    <tr>
+                        <td>
+                            <a href="/visitor/library/@itm.PKID" style="text-decoration:none;color:#000">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+
+
+        </p>
+
+       
+
+        <p class="paraCommon"><b> “Download the Full HR Policy Framework” AND “Need a Custom HR Manual for Your Organization?</b> </p>
+        <p class="paraCommon"> </p>
+    </div>
+</div>
+<div class="fowbottom hometext" style="padding-left:15px; padding-right:10px">
+    <a href="/visitor/trendingnewslist/14" style="text-decoration:none">
+        <div class="paraCommon trendingnewsbutton">
+            <table class="trendingnewstbl">
+                <tr>
+                    <td>
+                         <img src="~/images/news-icon.png" width="60" /> 
+                    </td>
+                    <td>
+                        <div style="background-color:#91D050; height:50px;width:4px;margin: 0px 10px 0px 10px;"></div>
+                    </td>
+                    <td>
+                        <span style="font-size:18px; font-weight:600; text-decoration:none">Stories</span> <br />that mean something <br /><span style="font-size:18px; font-weight:600">to us…</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </a>
+</div>

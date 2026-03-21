@@ -1,0 +1,502 @@
+﻿@using JobPortal.Web.ViewModels;
+
+@{
+    ViewData["Title"] = "Job Portal - Find Your Green Job";
+    Layout = "/Views/Shared/_LayoutHome.cshtml";
+}
+
+<style>
+    .hero-section {
+        position: relative;
+    }
+
+
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.55); /* dark overlay */
+            z-index: 1;
+        }
+
+        .hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+
+</style>
+<!-- Hero Section -->
+<!-- Hero Section -->
+<div style="width:100%; " class="container mx-auto">
+    <a href="/home/futureofwork" style="text-decoration:none;">
+        <div style="width:100%; text-align:center; " class="mx-auto homebg">
+            <div class="bgHomeUperText">
+                <p class="homeheading">The DNA of Why we work...</p>
+            </div>
+            <div class="bgHomeUpper" style="height:1px;margin-top:1px;margin-bottom:1px "></div>
+            <div class="bgHomeUpper" style="height:2px;margin-bottom:1px"></div>
+            <div class="bgHomeUpper" style="height:3px;margin-bottom:1px"></div>
+            <img src="~/images/greenjob_newhome.jpg" width="100%" />
+            <div class="bgHomeLower" style="height:3px;margin-top:1px "></div>
+            <div class="bgHomeLower" style="height:2px;margin-top:1px"></div>
+            <div class="bgHomeLower" style="height:1px;margin-top:1px;"></div>
+            <div class="bgHomeLowerText">
+                <p class="homesubheading">Future of work...   </p>
+
+                <p class="hometext">
+                    Is more than a question - it’s a journey. For many of us, first plans grow distant, and Plan B is no more an option but essential.
+                    <br /> <span style="display:block; margin-top:10px">GreenJobs.Digital is a diagnostic platform built to help you rethink and rediscover careers, and realign the Education-to-Employment journey for Students, Academics, Employers, and above all, Gen Z.</span>
+                    <span class="homeImage" style="padding-top:10px;">
+                        <img src="~/images/click_here_3.png" width="70px" />
+                    </span>
+            </div>
+
+        </div>
+    </a>
+
+
+    <div class="bgOrange" style="height:2px;margin-top:3px"></div>
+    <div class="bgOrange" style="height:4px;margin-top:3px"></div>
+    <div class="bgOrange" style="height:7px;margin-top:3px"></div>
+    <div class="row" style="padding:0px 0px 0px 0px">
+        <div class="col-12">
+            <a href="/home/hellogenz" style="text-decoration:none;">
+                <div class="bgStudentAbove" style="height:120px;margin-bottom:2px">
+                    <div class="homeheadingnew">Hello Gen Zs...</div><div class="homeGenzcommon">18-27 + Years Anxious Achiever from Aspirational Families</div>
+                </div>
+                <div>
+
+                    <img src="~/images/genz.jpg" width="100%" />
+                </div>
+                <div class="bgStudentBelow">
+                    <span style="font-weight:bold">Looking for meaningful work or gainful engagement.</span> Why Gamble with your future when it can be designed?   <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bggreen1" style="height:7px; "></div>
+            <div class="bggreen1" style="height:4px;margin-top:3px"></div>
+            <div class="bggreen1" style="height:2px;margin-top:3px"></div>
+            <div class="bggreenDesigned" style="height:2px;margin-top:3px"></div>
+            <div class="bggreenDesigned" style="height:4px;margin-top:3px"></div>
+            <div class="bggreenDesigned" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+            <a href="/home/employer" style="text-decoration:none;">
+                <div class="bgEmpAbove" style="height:120px;margin-bottom:2px">
+                    <div class="homeheadingnew"><span style="font-weight:normal">Modern Pragmatist</span> Employers... </div><div class="homeGenzcommon">In the Workplace Studios</div>
+                </div>
+                <div>
+                    <img src="~/images/employer1.jpg" width="100%" />
+                </div>
+                <div class="bgEmpBelow">
+                    <span class="homecommon"> Modern talent doesn't follow old rules. Gen Z wants sincerity, millennials want purpose, mid-career pros want dignity, and silver talent wants respect.  <br /> <img src="~/images/click_here_3.png" width="70px" /></span>
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bggreenDesigned2" style="height:7px; "></div>
+            <div class="bggreenDesigned2" style="height:4px;margin-top:3px"></div>
+            <div class="bggreenDesigned2" style="height:2px;margin-top:3px"></div>
+            <div class="bgConsultup" style="height:2px;margin-top:3px"></div>
+            <div class="bgConsultup" style="height:4px;margin-top:3px"></div>
+            <div class="bgConsultup" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+            <a href="/home/academics" style="text-decoration:none;">
+                <div class="bgConsultAbove" style="height:120px;margin-bottom:2px">
+                    <div class="homeheadingnew"><span style="font-weight:normal">Esteemed... </span> <br /><span style="font-size:21px; font-weight:600">Academics, Education, Training Providers</span></div>
+
+                </div>
+                <div>
+                    <img src="~/images/academics.jpeg" width="100%" />
+                </div>
+                <div class="bgConsultBelow">
+                    <span style="font-weight:bold">The Sacred Backbone of Civilization.</span>  In the fast-changing world, Don't let your legacy become redundant.   <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgConsultdwn" style="height:7px; "></div>
+            <div class="bgConsultdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgConsultdwn" style="height:2px;margin-top:3px"></div>
+            <div class="bgskyblue" style="height:2px;margin-top:3px"></div>
+            <div class="bgskyblue" style="height:4px;margin-top:3px"></div>
+            <div class="bgskyblue" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+
+            <a href="/home/Green_Education_Skilling" style="text-decoration:none;">
+                <div class="bgSkillAbove" style="height:120px;margin-bottom:2px">
+                    <div class="homeheadingnew">Green Education...</div>
+                    <div class="homecommon">Green jobs don't need fancy degrees, just curiosity, skill and purpose</div>
+                </div>
+                <div>
+                    <img src="~/images/skills.png" width="100%" />
+                </div>
+                <div class="bgSkillbelow">
+                    You can become green-job ready in 70-100 hours of self study. No elite colleges, no gatekeepers, just real skills, real growth, and real opportunity awaits.<img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bggreenskill" style="height:7px; "></div>
+            <div class="bggreenskill" style="height:4px;margin-top:3px"></div>
+            <div class="bggreenskill" style="height:2px;margin-top:3px"></div>
+            <div class="bgjobprofileup" style="height:2px;margin-top:3px"></div>
+            <div class="bgjobprofileup" style="height:4px;margin-top:3px"></div>
+            <div class="bgjobprofileup" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12" >
+            <a href="/home/Greenjob_Profiles_Career_Pathways" style="text-decoration:none;">
+                <div class="bgJobProfileAbove" style="margin-bottom:2px">
+                    <div class="homeheadingnew">Green Job Blue-Prints... </div>
+                    <div class="homeGenzcommon">Job Profiles & Opportunities - Why chase old jobs when the green economy is exploding</div>
+                </div>
+                <div>
+                    <img src="~/images/jobprofile.png" width="100%" />
+                </div>
+                <div class="bgJobProfilebelow">
+                    Green jobs aren't exotic roles - they are regular careers with purpose, growth, and future-proof demand.
+                    The green economy is expanding faster than traditional sectors, opening pathways for every skill, background, and ambition.  <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgjobprofiledwn" style="height:7px; "></div>
+            <div class="bgjobprofiledwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgjobprofiledwn" style="height:2px;margin-top:3px"></div>
+            <div class="bgjobsearchup" style="height:2px;margin-top:3px"></div>
+            <div class="bgjobsearchup" style="height:4px;margin-top:3px"></div>
+            <div class="bgjobsearchup" style="height:7px;margin-top:3px"></div>
+        </div>
+
+
+        <div class="col-12">
+            <a href="/home/Greenjob_Search" style="text-decoration:none;">
+                <div class="bgJobSearchAbove" style="margin-bottom:2px">
+                    <div class="homeheadingnew">Green Jobs Search...</div>
+                    <div class="homeGenzcommon">Where do real green jobs hide? Right here, not in 50 tabs</div>
+                </div>
+                <div>
+                    <img src="~/images/job-search.png" width="100%" />
+                </div>
+                <div class="bgJobSearchbelow">
+                    www.greenjobs.digital, scouts the entire green universe, internships, fellowships, campus gigs, full-time roles, so you find real opportunities
+                    without the doom-scroll, the confusion, or the 2 AM career panic. <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgjobsearchdwn" style="height:7px; "></div>
+            <div class="bgjobsearchdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgjobsearchdwn" style="height:2px;margin-top:3px"></div>
+            <div class="bgCVup" style="height:2px;margin-top:3px"></div>
+            <div class="bgCVup" style="height:4px;margin-top:3px"></div>
+            <div class="bgCVup" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+            <a href="/home/Greenjob_CV" style="text-decoration:none;">
+                <div class="bgCVAbove" style="margin-bottom:2px">
+                    <div class="homeheadingnew">Biodata → CV → Profile...</div>
+                    <div class="homeGenzcommon">An Embellished CV is a House of Cards, One Interview Question Can Bring it All Down</div>
+                </div>
+                <div>
+                    <img src="~/images/CV_Creation.png" width="100%" />
+                </div>
+                <div class="bgCVbelow">
+                    <span style="color:#FEF2CC">Walk in with Integrity and Walk Out with an Offer.</span> Build Your Career on a Foundation of Truth, Share
+                    <span style="font-size:22px">"Your Life Journey in Colors" </span>  <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgCVdwn" style="height:7px; "></div>
+            <div class="bgCVdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgCVdwn" style="height:2px;margin-top:3px"></div>
+            <div class="bgInternup" style="height:2px;margin-top:3px"></div>
+            <div class="bgInternup" style="height:4px;margin-top:3px"></div>
+            <div class="bgInternup" style="height:7px;margin-top:3px"></div>
+        </div>
+
+        <div class="col-12">
+            <a href="/home/Greenjob_Intern" style="text-decoration:none;">
+                <div class="bgInternAbove" style="margin-bottom:2px">
+                    <div class="homeheadingnew">INTERNSHIPS...</div>
+                    <div class="homeGenzcommon">THE NEW EDUCATION RAINBOW. From What You Studied to How You Learned to Learn</div>
+                </div>
+                <div>
+                    <img src="~/images/Internship.png" width="100%" />
+                </div>
+                <div class="bgInternbelow">
+                    Internships are not a side-dish to education. Theyu ARE education. This is your leap to first real footprint on the professional world. Come create your own Rainbow.
+                     <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgInterndwn" style="height:7px; "></div>
+            <div class="bgInterndwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgInterndwn" style="height:2px;margin-top:3px"></div>
+            <div class="bgCareerup" style="height:2px;margin-top:3px"></div>
+            <div class="bgCareerup" style="height:4px;margin-top:3px"></div>
+            <div class="bgCareerup" style="height:7px;margin-top:3px"></div>
+        </div>
+
+        <div class="col-12">
+            <a href="/home/Greenjob_Midcareer" style="text-decoration:none;">
+                <div class="bgCareerAbove" style="margin-bottom:2px">
+                    <div class="homeheadingnew"><span style="font-weight:normal">Mid-Career</span> Professionals...</div>
+                    <div class="homeGenzcommon" style="font-weight:normal; font-size:24px">It's never too late to shift to Green</div>
+
+                </div>
+                <div>
+                    <img src="~/images/mid-career.png" width="100%" />
+                </div>
+                <div class="bgCareerbelow">
+                    That mid-career itch you're feeling isn't burnout.It's your talent asking for a bigger stage. And guess
+                    what? <span style="font-weight:600">The Green Economy is actively hunting for people exactly like you: seasoned, steady, and ready for impact.</span>
+                    <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgCareerdwn" style="height:7px; "></div>
+            <div class="bgCareerdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgCareerdwn" style="height:2px;margin-top:3px"></div>
+            <div class="bgSilverup" style="height:2px;margin-top:3px"></div>
+            <div class="bgSilverup" style="height:4px;margin-top:3px"></div>
+            <div class="bgSilverup" style="height:7px;margin-top:3px"></div>
+        </div>
+
+        <div class="col-12">
+            <a href="/home/SiverTalent" style="text-decoration:none;">
+                <div class="bgSilverAbove" style="margin-bottom:2px">
+                    <div class="homeheadingnew">Silver Talent...</div>
+                    <div class="homecommon">All 55+ Years Professional. <span style="font-weight:normal">Where others see retirement, the green economy sees irreplaceable leadership</span></div>
+                </div>
+                <div>
+                    <img src="~/images/Silver_Talent.png" width="100%" />
+                </div>
+                <div class="bgSilverbelow">
+                    Decades of judgement, perspective and the crisis instinct don't expire at 55. They become powerful.
+                    The green economy needs seasoned minds who can guide, steady, negotiate, and navigate what AI simply cannot.
+                    <img src="~/images/click_here_3.png" width="70px" />
+                </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgSilverdwn" style="height:7px; "></div>
+            <div class="bgSilverdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgSilverdwn" style="height:2px;margin-top:3px"></div>
+
+            <div class="bgTalentHiringup" style="height:2px;margin-top:3px"></div>
+            <div class="bgTalentHiringup" style="height:4px;margin-top:3px"></div>
+            <div class="bgTalentHiringup" style="height:7px;margin-top:3px"></div>
+        </div>
+
+        <div class="col-12">
+            <a href="/home/Talent_hiring" style="text-decoration:none;">
+            <div class="bgTalentHiringAbove" style="margin-bottom:2px">
+                <div class="homeheadingnew" style="display:flex">
+                    Talent Scouting & Hiring...
+                </div>
+                <div class="homeGenzcommon" style="display:flex">Employers Green hiring is not about chasing talent</div>
+            </div>
+            <div>
+                <img src="~/images/talenmt-scouting.png" width="100%" /> 
+            </div>
+            <div class="bgTalentHiringbelow">
+                <b>When great talent goes missing, your company can’t afford to fall.</b> Looking for skilled talent to support your work?
+                 <img src="~/images/click_here_3.png" width="70px" /> 
+            </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgTalentHiringdwn" style="height:7px; "></div>
+            <div class="bgTalentHiringdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgTalentHiringdwn" style="height:2px;margin-top:3px"></div>
+
+            <div class="bgHRup" style="height:2px;margin-top:3px"></div>
+            <div class="bgHRup" style="height:4px;margin-top:3px"></div>
+            <div class="bgHRup" style="height:7px;margin-top:3px"></div>
+        </div>
+
+
+        <div class="col-12">
+            <a href="/home/hrpolicy" style="text-decoration:none;">
+            <div class="bgHRAbove" style="margin-bottom:2px">
+                <div class="homeheadingnew"><span style="font-weight:normal">Modern</span> HR Policy <span style="font-weight:normal">Framework...</span></div>
+                <div class="homeGenzcommon">HR began when humans began working together. It has been a long way from Cave fire Agreements to Future-Ready Workplaces</div>
+            </div>
+            <div>
+                <img src="~/images/HR_Home.png" width="100%" />
+            </div>
+            <div class="bgHRbelow">
+                A timeless reminder that humans have always needed fairness, clarity, and dignity at work, only now the rules are smarter, kinder, and built for 2025.
+                 <img src="~/images/click_here_3.png" width="70px" /> 
+            </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgHRdwn" style="height:7px; "></div>
+            <div class="bgHRdwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgHRdwn" style="height:2px;margin-top:3px"></div>
+
+            <div class="bgblack" style="height:2px;margin-top:3px"></div>
+            <div class="bgblack" style="height:4px;margin-top:3px"></div>
+            <div class="bgblack" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+            <a href="/home/employability_index" style="text-decoration:none;">
+            <div class="bgEmployabilityAbove" style="min-height:120px;margin-bottom:2px; ">
+                <div class="homeheadingnew">Decoding Career DNA...</div>
+                <div class="homeGenzcommon">Employability isn’t what you claim, it’s what talent and employers understand together</div>
+            </div>
+            <div>
+                <img src="~/images/consultants.jpeg" width="100%" />
+            </div>
+            <div class="bgEmployabilityBelow">
+                Most people chase jobs using degrees, titles, and keywords. But the job market responds to something else entirely - how you think, learn, adapt, collaborate,
+                and solve real problems. <span>Built for job seekers, employers, mentors, and hiring leaders - with AI working quietly in the background.</span>
+                 <img src="~/images/click_here_3.png" width="70px" /> 
+            </div>
+            </a>
+        </div>
+        <div class="onlyMobile">
+            <div class="bgblack" style="height:7px; "></div>
+            <div class="bgblack" style="height:4px;margin-top:3px"></div>
+            <div class="bgblack" style="height:2px;margin-top:3px"></div>
+
+        </div>
+        <div class="col-12">
+            <div class="bgtphAbove" style="height:120px;margin-bottom:2px; ">
+                <div class="homeheadingnew" style="font-size:24px;">How Life Teaches Us About Work...</div>
+                <div class="homeGenzcommon">Not everything that shapes our working life comes from classrooms, offices, or job titles</div>
+            </div>
+            <div class="image-row" style="text-align:center;margin:0 auto">
+                @*  <a href="/visitor/timepasslist"><img src="~/images/dygmp1.jpeg" alt="Timepass">
+                   
+                </a>
+                <a href="/visitor/dygmpointlist"><img src="~/images/dygmp2.jpeg" alt="Do you get my point">
+                   
+                </a>
+                <a href="/visitor/oneminutelist"><img src="~/images/dygmp3.jpeg" alt="One Minute">
+                  
+                </a> *@
+                <a href="/visitor/timepasslist">
+                    <img src="~/images/tpn1.jpeg" alt="Timepass">
+
+                </a>
+                <a href="/visitor/dygmpointlist">
+                    <img src="~/images/tpn2.jpeg" alt="Do you get my point">
+
+                </a>
+                <a href="/visitor/oneminutelist">
+                    <img src="~/images/tpn3.jpeg" alt="One Minute">
+
+                </a>
+            </div>
+            <div class="bgtphBelow">
+                <p class="paraCommon">Some lessons hide inside jokes that looked like time pass. Some arrive when a simple question quietly disrupts what we thought we knew. Some appear as one-minute realization’s that stay with us for years. </p>
+                <p class="paraCommon">This space brings together hundreds of small, real-life moments - observed, questioned, and distilled — across three lenses.</p>
+                <p class="paraCommon">Read them slowly or randomly. There is no order, no syllabus, no conclusion. Just life, quietly explaining work.</p>
+
+            </div>
+
+
+        </div>
+
+        <div class="onlyMobile">
+            <div class="bgblack" style="height:7px; "></div>
+            <div class="bgblack" style="height:4px;margin-top:3px"></div>
+            <div class="bgblack" style="height:2px;margin-top:3px"></div>
+
+            <div class="bgEmployebilityup" style="height:2px;margin-top:3px"></div>
+            <div class="bgEmployebilityup" style="height:4px;margin-top:3px"></div>
+            <div class="bgEmployebilityup" style="height:7px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+            <div class="bgJobsTop" style="margin-bottom:2px">
+                <div class="homeheadingnew">CTA - Where Do You Fit?</div>
+                <div class="homeGenzcommon">In the Green Jobs ecosystem, you begin here. Without confusion or fluff</div>
+
+            </div>
+            <div class="bgJobsCenter">
+                <a href="/home/"><img src="~/images/jobs-new.png" width="70%" /></a>
+            </div>
+            <div>
+                <div style="display:flex;margin-top:3px;" class="bgJobsTop">
+                    <div><i>If you’re a <b>student</b> or <b>job seeker</b> wondering where green careers actually begin…</i></div>
+                    <div style="align-items: flex-end;"> <a href="/home/candidate" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></div>
+                </div>
+                <div style="display:flex;margin-top:3px;" class="bgJobsTop">
+                    <div><i>If you’re an <b>employer</b> trying to attract talent that actually cares…</i></div>
+                    <div style="align-items: flex-end;"> <a href="/home/employerreg" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></div>
+                </div>
+                <div style="display:flex;margin-top:3px;" class="bgJobsTop">
+                    <div><i>If you’re an <b>academics, training institution</b> rethinking relevance in a changing world…</i></div>
+                    <div style="align-items: flex-end;"> <a href="/home/academicreg" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></div>
+                </div>
+
+            </div>
+
+
+        </div>
+        <div class="onlyMobile">
+            <div class="bgEmployebilitydwn" style="height:7px; "></div>
+            <div class="bgEmployebilitydwn" style="height:4px;margin-top:3px"></div>
+            <div class="bgEmployebilitydwn" style="height:2px;margin-top:3px"></div>
+        </div>
+        <div class="col-12">
+        <div class="fowbottom" style="padding-left:15px; padding-right:10px">
+            <a href="/visitor/librarylist/38" style="text-decoration:none">
+                <div class="paraCommon trendingnewsbutton">
+                    <table class="trendingnewstbl">
+                        <tr>
+                            <td>
+                                 <img src="~/images/library.png" width="60" /> 
+                            </td>
+                            <td>
+                                <div style="background-color:#91D050; height:50px;width:4px;margin: 0px 10px 0px 10px;"></div>
+                            </td>
+                                <td style="color:#000">
+                                <span style="font-size:18px; font-weight:600; text-decoration:none;color:#000">Signals Decoded</span> <br />My Interpretations… <br /> 
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </a>
+        </div>
+        </<div> 
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+        <p class="mb-2">&copy; @DateTime.Now.Year GreenJobs.digital. All rights reserved.</p>
+        <div class="row">
+            <div class="col-12" style="text-align:center">
+                        <a href="https://hellokisan.org/" target="_blank " style="font-size: 12px;color: #fff; text-align: left;">
+                            <img src="/images/hello-kisan1.webp" width="50" alt="Hello Kisan" />
+                            <br /> https://hellokisan.org
+                        </a>
+                    </div>
+                     
+          
+        </div>
+    </div>
+</footer>

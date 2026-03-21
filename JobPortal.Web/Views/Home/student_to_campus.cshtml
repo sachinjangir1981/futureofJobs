@@ -1,0 +1,52 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<OneMinuteItem>
+@{
+    ViewBag.Title = "Getting Students to Campus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+    @*  <img src="~/images/employer.jpeg" /> *@
+    </div>
+}
+<div class="gstcbg" style="min-height:95vh; margin-top:-90px">
+    @if (Model != null)
+    {
+        <div style="text-align:left;padding-top:75px; padding-left:20px; padding-right:10px;">
+            <ul class="ulBreadcrumb" style="padding-top:10px;">
+                <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+                <li><a href="/home/academicreg">Academics</a></li>
+            </ul>
+            <div class="paraCommon">
+                <b>Life in the campus itself is the curriculum.</b>
+            </div>
+            <div class="paraCommon">
+                <b>Colleges are struggling to bring students back to campus.</b>
+            </div>
+            <div class="paraCommon">
+                <b> Students, meanwhile, are quietly showing us where they feel alive…</b>
+            </div>
+
+            <div class="gstcbgstrip" style="height:2px; margin:5px 10px 0px 10px !important; "></div>
+            <div class="gstcbgstrip" style="height:3px; margin:3px 10px 0px 10px !important"></div>
+            <ul class="ulList">
+                @* <li class="gstcbgstrip">
+                    <span class="tpheading1" style="color:red">Life Lessons...</span>
+                </li> *@
+                @foreach (var itm in Model)
+                {
+                    <li class="gstcbgstrip">
+                        <a href="/home/student_timepass/@itm.PKID"> @Html.Raw(itm.NewsSubject)  </a>
+                    </li>
+                }
+            </ul>
+        </div>
+
+
+    }
+
+</div>

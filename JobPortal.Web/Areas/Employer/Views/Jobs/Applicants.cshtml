@@ -1,0 +1,25 @@
+@model IEnumerable<JobPortal.Domain.Models.JobApplication>
+@{
+    Layout = "/Views/Shared/_LayoutEmployer.cshtml";
+}
+<h2>Applicants</h2>
+<table class="table">
+<thead><tr><th>Name</th><th>Skills</th><th>Resume</th><th>Status</th><th>Action</th></tr></thead>
+<tbody>
+@foreach(var a in Model) {
+    <tr>
+        <td>@a.JobSeekerProfile?.FullName</td>
+               <td>@a.Status</td>
+        <td>
+            <form method="post" asp-action="UpdateApplicationStatus">
+                <input type="hidden" name="applicationId" value="@a.Id" />
+                <select name="status" class="form-select d-inline" style="width:180px;">
+                    <option>Pending</option><option>Shortlisted</option><option>Rejected</option><option>Hired</option>
+                </select>
+                <button class="btn btn-sm btn-primary" type="submit">Update</button>
+            </form>
+        </td>
+    </tr>
+}
+</tbody>
+</table>

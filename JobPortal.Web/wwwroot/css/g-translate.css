@@ -1,0 +1,62 @@
+﻿
+body {
+    top: 0px !important;
+}
+
+.bottom-bar {
+    flex-shrink: 0; /* Don’t shrink */
+    text-align: center;
+    height: 30px;
+    background: #00BD64;
+    color: white;
+    text-align: center;
+    padding: 10px 0 10px;
+    position: sticky;
+    bottom: 0; /* Stays at bottom even while scrolling inside inner */
+}
+
+
+/* Adjustments for a cleaner look */
+.goog-te-gadget {
+}
+
+.goog-te-gadget-simple {
+    background-color: #00BD64 !important;
+    border: none !important;
+    
+}
+
+.skiptranslate {
+    position: absolute !important;
+    bottom: 0 !important;
+    top: none !important;
+}
+
+iframe.skiptranslate {
+    position: absolute !important;
+    bottom: 0 !important;
+    top: none !important;
+}
+
+.skiptranslate iframe {
+    position: absolute !important;
+    bottom: 0 !important;
+    top: none !important;
+}
+
+#:2.container {
+    position: absolute !important;
+    bottom: 0 !important;
+    top: none !important;
+}
+
+@media only screen and (max-width: 500px) {
+    .goog-te-gadget-simple {
+        border: none !important;
+        font-size: 24px !important;
+        width: 100vw !important;
+        background-color: #00BD64 !important;
+    }
+    /* CSS rules to apply when the condition is met */
+
+}

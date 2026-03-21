@@ -1,0 +1,328 @@
+﻿.boldrow {
+    color: forestgreen;
+   /* font-weight: 700;*/
+    opacity: 0.5;
+    background-color: #f8f9fa;
+    pointer-events: none;
+}
+
+#dvAllForms {
+    height: 200px;
+    overflow-y: auto;
+    border: 5px solid #d7d7d7;
+}
+
+#dvMyForms {
+    height: 200px;
+    overflow-y: auto;
+    border: 5px solid #d7d7d7;
+}
+.tblFomrs
+{
+    width: 100%;
+    border-collapse: collapse;
+}
+ tblFomrs th, .tblFomrs td {
+    border-bottom: 1px dashed #000;
+    padding: 8px;
+    text-align: left;
+}
+.dvItems
+{
+    padding:0px;
+}
+
+.dvItems ul {
+    padding: 5px;
+}
+.versionlist {
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    list-style-type: none;
+}
+.versionlist li {
+   padding:10px;
+}
+ 
+.versionlist a{
+   text-decoration:none !important;
+}
+
+.logininfo {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 18px;
+    color:#000;
+}
+@media only screen and (max-width: 480px) {
+    .small-icon {
+        font-size: 10px;
+    }
+
+    .btn-sm {
+        padding: 2px 5px;
+    }
+}
+
+
+ 
+
+.studenttopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 60px;
+    margin-top: -80px;
+    z-index: -1;
+}
+
+    .studenttopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #000; /* For browsers that do not support gradients */
+        background-image: linear-gradient(to right, #F8AA60, #F9CC93);
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to right, #F8AA60, rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to right, #F8AA60, #F9CC93);
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.studentbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .studentbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/genz.jpg') center/cover no-repeat;
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0.2));
+        z-index: -1; /* keeps text above the fading image */
+        transform: scaleX(-1); /* Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+    }
+
+
+
+.employertopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 60px;
+    margin-top: -80px;
+    z-index: -1;
+}
+
+    .employertopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+       
+        background-image: url('/images/employer-top-new.jpeg');
+        /* Fade bottom → top */
+       
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.employerbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .employerbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/employer1.jpg') center/cover no-repeat;
+        /* Fade bottom → top 
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.5), rgba(0,0,0,0.2));
+       
+      /*  transform: scaleX(-1);  Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+
+
+
+
+.academictopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 60px;
+    margin-top: -80px;
+    z-index: -1;
+}
+
+    .academictopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #000; /* For browsers that do not support gradients */
+        background-image: url('/images/academics-top.jpeg');
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to right, #F8AA60, rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to right, #F8AA60, #F9CC93);
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.academicbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .academicbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/academics.jpeg') center/cover no-repeat;
+        /* Fade bottom → top  
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0.2));
+        /* keeps text above the fading image */
+   
+        -webkit-transform: scaleX(-1); /* For compatibility */
+        z-index: -1;
+    }
+
+
+
+/* Intern */
+
+.Interntopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 60px;
+    margin-top: -80px;
+    z-index: -1;
+}
+
+    .Interntopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #000; /* For browsers that do not support gradients */
+        background-image: url('/images/intern-top.jpeg');
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to right, #F8AA60, rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to right, #F8AA60, #F9CC93);
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.Internbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .Internbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/Internship.png') center/cover no-repeat;
+        /* Fade bottom → top 
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0.2));*/
+        z-index: -1; /* keeps text above the fading image */
+        transform: scaleX(-1); /* Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+    }
+
+/* Mid - Career */
+.midcareertopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 60px;
+    margin-top: -80px;
+    z-index: -1;
+}
+
+    .midcareertopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #000; /* For browsers that do not support gradients */
+        background-image: url('/images/mid-career-top.jpeg');
+        /* Fade bottom → top */
+        mask-image: linear-gradient(to right, #F8AA60, rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to right, #F8AA60, #F9CC93);
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.midcareerbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .midcareerbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/mid-career.png') center/cover no-repeat;
+        /* Fade bottom → top 
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0.2));*/
+        z-index: -1; /* keeps text above the fading image */
+        transform: scaleX(-1); /* Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+    }
+
+
+/* Silver Talent */
+
+
+.silvertalenttopbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+    min-height: 60px;
+    margin-top: -80px;
+    z-index: -1;
+}
+
+    .silvertalenttopbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #000; /* For browsers that do not support gradients */
+        background-image: url('/images/SilverTalent_Top.jpeg');
+        /* Fade bottom → top
+        mask-image: linear-gradient(to right, #F8AA60, rgba(0,0,0,0));
+        -webkit-mask-image: linear-gradient(to right, #F8AA60, #F9CC93); */
+        z-index: -1; /* keeps text above the fading image */
+    }
+
+.silvertalentbg {
+    position: relative;
+    color: #000; /* your text color */
+    margin-top: 2px;
+}
+
+    .silvertalentbg::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url('/images/Silver_Talent.png') center/cover no-repeat;
+        /* Fade bottom → top 
+        mask-image: linear-gradient(to bottom, rgba(0,0,0,0.7), rgba(0,0,0,0.2));
+        -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.7), rgba(0,0,0,0.2));
+        /* keeps text above the fading image */
+        transform: scaleX(-1); /* Flips the image horizontally */
+        -webkit-transform: scaleX(-1); /* For compatibility */
+        z-index: -1;
+    }

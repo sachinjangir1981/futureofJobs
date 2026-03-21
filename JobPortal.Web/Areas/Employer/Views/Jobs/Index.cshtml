@@ -1,0 +1,20 @@
+@model IEnumerable<JobPortal.Domain.Models.Job>
+@{
+    Layout = "/Views/Shared/_LayoutEmployer.cshtml";
+}
+<h2>My Jobs</h2>
+<p><a class="btn btn-primary" href="/Employer/Jobs/Create">Post Job</a></p>
+<table class="table">
+<thead><tr><th>Title</th><th>Location</th><th>Applicants</th><th>Actions</th></tr></thead>
+<tbody>
+@foreach(var j in Model) {
+    <tr>
+        <td>@j.Title</td>
+        
+        <td>@(j.City.Name)</td>
+        <td></td>
+        <td><a class="btn btn-sm btn-secondary" href="/Employer/Jobs/Edit/@j.Id">Edit</a> <a class="btn btn-sm btn-info" href="/Employer/Jobs/Applicants/@j.Id">Applicants</a></td>
+    </tr>
+}
+</tbody>
+</table>

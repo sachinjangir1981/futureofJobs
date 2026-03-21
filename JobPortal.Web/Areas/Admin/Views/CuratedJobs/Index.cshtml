@@ -1,0 +1,94 @@
+﻿@using JobPortal.Web.Models;
+@model List<CuratedJob>
+@{
+    ViewBag.Title = "Index";
+    Layout = "_LayoutAdmin";
+    int i = 0;
+}
+<div>
+    <h4> Manage Curated Jobs</h4>
+</div>
+<div style="float:right">
+    <a href="/admin/curatedJobs/ManageJobs/0" class="btn btn-primary">Create New</a>
+</div>
+
+<table id="myTable" class="table table-striped display">
+    <thead>
+        <tr>
+            <th width="50px">SNO</th>
+            <th>Title</th>
+            <th>Company</th>
+            <th width="70px">Edit</th>
+            <th width="70px">Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var itm in Model)
+        {
+            i++;
+            <tr>
+                <td width="50px">@i</td>
+                <td>@itm.JobTitle </td>
+                <td>@itm.CompanyName </td>
+                <td width="70px"><a href="/admin/curatedJobs/ManageJobs/@itm.PKID" class="btn btn-primary"> Edit</a> </td>
+                <td width="70px"><button onclick="Deleteitem(@itm.PKID)">Delete</button> </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th width="50px">SNO</th>
+            <th>Title</th>
+
+            <th width="450px">Complate Path</th>
+            <th width="70px">Edit</th>
+
+            <th width="70px">Delete</th>
+        </tr>
+    </tfoot>
+</table>
+@section Scripts
+{
+    <script>
+            $(document).ready(function () {
+                    $('#myTable').DataTable({
+                    "paging": true,
+                    "lengthChange": true,
+                    "searching": true,
+                    "ordering": true,
+                    "info": false,
+                    "autoWidth": false,
+                    "responsive": true,
+                });
+             });
+
+
+        $(document).ready(function () {
+            $('.navbar-brand').removeClass("active");
+            $('#atlibrary').addClass("active");
+        });
+
+
+
+        function Deleteitem(id) {
+            if (confirm('Are you sure to delete this record?')) {
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/CuratedJobs/Delete",
+                    data: "id=" + id,
+                    dataType: "json",
+                    success: function (data) {
+                        window.location.reload();
+                    },
+                    error: function () {
+                        console.log("error");
+                    }
+                });
+            }
+        }
+
+
+
+
+    </script>
+}

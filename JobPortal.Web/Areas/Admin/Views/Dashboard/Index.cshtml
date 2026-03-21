@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "/Views/Shared/_LayoutAdmin.cshtml";
+}
+ 
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">Jobs Posted</h5>
+                <p class="display-6 text-success">@ViewBag.JobCount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">Applications</h5>
+                <p class="display-6 text-primary">@ViewBag.ApplicationCount</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h5 class="card-title">Users</h5>
+                <p class="display-6 text-warning">@ViewBag.UserCount</p>
+            </div>
+        </div>
+    </div>
+</div>

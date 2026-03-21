@@ -1,0 +1,179 @@
+﻿@using JobPortal.Web.Models;
+@model LeadershipReflection;
+@{
+    ViewBag.Title = "Silver Talent – Competency & Delivery Framework - Grid";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@Html.Partial("_Breadcrumb")
+@section HeaderImage
+{
+    <style>
+        .theaderbg {
+            background-color: aliceblue;
+        }
+    </style>
+    <div class="headerImage2">
+        <img src="~/images/jobs-new.png" style="width:70px !important" />
+    </div>
+}
+<div class="hometext " style="margin-top:-25px; background-color:aliceblue">
+    <ul class="ulBreadcrumb" style="padding-top:10px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/SiverTalent">Siver Talent  </a></li>
+         
+    </ul>
+
+
+    <p class="commonPara paraHeaderNew " style="text-align:left">
+        <b>
+            Silver Talent <br /> Competency & Delivery Framework - Grid
+        </b>
+    </p>
+    <form action="st_competency_delivery_framework" method="post">
+        <p>
+            @Html.ValidationSummary(true, "Please fix the following errors.", new { @class = "text-danger" })
+        </p>
+        <p>
+            @if (TempData["Msg"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Msg"]
+                </div>
+            }
+
+        </p>
+        <p class="commonPara" style="text-align:left">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px; ">
+                <div>
+                    <input type="hidden" asp-for="uRId" />
+                    <input type="hidden" asp-for="PKID" />
+                    <input asp-for="FullName" class="input-form-control txtwhobg" placeholder="Name *" required />
+                </div>
+                <div>
+
+                    <input asp-for="InstituteName" class="input-form-control txtwhobg" placeholder="Academic Institution *" required />
+                </div>
+                <div>
+
+                    <input asp-for="PostDate" type="Date" class="input-form-control txtwhobg" placeholder="Date *" required style= />
+                </div>
+            </div>
+        </p>
+
+        <table class="modern-table">
+            <tr>
+                <td style="background:#E2FEA0" class="headright"> <b>What Do I Bring to the Table? <span style="font-size:25px">→</span></b></td>
+                <td class="tdovrflow" rowspan="2"><div class="modern-table-header">1. Immediate / Tangible Deliverables. <span style="font-size:13px">These are things that can be seen, used, or handed over..</span> </div></td>
+                <td class="tdovrflow" rowspan="2"><div class="modern-table-header">2. Capability Built in Others. <span style="font-size:13px">As a result of my engagement, others become better at…</span></div></td>
+                <td class="tdovrflow" rowspan="2"><div class="modern-table-header">3. Directional or Decision Clarity. <span style="font-size:13px">Help create clarity where ambiguity is expensive…</span></div> </td>
+            </tr>
+            <tr>
+
+                <td class="headright" style="background-color:#F0F8A4"><b>Areas where I am Ready to take Responsibility for Outcomes… <span style="font-size:20px">↓</span> </b></td>
+
+            </tr>
+            <tr>
+                <td class="modern-table-row-header"><div class="modern-table-row-div">1. Primary Strength -  <small><i>Where I Lead Confidently… </i></small></div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R1L1" class="modern-table-bg-txtarea" rows="5" placeholder="FMCG – Regional Distribution & Sales (North & West India) - handled distributor networks, dealer appointments, routine sales planning, and monthly reviews as part of my own role.">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R1L2" class="modern-table-bg-txtarea" rows="5" placeholder="Over the years, junior sales staff working with me picked up basic discipline around customer visits, follow-ups, and reporting.">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R1L3" class="modern-table-bg-txtarea" rows="5" placeholder="From experience, I am generally able to sense whether a proposed expansion or scheme is workable at ground level or not.">
+                    </textarea>
+                </td>
+
+            </tr>
+            <tr>
+
+                <td class="modern-table-row-header"><div class="modern-table-row-div">2. Strong Support Area <small><i>Where I Deliver Reliably…</i></small></div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R2L1" class="modern-table-bg-txtarea" rows="5" placeholder="Consumer Durables – Small & Mid-Size Enterprises - worked on market development activities, coordination with dealers, and handling customer and channel issues as part of my responsibilities.">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R2L2" class="modern-table-bg-txtarea" rows="5" placeholder="Team members became more familiar with handling dealers, resolving routine issues, and coordinating with internal departments.">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R2L3" class="modern-table-bg-txtarea" rows="5" placeholder="Empty, but you can write here…">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+
+                <td class="modern-table-row-header"><div class="modern-table-row-div">3. Contributing Area -<small><i>Where I Add Value with Context…</i></small></div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R3L1" class="modern-table-bg-txtarea" rows="5" placeholder="Industrial Products / B2B Sales (Project-based) - I have supported senior colleagues in customer meetings, follow-ups, and coordination with operations and finance.">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R3L2" class="modern-table-bg-txtarea" rows="5" placeholder="Empty, but you can write here…">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R3L3" class="modern-table-bg-txtarea" rows="5" placeholder="I am generally able to sense whether sales challenges are due to market conditions or internal execution gaps.">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="modern-table-row-header">
+                    <div class="modern-table-row-div">
+                        4. Adjacent Area -  <small>Where I Support, Not Anchor…</small>
+                    </div>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R4L1" class="modern-table-bg-txtarea" rows="5" placeholder="Industrial Products / B2G Sales…">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R4L2" class="modern-table-bg-txtarea" rows="5" placeholder="Empty, but you can write here…">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R4L3" class="modern-table-bg-txtarea" rows="5" placeholder="I can usually flag delays or risks based on past exposure, even if I am not leading the engagement."></textarea>
+                </td>
+
+            </tr>
+        </table>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            @if (!ViewBag.IsAuthenticated)
+            {
+                <div>
+
+                    <input asp-for="UserName" class="input-form-control txtwhobg" placeholder="Contact Details *" required />
+                </div>
+                <div>
+
+                    <input asp-for="Password" type="password" class="input-form-control txtwhobg" placeholder="Password *" required />
+                </div>
+            }
+            <div class="mb-3 text-end">
+
+                <button type="submit" id="btn" class="btn btn-primary">Save, Submit & Share</button>
+            </div>
+
+            <div style="display:flex">
+                <div class="col-5 col-lg-5 col-md-5 col-sm-12">
+                </div>
+                <div class="col-4 col-lg-4 col-md-4 col-sm-12" style="text-align:center; display:inline-flex">
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/home/st_competency_delivery_framework/"+Model.uRId.ToString())&title=@Html.Encode("Green Jobs")&description=@Html.Encode("Green Jobs: SHARE YOUR VOICE THAT MATTERS")"><img src="~/images/facebook.jpg" width="32" /> </a>
+                    <a target="_blank" href="https://wa.me/?text=@Html.Encode("Green Jobs : SHARE YOUR VOICE THAT MATTERS")%20https://greenjobs.digital/home/st_competency_delivery_framework/@Model.uRId.ToString()"><img src="~/images/whatsapp.jpg" width="32" /> </a>
+                    <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/home/st_competency_delivery_framework/@Model.uRId.ToString()&title=@Html.Encode("Green Jobs")&summary=@Html.Encode("Green Jobs: SHARE YOUR VOICE THAT MATTERS")&source=greenjobs.digital"><img src="~/images/linkedin.png" width="32" /> </a>
+                    <a href="mailto:?subject=HELLO%20KISAN%20POLLS%3A%20SHARE%20YOUR%20VOICE%20THAT%20MATTERS&body=https://greenjobs.digital/home/st_competency_delivery_framework/@Model.uRId.ToString()"><img src="~/images/mail.png" width="32" /></a>
+                </div>
+                <div class="col-4 col-lg-4 col-md-4 col-sm-12">
+                </div>
+            </div>
+
+        </div>
+        <p class="commonPara" style="margin-top:10px"></p>
+    </form>
+
+</div>

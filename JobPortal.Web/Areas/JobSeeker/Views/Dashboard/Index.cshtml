@@ -1,0 +1,67 @@
+﻿@model Dictionary<string, List<FormAnswer>>
+@{
+    Layout = "/Views/Shared/_LayoutJobSeeker.cshtml";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4">My Form Dashboard</h2>
+
+    <div class="mb-3">
+        @if (ViewBag.HasFinal)
+        {
+            <span class="badge bg-success">✅ Submitted Final</span>
+        }
+        else if (ViewBag.HasDraft)
+        {
+            <span class="badge bg-warning text-dark">📝 Draft Saved</span>
+            <a asp-action="FillForm" class="btn btn-sm btn-outline-primary ms-2">Continue Editing</a>
+        }
+        else
+        {
+            <span class="badge bg-secondary">No form started yet</span>
+            <a asp-action="FillForm" class="btn btn-sm btn-success ms-2">Start Form</a>
+        }
+    </div>
+
+    @if (Model.Any())
+    {
+        <div class="accordion" id="answersAccordion">
+            @foreach (var sect  in Model)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="heading-@sect.Key">
+                        <button class="accordion-button collapsed" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#collapse-@sect.Key">
+                            @sect.Key
+                        </button>
+                    </h2>
+                    <div id="collapse-@sect.Key" class="accordion-collapse collapse">
+                        <div class="accordion-body">
+                            <ul class="list-group">
+                                @foreach (var ans in sect.Value)
+                                {
+                                    <li class="list-group-item">
+                                        <strong>@ans.Question.QuestionText</strong><br />
+
+                                        @if (!string.IsNullOrEmpty(ans.AnswerText))
+                                        {
+                                            <span>@ans.AnswerText</span>
+                                        }
+                                        else if (!string.IsNullOrEmpty(ans.FilePath))
+                                        {
+                                            <a href="@ans.FilePath" target="_blank">📎 View File</a>
+                                        }
+                                        else
+                                        {
+                                            <em>No answer</em>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

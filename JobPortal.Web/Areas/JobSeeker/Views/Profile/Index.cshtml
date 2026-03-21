@@ -1,0 +1,38 @@
+@model List<JobPortal.Domain.Models.JobSeekerProfile>
+@{
+    Layout = "/Views/Shared/_LayoutJobSeeker.cshtml";
+}
+<h2>Profile</h2>
+
+<p><a class="btn btn-primary" href="/JobSeeker/Profile/Edit/0">Create Profile</a></p>
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Profile</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Added On</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var itm in Model)
+        {
+            <tr>
+                <td>@itm.ProfileName</td>
+                <td>@itm.FullName</td>
+
+                <td>@itm.Phone</td>
+
+                <td>
+                   
+                        <span>@string.Format("{0:dd/MM/yyyy hh:mm}", itm.RcdInsTs.AddMinutes(330))  </span>
+                    
+                </td>
+                <td><a class="btn btn-secondary" href="/JobSeeker/Profile/Edit/@itm.Id">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

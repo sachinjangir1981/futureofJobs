@@ -1,0 +1,98 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<TimePassCategories>
+@{
+    ViewBag.Title = "Time Pass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string dvId = "";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+    @*  <img src="~/images/employer.jpeg" /> *@
+    </div>
+}
+<link href="~/css/linecategory.css" rel="stylesheet" />
+<div class="bglogin" style="min-height:90vh; margin-top:-90px">
+    @if (Model != null)
+    {
+        <div style="text-align:center;padding-top:100px">
+            <table style="margin:0 auto">
+                <tr>
+                    <td style="border-right:1px solid blue">
+                        <img src="~/images/havingsaidthat.jpg" id="imgLogo" style=" max-width:40px" />
+                    </td>
+                    <td style="text-align:left; padding-left:10px">
+                        <span class="tpheading1" style="color:#06948A; font-size:22px">Having Said That...</span> <br />
+                        <span class="tpheading1" style="font-size:17px">Be Your Own Career Counsellor</span><br />
+
+                    </td>
+                </tr>
+            </table>
+
+
+            <div class="tpbg" style="height:2px; margin:5px 10px 0px 10px !important; "></div>
+            <div class="tpbg" style="height:3px; margin:3px 10px 0px 10px !important"></div>
+            <div class="tpbg" style="margin:3px 10px 0px 10px !important">
+            <table style="width:100%" >
+                <tr>
+                    <td class="tpbg"></td>
+                </tr>
+                @foreach (var itm in Model)
+                {
+                    dvId = "dv_" + itm.PKID.ToString(); 
+                    <tr>
+                        <td class="tpbg" style="text-align:left; padding:10px 10px 10px 15px;">
+                            <a href="javascript:void(0)" onclick="javascript:getItemsById(@itm.PKID)" style="text-decoration:none; color:#000"> @Html.Raw(itm.TPCategory) </a>
+                            <div id="@dvId" class="dvItems" style="display:none"> </div>
+                        </td>
+                    </tr>
+                    
+                }
+            </table>
+            </div>
+           @*  <ul class="ulList" style="min-height:90vh;">
+                
+                @foreach (var itm in Model)
+                {
+                    <li class="tpbg">
+                        <a href="/visitor/Havingsaidthat/@itm.PKID"> @Html.Raw(itm.TPCategory) </a>
+                    </li>
+                }
+            </ul> *@
+        </div>
+
+
+    }
+
+</div>
+<script>
+         function getItemsById(catId) {
+
+        $.ajax({
+            url: '/visitor/getItemsById/'+catId,   // controller action
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                console.log('Items loaded', data);
+                const ul = $("<ul >");
+                
+                ul.empty(); // clear old items if any
+
+                $.each(data.items, function (index, item) {
+                    ul.append('<li class="tpbg" style="text-decoration:none; color:#000;padding:10px">  <a href="/visitor/linedetails/'+item.pkid+ '">' + item.title + '</a></li>');
+                });
+                console.log(ul);
+                $('#dv_'+catId).empty();
+                $('#dv_'+catId).append(ul);
+                $('.dvItems').hide();
+                $('#dv_'+catId).show();
+            },
+            error: function (err) {
+                console.error('Error loading items', err);
+            }
+        });
+
+    };
+</script>

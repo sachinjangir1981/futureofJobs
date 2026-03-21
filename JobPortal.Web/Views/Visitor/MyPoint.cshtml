@@ -1,0 +1,178 @@
+﻿@using JobPortal.Web.Models;
+@using System.Text.RegularExpressions
+
+@model OneMinuteItem
+@{
+    ViewBag.Title = "Do you get my point";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/dygmpmain.png" />
+    </div>
+}
+
+@{
+
+    string newssubject = Regex.Replace(Model.NewsSubject, "<.*?>", string.Empty);
+    string discussion = Regex.Replace(Model.Discussion, "<.*?>", string.Empty);
+    string feedbacklink = Regex.Replace(Model.FeedBackLink, "<.*?>", string.Empty);
+    string mediaref = Regex.Replace(Model.MediaRef, "<.*?>", string.Empty);
+    int inewssubject = newssubject.Length;
+    int idiscussion = discussion.Length;
+    int ifeedbacklink = feedbacklink.Length;
+    int imediaref = mediaref.Length;
+}
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" type="text/javascript"></script>
+ 
+
+@if (Model != null)
+{
+    <div class="container dygmpbg" style="margin-top:-90px; min-height:98vh">
+        <div class="row" style="padding-top:80px">
+             
+            <div class="col-12">
+
+                <div id="html-content-holder" style="text-align:left;padding:0px 20px 20px 20px  ">
+
+                    <div class="row" style="width:100%;margin:auto;  text-align:center">
+
+                        <div class="col-12  timepassheading1" style="color:#3C467B; font-size:23px; text-transform:uppercase">
+                            Do you get my point...
+                        </div>
+                        <span class="timepassheading2" style="padding-top:10px">Future of Work</span><br />
+                    </div>
+
+
+                    <div class="row txt middlebg">
+                        <div class="row margin10" style="text-align:center; padding-top:30px">
+                            <div class="sphead" style="color:#000;">
+                                @Html.Raw(Model.Title)
+                            </div> 
+                        </div>
+                        <div class="clearfix margin10" style="padding-top:30px;"></div>
+                        @if (inewssubject > 0)
+                        {
+                            <div class="row margin10" style="text-align:center">
+                                <div class="sphead" style="color:#3C467B;text-align:center; padding-bottom:10px;" >
+                                    You Noticed That Too?
+                                </div> @Html.Raw(Model.NewsSubject)
+                            </div>
+                            <div class="clearfix margin0" ></div>
+                        }
+                        @if (idiscussion > 0)
+                        {
+                            <div class="row" style="text-align:center; padding-top:30px;">
+                                <div class="sphead" style="color:#3C467B;text-align:center; padding-bottom:10px;">
+                                    Wait Till You Hear This…
+                                </div>  @Html.Raw(Model.Discussion)
+                            </div>
+                            <div class="clearfix margin0"></div>
+                        }
+                        @if (ifeedbacklink > 0)
+                        {
+                            <div class="row" style="text-align:center; padding-top:30px;">
+                                <div class="sphead" style="color:#3C467B;text-align:center">
+                                    Do You Get My Point!
+                                </div>  @Html.Raw(Model.FeedBackLink)
+                            </div>
+                            <div class="clearfix margin0"></div>
+                        }
+
+                    </div>
+                    
+                </div>
+                <div class="col-lg-12 col-md-12" style="text-align:center; padding-top:5px">
+                    <div style="text-align:center; display:inline-flex">
+                        <a href="javascript:void(0)"><img src="~/images/download1.png" width="32" onclick="createimage()" id="btnConvert" alt="Download" /></a>
+                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/visitor/MyPoint/"+@Model.PKID)&title=@Html.Encode("Hello Kisan")&description=@Html.Encode("Hello Kisan: MyPoint")"><img src="~/images/facebook.png" width="32" /> </a>
+                        <a target="_blank" href="https://wa.me/?text=@Html.Encode("Hello Kisan: MyPoint")%20https://greenjobs.digital/visitor/MyPoint/@Model.PKID"><img src="~/images/whatsapp.png" width="32" /> </a>
+                        <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/visitor/MyPoint/@Model.PKID&title=@Html.Encode("Hello Kisan")&summary=@Html.Encode("Hello Kisan: MyPoint")&source=hellokisan.org"><img src="~/images/linkedin.png" width="32" /> </a>
+                        <a href="mailto:?subject=Hello Kisan: MyPoint&body=https://greenjobs.digital/visitor/MyPoint/@Model.PKID"><img src="~/images/mail.png" width="32" /> </a>
+                    </div>
+
+                </div>
+
+
+
+            </div>
+            
+            <div style="display:none">
+                <div id="previewImg">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<script>
+    var totalItem = parseInt(1);
+    var currentItem = parseInt(1);
+
+    if (currentItem == 1) {
+        $('#imgPrev').hide();
+    }
+
+    if (currentItem >= totalItem) {
+        $('#imgNext').hide();
+    }
+    if (currentItem > 1) {
+        $('#imgPrev').show();
+    }
+
+    if (totalItem > currentItem) {
+        $('#imgNext').show();
+    }
+
+    function gotopreviousItem() {
+        if (currentItem == 1) {
+            $('#imgPrev').hide();
+            console.log("already at first place");
+        }
+        else {
+            currentItem = currentItem - 1;
+            location.href = "/Home/MyPoint/?i=" + currentItem;
+
+        }
+    }
+
+    function gotonextItem() {
+        if (currentItem == totalItem) {
+            $('#imgNext').hide();
+            console.log("already at last place");
+        }
+        else {
+            currentItem = currentItem + 1;
+            location.href = "/Home/MyPoint/?i=" + currentItem;
+        }
+
+    }
+
+    function createimage() {
+        html2canvas(document.getElementById("html-content-holder")).then(function (canvas) {
+            var anchorTag = document.createElement("a");
+            document.body.appendChild(anchorTag);
+            document.getElementById("previewImg").appendChild(canvas);
+            anchorTag.download = "filename.jpg";
+
+            anchorTag.href = canvas.toDataURL();
+            anchorTag.target = '_blank';
+            anchorTag.click();
+            $('#previewImg').text('');
+            //var fakeLink = document.createElement('a');
+            //fakeLink.setAttribute('href', 'https://wa.me/send?text='+encodeURIComponent('http://cards.spavitechnology.com/images/head.png'));
+            //fakeLink.setAttribute('data-action', 'share/whatsapp/share');
+            //fakeLink.target = '_blank';
+            //console.log('hi');
+            //fakeLink.click();
+        });
+    };
+</script>

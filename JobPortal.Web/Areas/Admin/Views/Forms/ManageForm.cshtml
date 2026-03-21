@@ -1,0 +1,276 @@
+﻿@model JobPortal.Web.ViewModels.FormVm
+@using JobPortal.Domain.Models;
+@{
+    ViewData["Title"] = "Form Sections";
+    Layout = "_LayoutAdmin";
+}
+
+@foreach (var section in Model.Sections)
+{
+    string title = section.Title;
+    int id = section.Id;
+    <div class="card mb-4 shadow-sm position-relative">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"> @title   </h5> <div>
+                <a href="javascript:void(0);" class="text-white me-2" onclick="openEditSection(@id)">
+                    <i class="bi bi-pencil-square"></i>
+                </a>
+                <a href="javascript:void(0);" class="text-white" onclick="DeleteSection(@id)">
+                    <i class="bi bi-trash"></i>
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            @foreach (var q in section.Questions.OrderBy(x => x.DisplayOrder))
+            {
+                var existingText = Model.AnswersText.ContainsKey(q.Id) ? Model.AnswersText[q.Id] : null;
+                var existingFile = Model.AnswersFile.ContainsKey(q.Id) ? Model.AnswersFile[q.Id] : null;
+
+                <div class="mb-3 position-relative border-bottom pb-2">
+                    <label class="form-label">
+                        @q.QuestionText @if (q.IsRequired)
+                        {
+                            <span class="text-danger">*</span>
+                        }
+                    </label>
+
+                    @switch (q.QuestionType)
+                    {
+                        case QuestionType.Text:
+                            {
+                                <input name="Answers[@q.Id]" class="form-control" value="@existingText" @(q.IsRequired ? "required" : "") />
+                                break;
+                            }
+                        case QuestionType.SingleChoice:
+                            {
+                                foreach (var opt in q.Options.Where(o => o.IsActive).OrderBy(o => o.DisplayOrder))
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="Answers[@q.Id]" value="@opt.OptionText" @(existingText == opt.OptionText ? "checked" : "") @(q.IsRequired ? "required" : "") />
+                                        <label class="form-check-label">@opt.OptionText</label>
+                                        <a href="javascript:void(0);" class="text-primary ms-2" onclick="openEditOption(@opt.Id)">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" class="text-danger ms-1" onclick="DeleteOption(@opt.Id)">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                }
+                                <button class="btn btn-outline-success btn-sm mt-2" onclick="openAddOptions(@q.Id)">
+                                    + Add Options
+                                </button>
+                                break;
+                            }
+                        case QuestionType.MultipleChoice:
+                            {
+                                var selected = (existingText ?? "").Split('|', System.StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                                foreach (var opt in q.Options.Where(o => o.IsActive).OrderBy(o => o.DisplayOrder))
+                                {
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="Answers[@q.Id]" value="@opt.OptionText" @(selected.Contains(opt.OptionText) ? "checked" : "") />
+                                        <label class="form-check-label">@opt.OptionText</label>
+                                        <a href="javascript:void(0);" class="text-primary ms-2" onclick="openEditOption(@opt.Id)">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <a href="javascript:void(0);" class="text-danger ms-1" onclick="DeleteOption(@opt.Id)">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
+                                }
+                                if (q.IsRequired)
+                                {
+                                    <small class="text-muted">Select at least one.</small>
+                                }
+                                <button class="btn btn-outline-success btn-sm mt-2" onclick="openAddOptions(@q.Id)">
+                                    + Add Options
+                                </button>
+                                break;
+                            }
+                        case QuestionType.FileUpload:
+                            {
+                                if (!string.IsNullOrWhiteSpace(existingFile))
+                                {
+                                    <div class="mb-2">
+                                        <a href="@existingFile" target="_blank" class="btn btn-sm btn-outline-secondary">View current file</a>
+                                    </div>
+                                }
+                                <input type="file" name="Files[@q.Id]" class="form-control" @(q.IsRequired && string.IsNullOrWhiteSpace(existingFile) ? "required" : "") />
+                                break;
+                            }
+                    }
+
+                    <!-- Edit/Delete question buttons -->
+                    <div class="position-absolute top-0 end-0 mt-1 me-2">
+                        <a href="javascript:void(0);" class="text-primary me-2" onclick="openEditQuestion(@q.Id)">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a href="javascript:void(0);" class="text-danger" onclick="DeleteQuestion(@q.Id)">
+                            <i class="bi bi-trash"></i>
+                        </a>
+                    </div>
+                </div>
+            }
+            <button class="btn btn-outline-success btn-sm mt-2" onclick="openAddQuestion(@id)">
+                + Add Question
+            </button>
+        </div>
+    </div>
+}
+
+
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="editContent"></div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+         function openEditSection(id) {
+                 $.get('/Admin/Forms/EditSection/' + id + "?layout=2", function(data) {
+                 $('#editContent').html(data);
+                 new bootstrap.Modal(document.getElementById('editModal')).show();
+             });
+         }
+
+         function openEditQuestion(id) {
+                 $.get('/Admin/Forms/EditQuestion/' + id+ "?layout=2", function(data) {
+                 $('#editContent').html(data);
+                 new bootstrap.Modal(document.getElementById('editModal')).show();
+             });
+         }
+
+         function openEditOption(id) {
+                 $.get('/Admin/Forms/EditOption/' + id+ "?layout=2", function(data) {
+                 $('#editContent').html(data);
+                 new bootstrap.Modal(document.getElementById('editModal')).show();
+             });
+         }
+
+         function openAddSection() {
+                 $.get('/Admin/Forms/AddSection'+ "?layout=2", function(data) {
+                 $('#editContent').html(data);
+                 new bootstrap.Modal(document.getElementById('editModal')).show();
+             });
+         }
+
+         function openAddOptions(questionid) {
+                 $.get('/Admin/Forms/CreateOption?questionId='+questionid + "&layout=2", function(data) {
+                 $('#editContent').html(data);
+                 new bootstrap.Modal(document.getElementById('editModal')).show();
+             });
+         }
+
+         function openAddQuestion(sectionId) {
+                 $.get('/Admin/Forms/CreateQuestion?sectionId='+sectionId+ "&layout=2", function(data) {
+                 $('#editContent').html(data);
+                 new bootstrap.Modal(document.getElementById('editModal')).show();
+             });
+         }
+
+         function Save()
+             {
+                     var form = $('#editContent').find('form');
+                     var formData = new FormData(form[0]);
+                     $.ajax({
+                         url: form.attr('action'),
+                         type: 'POST',
+                         data: formData,
+                         processData: false,
+                         contentType: false,
+                         success: function(response) {
+                             if (response.success) {
+                                  var modal = bootstrap.Modal.getInstance(document.getElementById("editModal"));
+                                  modal.hide();
+
+                                     location.reload();
+                             } else {
+                                 $('#editContent').html(response);
+                             }
+                         },
+                         error: function() {
+                             alert('An error occurred while saving the section.');
+                         }
+                     });
+             }
+
+        function DeleteSection(sectionId)
+        {
+            if(confirm('Are you sure you want to delete section?'))
+            {
+             var urldel = "/admin/forms/DeleteSection"
+             $.ajax({
+                 url: urldel,
+                 type: 'POST',
+                 data: {id:sectionId, layout:2},
+               
+                 success: function(response) {
+                     if (response.success) {
+                             location.reload();
+                     } else {
+                         $('#editContent').html(response);
+                     }
+                 },
+                 error: function() {
+                     alert('An error occurred while deleting the section.');
+                 }
+             });
+          }
+        }
+
+        function DeleteQuestion(questionId)
+        {
+            if(confirm('Are you sure you want to delete question?'))
+            {
+             var urldel = "/admin/forms/DeleteQuestion"
+             $.ajax({
+                 url: urldel,
+                 type: 'POST',
+                 data: {id:questionId, layout:2},
+                 
+                 success: function(response) {
+                     if (response.success) {
+                             location.reload();
+                     } else {
+                         $('#editContent').html(response);
+                     }
+                 },
+                 error: function() {
+                     alert('An error occurred while deleting the question.');
+                 }
+             });
+          }
+        }
+
+        function DeleteOption(optionid)
+        {
+            if(confirm('Are you sure you want to delete option?'))
+            {
+             var urldeloption = "/admin/forms/DeleteOption"
+             $.ajax({
+                 url: urldeloption,
+                 type: 'POST',
+                 data: { id : optionid, layout : 2},
+                 success: function(response) {
+                     if (response.success) {
+                             location.reload();
+                     } else {
+                         $('#editContent').html(response);
+                     }
+                 },
+                 error: function() {
+                     alert('An error occurred while deleting the option.');
+                 }
+             });
+          }
+        }
+
+
+    </script>
+}

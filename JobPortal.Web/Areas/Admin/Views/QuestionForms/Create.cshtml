@@ -1,0 +1,201 @@
+﻿@using JobPortal.Web.Models;
+@model DynamicForm
+@{
+    Layout = "_LayoutAdmin";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+
+@using (Html.BeginForm("Create", "QuestionForms", FormMethod.Post, new { id = "frmFormpaper", @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal" style="padding:15px">
+        <h4> Add Survey Format</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (!string.IsNullOrEmpty(ViewBag.msg))
+        {
+            <div class="alert-success">
+                @ViewBag.msg
+            </div>
+        }
+
+        <div class="col-12 mt-2">
+            @Html.HiddenFor(model => model.PKID)
+            <b>Survey Format Name Title</b>
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+
+        </div>
+
+
+             <div class="col-12 mt-2">
+            <b>
+                Header Note : Survey Title Explanation
+            </b>  <br />
+            @Html.TextAreaFor(model => model.Header, new { @class = "form-control summernote", @rows = "5", @cols = "50" })
+
+            @Html.ValidationMessageFor(model => model.Header, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-12 mt-2">
+            <b>
+                Footer Note : Survey Content Explanation
+            </b>  <br />
+            <br />
+            @Html.TextAreaFor(model => model.Footer, new { @class = "form-control summernote", @rows = "5", @cols = "50" })
+
+            @Html.ValidationMessageFor(model => model.Footer, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-12 mt-2">
+            <b>
+                Website Display Sub Title
+            </b>  <br />
+            @Html.TextAreaFor(model => model.Detail, new { @class = "form-control summernote", @rows = "5", @cols = "50" })
+
+            @Html.ValidationMessageFor(model => model.Detail, "", new { @class = "text-danger" })
+        </div>
+
+
+       
+             
+                <div class="col-12  mt-2">
+                    @Html.HiddenFor(model => model.ImageUrlLeft)
+                    <b>
+                        Website Display Image Left
+                    </b> <br />
+            <input type="file" id="flImageUrlLeft" name="flImageUrlLeft" accept="image/*" />
+
+                </div>
+                <div class="col-12  mt-2">
+                    @Html.HiddenFor(model => model.ImageUrl)
+                    <b>
+                        Website Display Image Right
+                    </b> <br />
+            <input type="file" id="flImageUrl" name="flImageUrl" accept="image/*" />
+
+                </div>
+
+                <div class="col-12  mt-2">
+                    @Html.HiddenFor(model => model.BGUrl)
+                    <b>
+                        Survey Question Background Theme
+                    </b> <br />
+            <input type="file" id="flImageBGUrl" name="flImageBGUrl" accept="image/*" />
+
+                </div>
+                <div class="col-12  mt-2">
+                    <b>
+                        Display Order
+                    </b>
+                    <br />
+                    @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+
+                <div class="col-12  mt-2">
+                    <b>
+                        Active
+                    </b>
+                    <br />
+                    @Html.CheckBoxFor(model => model.IsActive, new { @class = "form-check-input", @style = "border:1px solid #000" })
+                </div>
+            
+            
+
+        
+
+        <div class="row">
+            <div class="col-12  mt-2">
+
+                <b>
+                    Survey Format Name Title Background
+                </b> @Html.EditorFor(model => model.CommonCSS.SurveyFormatHeaderBG, new { htmlAttributes = new { @type = "color" } })
+
+
+            </div>
+            <div class="col-12  mt-2">
+
+                <b>
+                    Header Note : Survey Title Explanation Background
+                </b>
+                @Html.EditorFor(model => model.CommonCSS.SurveyFormatHeadDetailsBG, new { htmlAttributes = new { @type = "color" } })
+
+            </div>
+
+            <div class="col-12  mt-2">
+
+                <b>
+                    Footer Note : Survey Content Explanation Background
+                </b>
+                @Html.EditorFor(model => model.CommonCSS.SurveyFormatFooterBG, new { htmlAttributes = new { @type = "color" } })
+
+            </div>
+            <div class="col-12  mt-2">
+                <b>
+                   Survey Question Series Title Background
+                </b>
+
+                @Html.EditorFor(model => model.CommonCSS.SurveyFormatSectionBG, new { htmlAttributes = new { @type = "color" } })
+            </div>
+            <div class="col-12  mt-2">
+                <b>
+                    Survey Question Series Title Explanation Background
+                </b>
+
+                @Html.EditorFor(model => model.CommonCSS.SurveyFormatSectionDetailsBG, new { htmlAttributes = new { @type = "color" } })
+            </div>
+            <div class="col-12  mt-2">
+                <b>
+                    Survey Question Series Footer Background
+                </b>
+
+                @Html.EditorFor(model => model.CommonCSS.SurveyFormatSectionFooterBG, new { htmlAttributes = new { @type = "color" } })
+            </div>
+            <div class="col-12  mt-2">
+                <b>
+                    Question Background
+                </b>
+
+                @Html.EditorFor(model => model.CommonCSS.QuestionBG, new { htmlAttributes = new { @type = "color" } })
+            </div>
+            <div class="col-12  mt-2">
+                <b>
+                    Answer Background
+                </b>
+
+                @Html.EditorFor(model => model.CommonCSS.AnswerBG, new { htmlAttributes = new { @type = "color" } })
+            </div>
+        </div>
+
+        <div class="col-md-6">
+        </div>
+
+        <div class="row" style="padding-top:30px">
+        </div>
+
+        <div class="row" style="padding-top:30px">
+            <div class="col-md-12">
+
+                <input id="btnSubmitContent" type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            $('#Header').summernote();
+            $('#Footer').summernote();
+            $('#Detail').summernote();
+
+        });
+    </script>
+}

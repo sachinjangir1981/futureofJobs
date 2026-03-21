@@ -1,0 +1,47 @@
+﻿@model IEnumerable<FormTypeCategory>
+@{
+
+    ViewData["Title"] = "View Categories";
+    Layout = "_LayoutAdmin";
+}
+<div class="container py-4">
+    <h2>Form</h2>
+    <a asp-action="CreateCategory" class="btn btn-success mb-3">➕ Add New</a>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>Category</th>
+                <th width="100">Form</th>
+                <th width="100">Active</th>
+                <th style="width:420px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FormCategory</td>
+
+                    <td width="100"><a class="nav-link" href="/Admin/Forms/Sections/@item.Id">Sections</a></td>
+                    <td width="100">@(item.IsActive ? "✔️" : "❌")</td>
+                    
+
+                        <td width="420">
+                          
+                            <a asp-action="Compare" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"> Compare</a>
+                        @if (!item.IsReadOnly)
+                        {
+                            <a asp-action="ViewEntries" asp-route-id="@item.Id" class="btn btn-sm btn-secondary"> View Entries</a>
+                            <a asp-action="EditCategory" asp-route-id="@item.Id" class="btn btn-sm btn-primary">✏️ Edit</a>
+                            <a asp-action="Ratings" asp-route-id="@item.Id" class="btn btn-sm btn-info">👁 View</a>
+                            <a asp-action="CategoryDeleteConfirmed" asp-route-id="@item.Id" class="btn btn-sm btn-danger">🗑 Delete</a>
+                        }
+                        </td>
+
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

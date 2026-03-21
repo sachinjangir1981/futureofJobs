@@ -1,0 +1,15 @@
+﻿@using JobPortal.Web.Models;
+@model ShareItModel
+@{
+    string url = Model.URL + Model.PKID.ToString();
+    string subject = Model.Subject;
+}
+     <div style="text-align:center; display:inline-flex">
+       
+    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/"+@url)&title=@Html.Encode("Green Jobs")&description=@Html.Encode(subject)"><img src="~/images/facebook.png" width="32" /> </a>
+    <a target="_blank" href="https://wa.me/?text=@Html.Encode(subject)%20https://greenjobs.digital/@url"><img src="~/images/whatsapp.png" width="32" /> </a>
+        <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/@url&title=@Html.Encode("Green Jobs")&summary=@Html.Encode(subject)&source=greenjobs.digital"><img src="~/images/linkedin.png" width="32" /> </a>
+        <a href="mailto:?subject=@subject&body=https://greenjobs.digital/@url"><img src="~/images/mail.png" width="32" /> </a>
+    </div>
+
+ 

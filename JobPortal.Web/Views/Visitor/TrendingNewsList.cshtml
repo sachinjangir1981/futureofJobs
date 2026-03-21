@@ -1,0 +1,45 @@
+﻿@using JobPortal.Models;
+
+@model List<WpPost>
+@{
+    ViewBag.Title = "Trending News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+     
+    WpPostCategory wpPostCategory = ViewBag.Category != null ? (WpPostCategory)ViewBag.Category : new WpPostCategory();
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        @if (!string.IsNullOrEmpty(wpPostCategory.ImageUrl))
+        {
+            <img src="~/images/snippet/@wpPostCategory.ImageUrl" />
+        }
+</div>
+}
+<div class="bglogin" style="min-height:90vh; margin-top:-90px">
+
+    <div style="text-align:center">
+        <a href="/">
+
+            <img src="~/images/news-icon.png" id="imgLogo" style="padding:45px 10px 10px 10px; max-width:180px" />
+        </a>
+        @if (Model != null && Model.Count >0)
+        {
+            <ul class="ulList">
+                @foreach(WpPost itm in Model)
+                {
+                    <li class="tnbg"><a href="/visitor/trendingnews/@itm.PKID">@itm.Title</a> </li>
+                }
+            </ul>
+            
+        }
+        else
+        {
+        <p class="paraCommon" style="padding:20px; font-size:18px;">No trending news available.</p>
+        }
+    </div>
+
+
+    
+</div>

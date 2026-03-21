@@ -1,0 +1,73 @@
+﻿@model JobPortal.Web.Models.ContactForm
+@{
+	ViewData["Title"] = "Contact - Green Jobs";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<div class="bglogintop">
+</div>
+<div class="cmspages bglogin" style="min-height:99vh">
+	<div class="p-3">
+		<span class="cms-heading">
+			<i> <span style="font-size:20px;font-weight:bold"> Contact Us</span> </i>
+		</span> <br /><br />
+		<div class="pagecontent" >
+
+			<div class="row clPadding">
+				<div class="col-12 clPadding">Please fill the following form:</div>
+			</div>
+			<div class="row clPadding">
+				 
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<form method="post" asp-controller="Home" asp-action="Contact">
+						@if (!string.IsNullOrEmpty(ViewBag.Msg))
+						{
+							<div class="alert-success">
+								@ViewBag.Msg
+							</div>
+						}
+						<div>
+							<div class="pb-2">
+								 
+								<input type="text" name="Name" id="Name" class="form-control txtwhobg" placeholder="Name" required="required">
+							</div>
+							<div class="pb-2">
+								 
+								<input type="tel" name="Phone" id="Phone" placeholder="Mobile" class="form-control txtwhobg" required="required" pattern="[0-9()#&amp;+*-=.]+" title="Only numbers and phone characters (#, -, *, etc) are accepted.">
+
+							</div>
+							<div class="pb-2">
+								 
+								<input type="email" name="Email" id="Email" class="form-control txtwhobg" placeholder="Email" required="required">
+							</div>
+							<div class="pb-2">
+								 
+								<textarea class="form-control txtwhobg" name="Message" id="Message" rows="4" placeholder="Message"></textarea>
+							</div>
+							<div class="pb-2">
+								<div class="cf-turnstile" data-sitekey="0x4AAAAAABgDfPxwzl2vplTY" data-theme="light"></div>
+								<input type="hidden" id="turnstile_token" name="TurnstileToken">
+
+							</div>
+							<div class="pb-2">
+								<input type="submit" class="btn btn-primary" value="Send">
+							</div>
+						</div>
+
+					</form>
+				</div>
+			</div>
+			@* <div class="col-12">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3560.2447506446797!2d75.79339111436394!3d26.83216667001395!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x396dc9aba3d9a18f%3A0x371714c8558d2874!2sMy%20Home!5e0!3m2!1sen!2sin!4v1663394691371!5m2!1sen!2sin" width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+			</div> *@
+
+
+		</div>
+	</div>
+</div>
+<script>
+	function cf_submit() {
+		let turnstileToken = document.getElementById('turnstile_token');
+		turnstileToken.value = cf_turnstile.getValue();
+	}
+</script>

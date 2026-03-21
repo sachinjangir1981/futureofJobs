@@ -1,0 +1,89 @@
+﻿@using JobPortal.Web.Models;
+@model List<DynamicForm>
+@{
+    ViewBag.Title = "Index";
+    Layout = "_LayoutAdmin";
+    int i = 0;
+}
+<div style="float:right">
+    <a href="/Admin/QuestionForms/Create" class="btn btn-outline-primary">Create New Category</a>
+
+</div>
+
+<table id="myTable" class="table">
+
+    <tr>
+        <th width="50px">SNO</th>
+        <th>Forms</th>
+        <th width="70px">Website View</th>
+        <th width="70px">Edit</th>
+        <th width="80px">Active</th>
+        @*  <th width="80px">Duplicate</th> *@
+        <th width="70px"> Form</th>
+        <th width="70px">Delete</th>
+    </tr>
+
+    @foreach (var itm in Model)
+    {
+        i += 1;
+        <tr>
+            <td width="50px">@i </td>
+
+            <td>@itm.Title </td>
+            <td width="70px"><a href="/visitor/forms/@itm.PKID" class="btn btn-primary"> View</a></td>
+            <td width="70px"><a href="/Admin/QuestionForms/Edit/@itm.PKID" class="btn btn-dark"> Edit</a></td>
+            <td width="80px">
+                <input type="checkbox" checked="@itm.IsActive" disabled />
+            </td>
+            @*  <td width="70px"><button onclick="DuplicateForms(@itm.PKID)" class="btn btn-warning">Duplicate</button> </td> *@
+            <td width="70px"><a href="/Admin/QuestionForms/ManageForm/@itm.PKID" class="btn btn-primary"> Manage</a> </td>
+            <td width="70px"><button onclick="DeleteForms(@itm.PKID)" class="btn btn-warning">Delete</button> </td>
+        </tr>
+    }
+
+</table>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('.navbar-brand').removeClass("active");
+        $('#atnews').addClass("active");
+    });
+
+
+
+    function DeleteForms(id) {
+        if (confirm('Are you sure to delete this form?')) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/QuestionForms/DeleteForms",
+                data: "id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        }
+    }
+
+     function DuplicateForms(id) {
+        if (confirm('Are you sure to duplicate this form?')) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/QuestionForms/Duplicate",
+                data: "id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        }
+    }
+
+</script>

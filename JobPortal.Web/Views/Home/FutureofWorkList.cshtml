@@ -1,0 +1,42 @@
+﻿ @using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{ Layout = "/Views/Shared/_Layout.cshtml"; 
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+}
+ 
+@section HeaderImage
+{
+    <div class="headerImage2">
+            <img src="~/images/greenjob_newhome.jpg"   />
+    </div>
+}
+<div class="fowinnertop"></div>
+<div class="hometext fowinner">
+    <ul class="ulBreadcrumb">
+    <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+    <li><a href="/home/futureofwork">Future of Work </a></li>
+</ul>
+      <p class="paraCommon paraHeader"  > <b>Future of Work  </b></p>
+
+    @if (Model != null)
+    {
+        <table class="tbl" width="100%">
+
+
+            @foreach (var itm in Model)
+            {
+
+                <tr>
+                    <td>
+                        <a href="/visitor/library/@itm.PKID" style="text-decoration:none;color:#000">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+  
+</div>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Job Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta+Mahee:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css' rel='stylesheet'>
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/css/g-translate.css" rel="stylesheet" />
+    <style>
+        #google_translate_element {
+            text-align: center;
+            padding-right: 10px;
+        }
+    </style>
+     
+</head>
+<body>
+     
+    <div class="container-fluid" style="max-width:500px;margin:0px auto">
+    <div class="container-fluid" >
+       
+           
+                <div class="row m-2">
+                    <div class="col-6" style="text-align:left">
+                        <a class="navbar-brand headerlogoHome" href="/">
+                    <img src="~/images/gjob-logo.png" /> <span style="display:block; margin:-10px 5px auto"><b>SMART Career Choices</b></span>
+                        </a>
+                    </div>
+             
+                    <div class="col-6" style="text-align:right;float:right">
+                    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:20px;float:right">
+                        <!-- Toggler button (required for mobile) -->
+                        <button class="navbar-toggler" type="button"
+                                data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                                aria-controls="mainNavbar" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+
+                        <!-- Menu -->
+                    <div class="collapse navbar-collapse " id="mainNavbar">
+
+                            @*  <ul class="navbar-nav ">
+                        <li class="nav-item"><a class="nav-link" href="/Jobs">Jobs</a></li>
+                    </ul> *@
+
+                            <ul class="navbar-nav ms-auto" style="padding-right:20px">
+                                @if (User.Identity.IsAuthenticated)
+                                {
+                                    
+                                    if (User.HasClaim("AccountType", "Admin"))
+                                    {
+                                        <li class="nav-item"><a class="nav-link" href="/Admin/Dashboard">My Account</a></li>
+                                    }
+                                    
+                                    else
+                                    {
+                                        <li class="nav-item"><a class="nav-link" href="/home/myaccount">My Account</a></li>
+                                    }
+                                    <li class="nav-item">
+                                        <a asp-controller="Account" asp-area="/" asp-action="Logout" class="nav-link">Logout</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item"><a class="nav-link" href="/Account/Register">Register</a></li>
+
+                                    <li class="nav-item"><a class="nav-link" href="/Account/Login"> Login</a></li>
+                                  @*   <li class="nav-item">
+                                        <a href="javascript:void(0)" class="nav-link" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+                                    </li> *@
+                                }
+
+                            </ul>
+                        </div>
+                    </nav>
+                    </div>
+                </div>
+            
+    </div>
+    @Html.Partial("_login", new JobPortal.Web.ViewModels.LoginViewModel())
+
+    <div class="container-fluid mt-4">
+        @RenderBody()
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    @RenderSection("Scripts", required: false)
+        <script type="text/javascript">
+
+
+            function setCookie(key, value, expiry) {
+                var expires = new Date();
+                expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+                document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+            }
+                function googleTranslateElementInit() {
+                    var lang = getUrlVars()["lang"];
+                    if (lang != undefined && lang != null && lang != "") {
+                        setCookie('googtrans', "/en/" + lang, 1);
+                    }
+                    new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, includedLanguages: "as,bn,en,fr,de,gu,hi,kn,mr,ne,es,ta,te,ur" }, 'google_translate_element');
+                }
+
+            function getUrlVars() {
+                var vars = [], hash;
+                var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                for (var i = 0; i < hashes.length; i++) {
+                    hash = hashes[i].split('=');
+                    vars.push(hash[0]);
+                    vars[hash[0]] = hash[1];
+                }
+                return vars;
+            }
+
+            function readCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+             
+        $("#loginForm").submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: '/Account/Login',
+                type: 'POST',
+                data: $(this).serialize(),
+                success: function (res) {
+                    location.reload(); // Refresh navbar to show logged in user
+                },
+                error: function () {
+                    alert("Login failed. Try again.");
+                }
+            });
+        });
+    </script>
+    </div>
+
+    <div class="bottom-bar" style="padding-top:20px">
+        <div class="google-translate-container">
+            <div id="google_translate_element"></div>
+        </div>
+    </div>
+</body>
+
+</html>

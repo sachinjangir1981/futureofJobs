@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Job Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        .navbar-toggler {
+            border: none !important;
+        }
+        .navbar-toggler-icon
+        {
+            border: none !important;
+        }
+    </style>
+      <link href="~/css/g-translate.css" rel="stylesheet" />  
+</head>
+<body>
+    
+    <div class="container-fluid mt-4">
+    @RenderBody()
+</div>
+ <script type="text/javascript">
+
+
+        function setCookie(key, value, expiry) {
+            var expires = new Date();
+            expires.setTime(expires.getTime() + (expiry * 24 * 60 * 60 * 1000));
+            document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+        }
+            function googleTranslateElementInit() {
+                var lang = getUrlVars()["lang"];
+                if (lang != undefined && lang != null && lang != "") {
+                    setCookie('googtrans', "/en/" + lang, 1);
+                }
+                new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL, includedLanguages: "as,bn,en,fr,de,gu,hi,kn,mr,ne,es,ta,te,ur" }, 'google_translate_element');
+            }
+
+        function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+
+        function readCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+ <div class="bottom-bar" style="padding-top:20px">
+        <div class="google-translate-container">
+            <div id="google_translate_element"></div>
+        </div>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,58 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+}
+
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/academics.jpeg" />
+    </div>
+}
+<div class="bgacademicSacredTopBg">
+</div>
+<div class="hometext bgacademicSacredbg">
+    <ul class="ulBreadcrumb">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/academics">Academics <span class="fa fa-angle-right"></span></a></li>
+      @*   <li><a href="/home/academics_the_sacred_backboneof_civilization">Academics - The Sacred Backbone of Civilization <span class="fa fa-angle-right"></span></a></li> *@
+    </ul>
+    @if (Model != null)
+    {
+        <div class="rounded-3"  >
+            <p class="paraCommon paraHeader"> <b>Academics - The Sacred Backbone of Civilization </b> </p>
+            <p class="paraCommon">
+                <b>Academics Come here to Decode, Debate, and Delight in New Ideas</b>
+            </p>
+            <p class="paraCommon"> A space where educators rethink classrooms, careers, and curiosity. </p>
+            <p class="paraCommon"> A fun corner for curious educators to rethink learning with wit and insight. Read the following topics explore whatever pulls your brain, heart, or coffee-powered curiosity today. </p>
+            <p class="paraCommon">
+                <table class="tbl" width="100%">
+
+
+                    @foreach (var itm in Model)
+                    {
+
+                        <tr>
+                            <td>
+                                <a href="/visitor/library/@itm.PKID" style="text-decoration:none;color:#000">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+
+
+            </p>
+
+        </div>
+    }
+</div>

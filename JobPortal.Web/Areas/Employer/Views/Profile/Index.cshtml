@@ -1,0 +1,31 @@
+@model List<JobPortal.Domain.Models.EmployerProfile>
+@{
+    Layout = "/Views/Shared/_LayoutEmployer.cshtml";
+}
+<h2>Profile</h2>
+
+ 
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var itm in Model)
+        {
+            <tr>
+                <td>@itm.FullName</td>
+
+                <td>@itm.Email</td>
+                
+                <td><a class="btn btn-secondary" href="/Employer/Profile/Edit/@itm.Id">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+

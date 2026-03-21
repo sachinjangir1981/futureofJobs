@@ -1,0 +1,26 @@
+﻿@using JobPortal.Web.Models;
+@model List<LibraryModel>
+
+<table width="100%">
+    <tr>
+        <th width="50px">SNO</th>
+        <th>Title</th>
+        <th width="100px">Copy</th>
+        <th width="70px">Edit</th>
+        <th width="80px">Duplicate</th>
+        <th width="70px">Delete</th>
+    </tr>
+
+    @foreach (var itm in Model)
+    {
+        <tr>
+            <td width="50px">@itm.DisplayOrder</td>
+
+            <td>@itm.Title </td>
+            <td width="100px"><button class="btn copylink" id="btn_@itm.PKID" onclick="copywithJquery('btn_@itm.PKID','dvlnk_@itm.PKID')">Copy Link</button> <div name="dvlnk_@itm.PKID" style="display:none" id="dvlnk_@itm.PKID"> <a href="/library/@itm.PKID">@itm.Title</a></div> </td>
+            <td width="70px"><a href="/Webadmin/Library/Edit/@itm.PKID" class="btn btn-primary"> Edit</a> </td>
+            <td width="70px"><button onclick="DuplicateItem(@itm.PKID)" class="btn btn-warning">Duplicate</button> </td>
+            <td width="70px"><button onclick="Deleteitem(@itm.PKID)">Delete</button> </td>
+        </tr>
+    }
+</table>

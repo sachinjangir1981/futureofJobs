@@ -1,0 +1,54 @@
+﻿@model List<QuestionRating> 
+
+<div   id="section-rate"  >
+    <div class="card p-3 mb-4">
+        <h5>⭐ Ratings</h5>
+
+        <div class="mb-3">
+            <strong>Overall Average:</strong>
+            <span class="badge bg-primary"> </span>
+        </div>
+
+        <table class="table table-bordered table-striped">
+              
+            <tbody>
+                @foreach (var rategroup in Model.GroupBy(b => b.RatingByName))
+                {
+                    <tr>
+                        <td colspan="3">
+                            <strong>
+                                @(rategroup.Key == "Self" ? "My Ratings" : rategroup.Key)
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <table width="100%">
+
+
+                                @foreach (var r in rategroup)
+                                {
+                                    <tr>
+                                        <td>
+                                            @r.Question.QuestionText
+                                        </td>
+                                        <td>
+                                            <span class="badge @(r.RatedBy == "Self" ? "bg-info" : "bg-success")">
+                                                @r.Score
+                                            </span>
+                                        </td>
+                                        
+                                        <td>@r.RatedAt.ToString("dd-MMM-yyyy HH:mm")</td>
+                                    </tr>
+                                }
+
+                            </table>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+    </div>
+</div>

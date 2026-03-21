@@ -1,0 +1,153 @@
+﻿@using JobPortal.Web.Models
+@model DynamicForm
+@{
+     string QuestionBG = "background-color:" + Model.CommonCSS.QuestionBG ?? "#ffffff";
+    string AnswerBG = "background-color:" + Model.CommonCSS.AnswerBG ?? "#ffffff";
+}
+<table width="100%">
+    <tr style="@QuestionBG">
+        <td>Select Question Type</td>
+        <td>
+            @Html.HiddenFor(m => m.CurrentSection.CurrentQuestion.PKID)
+            @Html.DropDownListFor(m => m.CurrentSection.CurrentQuestion.QuestionType, new SelectList(new List<SelectListItem>
+            {
+            new SelectListItem { Text = "Single Choice - Radio", Value = "1" },
+            new SelectListItem { Text = "Multiple Choice - Checkbox", Value = "2" },
+            new SelectListItem { Text = "Range Slider", Value = "3" },
+            new SelectListItem { Text = "Text Answer", Value = "4" },
+            new SelectListItem { Text = "Upload (Image/Doc/PDF)", Value = "5" }
+            }, "Value", "Text"), "Select Question Type", new { @class = "form-control", @onchange = "javascript:SetAnswerVisibility(this)" })
+        </td>
+    </tr>
+    <tr style="@QuestionBG">
+        <td>Write Question</td>
+        <td>
+            @Html.TextAreaFor(m => m.CurrentSection.CurrentQuestion.Question, new { @class = "form-control summernote" })
+            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.Question)
+        </td>
+    </tr>
+    <tr style="@QuestionBG">
+        <td>
+            Select display order of question
+        </td>
+        <td>
+            @Html.EditorFor(m => m.CurrentSection.CurrentQuestion.DisplayOrder, new { @class = "form-control", @min = "1"  })
+            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.Question)
+        </td>
+    </tr>
+    <tr style="@QuestionBG">
+        <td>
+           How many question in 1 display screen (Select screen display number)
+        </td>
+        <td>
+            @Html.EditorFor(m => m.CurrentSection.CurrentQuestion.Step, new { @class = "form-control", @min = "1" })
+            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.Step)
+        </td>
+    </tr>
+    <tr style="@QuestionBG">
+        <td>
+            Marks / Weightage
+        </td>
+        <td>
+            @Html.EditorFor(m => m.CurrentSection.CurrentQuestion.Marks, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.Question)
+        </td>
+    </tr>
+    <tr style="@QuestionBG">
+        <td>Active</td>
+        <td> @Html.EditorFor(m => m.CurrentSection.CurrentQuestion.IsActive, new { @class = "form-control" })</td>
+    </tr>
+    <tr style="@QuestionBG">
+        <td colspan="2">
+            <input type="button" onclick="SaveForm(3);" value="Save Question" class="sheetbg" />
+        </td>
+    </tr>
+    @if (Model.CurrentSection.CurrentQuestion.PKID >0)
+            {
+        <tr style="@AnswerBG">
+        <td colspan="2">
+           
+            <table width="100%">
+                <tr>
+                    <td colspan="6">
+                        <b>Write Answer/s 1 2 3...</b>
+                    </td>
+
+                </tr>
+                    @foreach (var answer in Model.CurrentSection.CurrentQuestion.Answers)
+                {
+                    <tr>
+                        <td>
+                            @Html.Raw(answer.Answer) <br />
+                           
+                        </td>
+                        <td>
+                            @answer.Details
+                        </td>
+                            <td> @answer.Marks </td>
+                            <td> @answer.IsActive </td>
+                            <td> <a href="/Admin/QuestionForms/ManageForm/@Model.PKID/@Model.CurrentSection.PKID/@Model.CurrentSection.CurrentQuestion.PKID/@answer.PKID">Edit </a> </td>
+                            <td> <input type="button" onclick="DeleteAnswer(@answer.PKID);" value="Delete" class="btn-outline-primary" /> </td>
+                    </tr>
+                }
+                <tr class="clOption">
+                    <td>Answer</td>
+                    <td colspan="5">
+                            @Html.HiddenFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.PKID)
+                            @Html.TextAreaFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Answer, new { @class = "form-control summernote" })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Answer)
+                    </td>
+                </tr>
+                    <tr>
+                        <td>Answer Interpretation</td>
+                        <td colspan="5">
+                            @Html.TextAreaFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Details, new { @class = "form-control " })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Details)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Marks/ weightage</td>
+                        <td colspan="5">
+                            @Html.TextBoxFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Marks, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Marks)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Display Order</td>
+                        <td colspan="5">
+                            @Html.TextBoxFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.DisplayOrder, new { @class = "form-control", @min = "1" })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.DisplayOrder)
+                        </td>
+                    </tr>
+                    <tr class="clOptionRange">
+                        <td>Min Value</td>
+                        <td  >
+                            @Html.TextBoxFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.RMin, new { @class = "form-control", @type="number" })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.RMin)
+                        </td>
+                        <td>Max Value</td>
+                        <td >
+                            @Html.TextBoxFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.RMax, new { @class = "form-control", @type = "number" })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.RMax)
+                        </td>
+                        <td>Default Value</td>
+                        <td>
+                            @Html.TextBoxFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Rincrement, new { @class = "form-control", @type = "number" })
+                            @Html.ValidationMessageFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.Rincrement)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Active</td>
+                        <td colspan="5"> @Html.EditorFor(m => m.CurrentSection.CurrentQuestion.CurrentAnswer.IsActive, new { @class = "form-control" })</td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <input type="button" onclick="SaveForm(4);" value="Save Answer"   />
+                        </td>
+                    </tr>
+            </table>
+           
+        </td>
+    </tr>
+    }
+</table>

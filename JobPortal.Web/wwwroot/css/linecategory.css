@@ -1,0 +1,152 @@
+﻿ ul {
+    list-style-type: none;
+    list-style: none;
+   /* margin-left: 10px !important;*/
+/*padding-left:10px;*/
+}
+
+li {
+    border-bottom: 1px solid #000;
+}
+
+ul li a {
+    padding: 10px 10px 10px 1px;
+    text-decoration: none;
+    color: #000;
+} 
+
+
+.firstjob_bg {
+    margin-top: -90px;
+    background-image:url('/images/first_job.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 99vh;
+    width:100%;
+}
+.firstjob_tbl {
+    
+    max-height:300px;
+    overflow-y:scroll;
+    position:relative;
+    width:99%;
+}
+.firstjob_tbl table
+    {
+        width:100%;
+    }
+.fjrowcatbg {
+    background-image: url('/images/firstjob_cat_bg.jpeg');
+    background-size: cover;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    margin : 3px 1px 3px 1px;
+}
+
+.fjitembg {
+    background-image: url('/images/firstjob_item_bg.jpeg');
+    background-size: cover;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    margin : 3px 1px 3px 1px;
+    text-align:left;
+}
+    .fjitembg a {
+        text-decoration: none;
+        color: #000;
+        padding-left: 15px;
+    }
+
+.highlevel_bg {
+    margin-top: -90px;
+    background-image: url('/images/highlevel.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 99vh;
+    width: 100%;
+}
+
+.highlevel_tbl {
+    max-height: 300px;
+    overflow-y: scroll;
+    position: relative;
+    width: 99%;
+}
+
+    .highlevel_tbl table {
+        width: 100%;
+    }
+
+.hlrowcatbg {
+    background-image: url('/images/hlcatbg.jpeg');
+    background-size: cover;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    margin: 3px 1px 3px 1px;
+}
+
+.hlitembg {
+    background-image: url('/images/hlitembg.jpeg');
+    background-size: cover;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    margin: 3px 1px 3px 1px;
+    text-align: left;
+}
+
+.hlitembg a {
+    text-decoration: none;
+    color: #000;
+    padding-left: 15px;
+}
+
+
+
+.gj_pathway_bg {
+    margin-top: -90px;
+    background-image: url('/images/gb_pathways.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 99vh;
+    width: 100%;
+}
+
+.gj_pathway_tbl {
+    max-height: 300px;
+    overflow-y: scroll;
+    position: relative;
+    width: 99%;
+}
+
+    .gj_pathway_tbl table {
+        width: 100%;
+    }
+
+.gjprowcatbg {
+    background-image: url('/images/gbp_catbg.jpeg');
+    background-size: cover;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    margin: 3px 1px 3px 1px;
+}
+
+.gjpitembg {
+    background-image: url('/images/gjp_itembg.jpeg');
+    background-size: cover;
+    text-decoration: none;
+    color: #000;
+    padding: 10px;
+    margin: 3px 1px 3px 1px;
+    text-align: left;
+}
+
+    .gjpitembg a {
+        text-decoration: none;
+        color: #000;
+        padding-left: 15px;
+    }

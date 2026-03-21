@@ -1,0 +1,46 @@
+﻿@using JobPortal.Web.Models;
+@model LibraryModel
+@{
+    ViewBag.Title = "Time Pass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var shareit = new ShareItModel { PKID = Model.PKID, Subject = "Library", URL = "visitor/library/" };
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+}
+
+
+<div class="bglibraryitemtop">
+
+</div>
+<div class="hometext bglibraryitem" style="min-height:90vh;">
+    @if (ViewBag.libCat != null && ViewBag.libCat.IsCustomBreadcrumb && !string.IsNullOrEmpty(ViewBag.libCat.CustomBreadcrumb))
+    {
+        <ul class="ulBreadcrumb">
+            @Html.Raw(ViewBag.libCat.CustomBreadcrumb)
+            @* <li><a href="javascript:void(0)">@Model.Title <span class="fa fa-angle-right"></span></a></li> *@
+        </ul>
+    }
+
+
+    <div class="timepass-details">
+
+
+
+        <div class="subhead"  >
+            <b>@Model.Title</b>
+        </div>
+
+        <div class="description">
+            @Html.Raw(Model.Content)
+
+        </div>
+
+    </div>
+    <div class="col-lg-12 col-md-12" id="dvSocial" style="text-align:center;padding-top:10px; margin-bottom:20px">
+        <partial name="_shareit" model="@shareit" />
+
+    </div>
+
+</div>
+

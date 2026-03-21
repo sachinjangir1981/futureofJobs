@@ -1,0 +1,171 @@
+﻿@using JobPortal.Web.Models;
+
+
+@model OneMinuteItem
+@{
+    ViewBag.Title = "Time Pass";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/havingsaidthat.jpg" />
+    </div>
+}
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+
+
+@if (Model != null)
+{
+    <div class="container tpbg" style="margin-top:-90px">
+        <div class="row" style="padding-top:60px">
+            <div class="col-12">
+                <table width="100%" style="padding:0px 0px 0px 0px">
+                    <tr>
+
+                        <td style="max-width:450px;" align="left">
+                            <div id="html-content-holder" style="text-align:left  ">
+
+                                <div class="row" style="width:100%;margin:auto;  text-align:left; padding-left:10px">
+
+                                    <div class="col-12 timepassheading1" style="color:#06948A; font-size:35px">
+                                        Having Said That...
+                                    </div>
+                                    <span class="timepassheading2">Be Your Own Career Counsellor</span><br />
+                                </div>
+
+
+                                <div class="row txt" style="margin-top:15px; padding:0px 10px 10px 20px;">
+                                    <div class="clearfix margin10"></div>
+                                    <div class="row">
+                                        <div class="sphead" style="margin-bottom:15px; font-size:17px; color:#000;">
+                                            @Html.Raw(Model.NewsSubject)
+                                        </div>
+                                    </div>
+                                    <div class="row margin10">
+                                        <div class="sphead" style="color:#06948A;">
+                                            Situation
+                                        </div> @Html.Raw(Model.Discussion)
+                                    </div>
+                                    <div class="clearfix margin10"></div>
+                                    <div class="row">
+                                        <div class="sphead" style="color:#06948A;">
+                                            Thought Bubble
+                                        </div> @Html.Raw(Model.FeedBackLink)
+                                    </div>
+                                    <div class="clearfix margin10"></div>
+                                    <div class="row">
+                                        <div class="sphead" style="color:#06948A;">
+                                            Having Said That…
+                                        </div> @Html.Raw(Model.MediaRef)
+                                    </div>
+                                    <div class="clearfix margin10"></div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12 col-md-12" style="text-align:center; padding-top:5px;padding-bottom:10px;">
+                                <div style="text-align:center; display:inline-flex">
+                                    <a href="javascript:void(0)"><img src="~/images/download1.png" width="32" onclick="shareOnWhatsApp()" id="btnConvert" alt="Download" /></a>
+                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/visitor/Havingsaidthat/"+@Model.PKID)&title=@Html.Encode("Hello Kisan")&description=@Html.Encode("Hello Kisan: Timepass")"><img src="~/images/facebook.png" width="32" /> </a>
+                                    <a target="_blank" href="https://wa.me/?text=@Html.Encode("Hello Kisan: Timepass")%20https://greenjobs.digital/visitor/Havingsaidthat/@Model.PKID"><img src="~/images/whatsapp.png" width="32" /> </a>
+                                    <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/visitor/Havingsaidthat/@Model.PKID&title=@Html.Encode("Hello Kisan")&summary=@Html.Encode("Hello Kisan: Timepass")&source=hellokisan.org"><img src="~/images/linkedin.png" width="32" /> </a>
+                                    <a href="mailto:?subject=Hello Kisan: Timepass&body=https://greenjobs.digital/visitor/Havingsaidthat/@Model.PKID"><img src="~/images/mail.png" width="32" /> </a>
+                                </div>
+
+                            </div>
+                            <div id="fttext" style="padding-bottom:20px;"> </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td align="center" style="display:none">
+                            <img src="~/images/prev_button.png" id="imgPrev" onclick="gotopreviousItem()" style="margin-right:10px; top: 50%;" class="" />
+                            <img src="~/images/next_button.png" id="imgNext" onclick="gotonextItem()" style="margin-left:10px" class="" />
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+
+            <div style="display:none">
+                <div id="previewImg">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+<script>
+    var totalItem = parseInt(1);
+    var currentItem = parseInt(1);
+
+    if (currentItem == 1) {
+        $('#imgPrev').hide();
+    }
+
+    if (currentItem >= totalItem) {
+        $('#imgNext').hide();
+    }
+    if (currentItem > 1) {
+        $('#imgPrev').show();
+    }
+
+    if (totalItem > currentItem) {
+        $('#imgNext').show();
+    }
+
+    function gotopreviousItem() {
+        if (currentItem == 1) {
+            $('#imgPrev').hide();
+            console.log("already at first place");
+        }
+        else {
+            currentItem = currentItem - 1;
+            location.href = "/Home/TimePass/?i=" + currentItem;
+
+        }
+    }
+
+    function gotonextItem() {
+        if (currentItem == totalItem) {
+            $('#imgNext').hide();
+            console.log("already at last place");
+        }
+        else {
+            currentItem = currentItem + 1;
+            location.href = "/Home/TimePass/?i=" + currentItem;
+        }
+
+    }
+
+    function createimage() {
+        html2canvas(document.getElementById("html-content-holder")).then(function (canvas) {
+            var anchorTag = document.createElement("a");
+            document.body.appendChild(anchorTag);
+            document.getElementById("previewImg").appendChild(canvas);
+            anchorTag.download = "filename.jpg";
+
+            anchorTag.href = canvas.toDataURL();
+            anchorTag.target = '_blank';
+            anchorTag.click();
+            $('#previewImg').text('');
+            //var fakeLink = document.createElement('a');
+            //fakeLink.setAttribute('href', 'https://wa.me/send?text='+encodeURIComponent('http://cards.spavitechnology.com/images/head.png'));
+            //fakeLink.setAttribute('data-action', 'share/whatsapp/share');
+            //fakeLink.target = '_blank';
+            //console.log('hi');
+            //fakeLink.click();
+        });
+    };
+</script>
+
+<script src="~/js/share.js"></script>

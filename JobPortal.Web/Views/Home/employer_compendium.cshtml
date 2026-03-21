@@ -1,0 +1,60 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string serialNo = "";
+    int padding = 0;
+    string paddingstr = "";
+}
+ 
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/employer.jpeg" />
+    </div>
+}
+<div class="bgemployercompendiumtop">
+</div>
+<div class="hometext bgemployercompendium">
+    <ul class="ulBreadcrumb">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/employer">Modern Pragmatic Employers <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+@if (Model != null)
+{
+    <div class="rounded-3"  >
+            <p class="paraCommon" style="text-align:center">
+                <img src="/images/employer4.png" width="50%" />
+            </p>
+        <p class="paraCommon paraHeader"> <b>Compendium on Future of Work </b> </p>
+        <p class="paraCommon">
+            <b>Create a complete 360°</b> lens of how EMPLOYERS must think in a Post-AI, Gen Z, Hybrid, Purpose-Driven World. <i>This is also a</i> new-age guide for Employers, Founders, HR Leaders, and Anyone preparing for the talent realities of this decade.
+        </p>
+        <p class="paraCommon"><i>“lighter tone, deeper wisdom, maximum impact.”</i> </p>
+         
+        <p class="paraCommon">
+            <table class="tbl" width="100%">
+
+
+                @foreach (var itm in Model)
+                {
+
+                    <tr>
+                        <td>
+                                <a href="/visitor/library/@itm.PKID" style="text-decoration:none;color:#000">@serialNo@itm.DisplayOrder. @Html.Raw(itm.Title) <br /><span style="display:block; padding-top:7px;"><img src="~/images/click_here_3.png" width="45px" /></span></a>
+                        </td>
+                    </tr>
+                }
+
+            </table>
+
+
+
+        </p>
+
+    </div>
+}
+</div>

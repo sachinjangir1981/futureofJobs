@@ -1,0 +1,66 @@
+﻿@using JobPortal.Web.Models;
+@model List<OneMinuteItem>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    int i = 0;
+}
+<div style="float:right">
+    <a href="/Admin/MyPoint/Create" class="btn btn-primary">Create</a>
+   
+</div>
+<table>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+</table>
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th width="40">SNO</th>
+            <th>My Point</th>
+
+            <th>Card</th>
+
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var itm in Model)
+        {
+            i++;
+            <tr>
+                <td width="40">@i </td>
+                <td>@Html.Raw(itm.Title)</td>
+
+                <td><a href="/visitor/MyPoint/@itm.PKID" class="btn">View Card</a> </td>
+                <td><a href="/Admin/MyPoint/Edit/@itm.PKID" class="btn">Edit</a> </td>
+                <td><a href="javascript:void(0);" onclick="javascript:deleteCustomer(@itm.PKID);" class="btn btn-danger">Delete</a> </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    
+    function deleteCustomer(id) {
+        if (confirm("Are you sure you want to delete this my point article?")) {
+            $.ajax({
+                type: "POST",
+                url: "/admin/MyPoint/Delete",
+                data: "id=" + id,
+                dataType: "json",
+                success: function (data) {
+                    window.location.reload();
+                },
+                error: function () {
+                    console.log("error");
+                }
+            });
+        }
+    }
+
+
+</script>

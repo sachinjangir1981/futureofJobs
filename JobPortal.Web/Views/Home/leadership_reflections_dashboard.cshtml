@@ -1,0 +1,187 @@
+﻿@using JobPortal.Web.Models;
+@model LeadershipReflection;
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@Html.Partial("_Breadcrumb")
+@section HeaderImage
+{
+    <style>
+        .theaderbg
+        {
+            background-color: aliceblue;
+        }
+    </style>
+<div class="headerImage2">
+    <img src="~/images/jobs-new.png" style="width:70px !important" />
+</div>
+}
+ <div class="hometext " style="margin-top:-25px; background-color:aliceblue">
+    <ul class="ulBreadcrumb" style="padding-top:10px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/academicreg">Academics <span class="fa fa-angle-right"></span></a></li>
+        <li><a href="/home/leadership_reflections">Leadership Reflections </a></li>
+    </ul>
+
+
+    <p class="commonPara paraHeaderNew " style="text-align:left">
+        <b>
+            Leadership Reflections; <br />
+            Dashboard -Priority Setting Grid
+        </b>
+    </p>
+    <form action="leadership_reflections_dashboard" method="post">
+        <p>
+            @Html.ValidationSummary(true, "Please fix the following errors.", new { @class = "text-danger" })
+        </p>
+        <p>
+            @if (TempData["Msg"] !=null)
+            {
+                   <div class="alert alert-success">
+                    @TempData["Msg"]
+                </div>
+            }
+            
+        </p>
+        <p class="commonPara" style="text-align:left">
+            <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px; ">
+                <div  >
+                    <input type="hidden" asp-for="uRId" />
+                    <input type="hidden" asp-for="PKID" />
+                    <input asp-for="FullName"   class="input-form-control txtwhobg" placeholder="Name *" required />
+                </div>
+                <div  >
+
+                    <input asp-for="InstituteName" class="input-form-control txtwhobg" placeholder="Academic Institution *" required />
+                </div>
+                <div  >
+
+                    <input asp-for="PostDate" type="Date" class="input-form-control txtwhobg" placeholder="Date *" required style= />
+                </div>
+            </div>
+        </p>
+
+        <table class="modern-table">
+            <tr>
+                <td style="background:#E2FEA0" class="headright"> <b>When Do You Need This Solved <span style="font-size:25px">→</span></b></td>
+                <td class="tdovrflow" rowspan="2"><div class="modern-table-header">Level 1: Immediate / Overdue -<span style="font-size:13px"> What issues are already hurting you and should ideally have been resolved by now.</span> </div></td>
+                <td class="tdovrflow" rowspan="2"><div class="modern-table-header">Level 2: Current Academic Cycle - <span style="font-size:13px">What must be strengthened within the current academic year or admission season</span></div></td>
+                <td class="tdovrflow" rowspan="2"><div class="modern-table-header">Level 3: Next Academic Year - <span style="font-size:13px">What would you like firmly in place by the next academic–admission cycle.</span></div> </td>
+            </tr>
+            <tr>
+
+                <td class="headright" style="background-color:#F0F8A4"><b>What are you looking <small>to strengthen</small> <span style="font-size:20px">↓</span> </b></td>
+
+            </tr>
+            <tr>
+                <td class="modern-table-row-header"><div class="modern-table-row-div">Admissions Quality & Volume; <small><i>Right-fit students, not just numbers</i></small></div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R1L1" class="modern-table-bg-txtarea" rows="5" placeholder="B.Tech CSE (AI/DS): 180 seats – only ~135 confirmed
+B.Tech Mechanical: 120 seats – demand  50 MBA (Core): 240 seats – heavy discounting">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R1L2" class="modern-table-bg-txtarea" rows="5" placeholder="B.Tech AI/DS: Stabilise intake at 180 with better quality
+BBA: Improve intake from 90 → 150 M.Tech (Automation): Fill at least 25/30 seats">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R1L3" class="modern-table-bg-txtarea" rows="5" placeholder="Selective expansion of AI, Cyber, Data programs
+Exit / merge low-demand traditional programs Target overall intake quality improvement of ~15%">
+                    </textarea>
+                </td>
+
+            </tr>
+            <tr>
+
+                <td class="modern-table-row-header"><div class="modern-table-row-div">Internships & NEP Compliance; <small><i>Internships & NEP Compliance; Meaningful internships, not paperwork</i></small></div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R2L1" class="modern-table-bg-txtarea" rows="5" placeholder="~1,600 students require internships Only ~900 meaningful internships available Balance largely observational">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R2L2" class="modern-table-bg-txtarea" rows="5" placeholder="Ensure 100% NEP compliance for ~2,200 students
+                              At least 60% task-based internships">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R2L3" class="modern-table-bg-txtarea" rows="5" placeholder="Structured internship pipelines for 3,000+ students annually
+                              Repeat employers across semesters">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+
+                <td class="modern-table-row-header"><div class="modern-table-row-div">Placements & Employability; <small><i>Employer-aligned readiness</i></small></div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R3L1" class="modern-table-bg-txtarea" rows="5" placeholder="Engineering: ~65% placed Management: ~55% placed Median CTC stagnating at ₹3.5–4 LPA">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R3L2" class="modern-table-bg-txtarea" rows="5" placeholder="Improve placement ratio to 75% overall
+Push median CTC to ₹4.5–5 LPA Stronger readiness for mid-tier students">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R3L3" class="modern-table-bg-txtarea" rows="5" placeholder="Shift focus from % placed to role relevance
+Target 30–35% students in higher-quality roles">
+                    </textarea>
+                </td>
+            </tr>
+            <tr>
+                <td class="modern-table-row-header">
+                    <div class="modern-table-row-div">
+                        Industry & Employer Collaboration; <small>Curriculum, live problems, training</small>
+                    </div></td>
+                <td class="tdContent">
+                    <textarea asp-for="R4L1" class="modern-table-bg-txtarea" rows="5" placeholder="Shift focus from % placed to role relevance Target 30–35% students in higher-quality roles">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R4L2" class="modern-table-bg-txtarea" rows="5" placeholder="Activate 10–12 employers for live projects Industry input in 5–6 key programs">
+                    </textarea>
+                </td>
+                <td class="tdContent">
+                    <textarea asp-for="R4L3" class="modern-table-bg-txtarea" rows="5" placeholder="Long-term partnerships with 20–25 employers Co-designed curriculum, labs, certifications"></textarea>
+                </td>
+
+            </tr>
+        </table>
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            @if (!ViewBag.IsAuthenticated)
+            {
+                <div>
+
+                    <input asp-for="UserName" class="input-form-control txtwhobg" placeholder="Contact Details *" required />
+                </div>
+                <div>
+
+                    <input asp-for="Password" type="password" class="input-form-control txtwhobg" placeholder="Password *" required />
+                </div>
+            }
+            <div class="mb-3 text-end">
+
+                <button type="submit" id="btn" class="btn btn-primary">Save, Submit & Share</button>
+            </div>
+
+            <div style="display:flex">
+                <div class="col-5 col-lg-5 col-md-5 col-sm-12">
+                </div>
+                  <div class="col-4 col-lg-4 col-md-4 col-sm-12" style="text-align:center; display:inline-flex">
+                 <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/home/leadership_reflections_dashboard/"+Model.uRId.ToString())&title=@Html.Encode("Green Jobs")&description=@Html.Encode("Green Jobs: SHARE YOUR VOICE THAT MATTERS")"><img src="~/images/facebook.jpg" width="32" /> </a>
+                 <a target="_blank" href="https://wa.me/?text=@Html.Encode("Green Jobs : SHARE YOUR VOICE THAT MATTERS")%20https://greenjobs.digital/home/leadership_reflections_dashboard/@Model.uRId.ToString()"><img src="~/images/whatsapp.jpg" width="32" /> </a>
+                 <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/home/leadership_reflections_dashboard/@Model.uRId.ToString()&title=@Html.Encode("Green Jobs")&summary=@Html.Encode("Green Jobs: SHARE YOUR VOICE THAT MATTERS")&source=greenjobs.digital"><img src="~/images/linkedin.png" width="32" /> </a>
+                 <a href="mailto:?subject=HELLO%20KISAN%20POLLS%3A%20SHARE%20YOUR%20VOICE%20THAT%20MATTERS&body=https://greenjobs.digital/home/leadership_reflections_dashboard/@Model.uRId.ToString()"><img src="~/images/mail.png" width="32" /></a>
+             </div> 
+                <div class="col-4 col-lg-4 col-md-4 col-sm-12">
+                </div>
+            </div>
+
+        </div>
+         <p class="commonPara" style="margin-top:10px" ></p>
+    </form>
+    
+</div>

@@ -1,0 +1,149 @@
+@using JobPortal.Domain.Models
+@model JobPortal.Domain.Models.EmployerProfile
+@{
+    Layout = "/Views/Shared/_LayoutAcademics.cshtml";
+}
+<h2>Edit Profile</h2>
+<form method="post" enctype="multipart/form-data">
+
+    
+    <input type="hidden" asp-for="Id"  />
+
+    <div class="row">
+        <div class="mb-3 col-6">
+            <label class="form-label">FullName</label>
+            <input type="text" name="fullname" value="@Model.FullName" class="form-control" />
+            <span style="font-size:11px">How you want your first name to appear on your profile. Example: "Amit" or "Dr. Priya" </span>
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label">Phone</label>
+            <input type="text" name="Phone" class="form-control" value="@Model.Phone" />
+            <span style="font-size:11px">A phone number where you can be reached Example: "+91 9876543210" </span>
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label">WhatsappNo</label>
+            <input type="text" name="WhatsappNo" class="form-control" value="@Model.WhatsappNo" />
+            <span style="font-size:11px">If different from your mobile number, for WhatsApp communication. Example: "+91 8765432109" (Leave blank if the same.) </span>
+        </div>
+        <div class="mb-3 col-6">
+            <label class="form-label">Email</label>
+            <input type="text" name="Email" class="form-control" value="@Model.Email" />
+            <span style="font-size:11px">An active email address for general communication. Example: amit.sharma@email.com</span>
+        </div>
+    @foreach (var q in ViewBag.Sections)
+    {
+
+        var existingText = ViewBag.AnswersText.ContainsKey(q.Id) ? ViewBag.AnswersText[q.Id] : null;
+        var existingFile = ViewBag.AnswersFile.ContainsKey(q.Id) ? ViewBag.AnswersFile[q.Id] : null;
+        
+            
+            <div class="mb-3 col-6">
+                <label class="form-label">@q.QuestionText</label>
+
+                @switch (q.QuestionType)
+                {
+                    case QuestionType.Text:
+                        <input type="text" name="answers[@q.Id]" value="@existingText" class="form-control" />
+                        break;
+
+                    case QuestionType.Multiline:
+                        <textarea name="answers[@q.Id]" class="form-control">@existingText</textarea>
+                        break;
+
+                    case QuestionType.SingleChoice:
+                        foreach (var opt in q.Options)
+                        {
+                            <div class="form-check">
+                                <input type="radio" name="answers[@q.Id]" @(existingText == opt.OptionText ? "checked" : "") value="@opt.OptionText"
+                                       class="form-check-input" />
+                                <label>@opt.OptionText</label>
+                            </div>
+                        }
+                        break;
+
+                    case QuestionType.MultipleChoice:
+                        foreach (var opt in q.Options)
+                        {
+                            var selected = (existingText ?? "").Split('|', System.StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                            <div class="form-check">
+                                <input type="checkbox" name="answers[@q.Id]" value="@opt.OptionText" @(selected.Contains(opt.OptionText) ? "checked" : "")
+                                       class="form-check-input" />
+                                <label>@opt.OptionText</label>
+                            </div>
+                        }
+                        break;
+
+                    case QuestionType.FileUpload:
+                        if (!string.IsNullOrWhiteSpace(existingFile))
+                        {
+                            <div class="mb-2">
+                                <a href="@existingFile" target="_blank" class="btn btn-sm btn-outline-secondary">View current file</a>
+                            </div>
+                        }
+                        <input type="file" id="files_@q.Id" name="files" class="form-control" />
+                        break;
+                }
+                <span style="font-size:11px">@q.Explanation</span>
+            </div>
+            <div class="col-3 top-0 end-0 mt-1" style="display:none">
+                @if (q.IsRating)
+                {
+                    <label class="form-label fw-bold">Rate yourself (out of @q.Marks)</label>
+                    <input type="number" id="selfRating" class="form-control self-rating" data-qid="@q.Id" min="1" max="@q.Marks" step="1" />
+
+                    <div id="msg_@q.Id" class="mt-2 text-success"></div>
+                }
+            </div>
+       
+    }
+    </div>
+    <button class="btn btn-primary" type="submit">Save</button>
+</form>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script>
+        
+         function fillCurrentCity() {
+         
+            var stateId = $("#CurrentStateId").val();
+               
+           $.getJSON('/Location/GetCities', { stateId: stateId }, function (data) {
+                var items = '<option value="">-- Select City --</option>';
+                $.each(data, function (i, city) {
+                    items += "<option value='" + city.id + "'>" + city.name + "</option>";
+                });
+                $("#CurrentCityId").html(items);
+            });
+        } ;
+
+     function fillDesiredCity() {
+           var stateId = $("#DesiredStateId").val();
+            
+           $.getJSON('/Location/GetCities', { stateId: stateId }, function (data) {
+                var items = '<option value="">-- Select City --</option>';
+                $.each(data, function (i, city) {
+                    items += "<option value='" + city.id + "'>" + city.name + "</option>";
+                });
+                $("#DesiredCityId").html(items);
+            });
+        } ;
+   
+         $(document).on("change", ".self-rating", function () {
+        var $sel = $(this);
+        var profId = @Model.Id;
+        var questionId = $sel.data("qid");
+        var score = $sel.val();
+        var maxscore = $(this).attr("max");
+        console.log(maxscore);
+        $.post("/Employer/Profile/RateSelfAjax", { questionId: questionId, score: score, profileId:profId }, function (res) {
+            if (res.success) {
+                $("#msg_" + questionId).text("Saved (" + res.score + "/"+maxscore+")");
+                // optional: update admin avg shown:
+                if (res.averageOther !== null) {
+                    $sel.closest("tr").find("span.badge.bg-success").text(res.averageOther.toFixed(1));
+                }
+            } else {
+                $("#msg_" + questionId).text("Error saving");
+            }
+        });
+    });
+</script>

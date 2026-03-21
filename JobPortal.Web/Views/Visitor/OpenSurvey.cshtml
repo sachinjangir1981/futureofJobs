@@ -1,0 +1,332 @@
+﻿@model JobPortal.Web.ViewModels.FormVmVisitor
+@using JobPortal.Domain.Models;
+
+@{
+
+    ViewData["Title"] = "Survey";
+    Layout = "_Layout";
+
+    int i = 0;
+    string bgimageurl = ViewBag.FormCategory.BgImageUrl;
+    string imageurl = ViewBag.FormCategory.ImageUrl;
+    string bgColorcss = ".container-fluid  {  padding:1px 10px 10px 10px !important; ";
+    int questionNo = 0;
+    string questionNostring = "";
+    int answerindex = 0;
+    string questionId = "";
+    string answerwqId = "";
+    string institutename = ViewBag.InstitureName; 
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.FormCategory.BgImageUrl))
+{
+    bgColorcss += " background-image:url('/images/forms/" + ViewBag.FormCategory.BgImageUrl + "'); background-repeat: repeat-y;";
+}
+@{
+    bgColorcss += " }";
+}
+
+@if (TempData["Saved"] != null)
+{
+    <div class="alert alert-success">@TempData["Saved"]</div>
+
+}
+<style>
+    .nav-tabs .nav-link {
+        font-weight: 500;
+        color: #333;
+    }
+
+        .nav-tabs .nav-link.active {
+            background-color: #28a745;
+            color: white !important;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background-color: #d4edda;
+        }
+
+
+
+
+    .horizontal-scroll-except-first-column {
+        width: 100%;
+        overflow: auto;
+    }
+
+        .horizontal-scroll-except-first-column > table {
+            margin-left: 30em;
+        }
+
+            .horizontal-scroll-except-first-column > table > * > tr > th:first-child,
+            .horizontal-scroll-except-first-column > table > * > tr > td:first-child {
+                position: absolute;
+                width: 30em;
+                margin-left: -30em;
+                word-break: break-word;
+                background: #ccc;
+            }
+
+            .horizontal-scroll-except-first-column > table > * > tr > th,
+            .horizontal-scroll-except-first-column > table > * > tr > td {
+                /* Without this, if a cell wraps onto two lines, the first column
+                * will look bad, and may need padding. */
+                /*  white-space: nowrap; */
+                padding: 5px;
+            }
+
+</style>
+<style>
+    @Html.Raw(bgColorcss)
+</style>
+
+<div class="jobseeker-form container" style="margin-top:-30px">
+    <div class="col-12" style="display:flex; margin:0 auto">
+        <img src="/images/forms/@ViewBag.FormCategory.ImageUrl" width="100" style="margin:0 auto" />
+    </div>
+    <div class="col-12">
+        <h2 class="opensureveyTitle" style="margin:0 auto"><b>Survey : @ViewBag.FormCategory.FormCategory </b></h2>
+        <p class="paraCommon opensureveyDetails">@Html.Raw(ViewBag.FormCategory.Details)</p>
+    </div>
+
+    <div>
+        @if (TempData["Message"] != null)
+        {
+            <div class="alert alert-info">@TempData["Message"]</div>
+        }
+    </div>
+    <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:10px; ">
+        <div>
+            <input asp-for="FullName" class="input-form-control txtwhobg" placeholder="Name *" required />
+        </div>
+        <div>
+            <input asp-for="InstituteName" class="input-form-control txtwhobg" placeholder="@institutename" required />
+        </div>
+        <div>
+            <input  type="text" class="input-form-control txtwhobg"   value="@Model.PostDate.ToString("dd MMM yyyy")"/>
+        </div>
+    </div>
+
+    <!-- Section Tabs -->
+    <ul class="nav nav-tabs" id="sectionTabs" role="tablist">
+        @foreach (var sect in Model.Sections)
+        {
+
+            <li class="nav-item" role="presentation">
+                <button class="nav-link @(i == 0 ? "active" : "")"
+                        id="tab-@sect.Id"
+                        data-bs-toggle="tab"
+                        data-bs-target="#section-@sect.Id"
+                        type="button" role="tab" style="display:none !important">
+                    @sect.Title
+                </button>
+            </li>
+            i++;
+        }
+
+    </ul>
+    @{
+        i = 0;
+    }
+    <!-- Section Content -->
+    <form method="post" asp-action="OpenSurvey" asp-controller="visitor" enctype="multipart/form-data">
+        <div class="tab-content mt-3" id="sectionTabContent">
+
+            @foreach (var sect in Model.Sections)
+            {
+                var questionlist = sect.Questions.OrderBy(m=>m.DisplayOrder);
+                <input type="hidden" name="FormCategoryId" value="@Model.FormCategoryId" />
+                <div class="tab-pane fade @(i == 0 ? "show active" : "")"
+                     id="section-@sect.Id" role="tabpanel">
+
+                    @foreach (var q in questionlist)
+                    {
+                        answerindex = 0;
+                        questionNo += 1;
+                        questionId = q.Id.ToString();
+                        var existingText = "";
+                        var existingFile = "";
+                        if (Model.AnswersText != null && Model.AnswersText.Count > 0)
+                        {
+                            existingText = Model.AnswersText.ContainsKey(q.Id) ? Model.AnswersText[q.Id] : null;
+                        }
+                        if (Model.AnswersFile != null && Model.AnswersFile.Count > 0)
+                        {
+                            existingFile = Model.AnswersFile.ContainsKey(q.Id) ? Model.AnswersFile[q.Id] : null;
+                        }
+                        <div class="row">
+                            <div class="mt-3 mb-3 col-12">
+                                @if (!string.IsNullOrEmpty(q.Explanation))
+                                {
+
+                                    <div class="opensureveyQuestionExplanation">@Html.Raw(q.Explanation.Replace("{QNO}", questionNo.ToString()))</div>
+                                }
+                                @if (q.IsRequired)
+                                {
+                                    <span style="color:red">*</span>
+                                }
+                                @if (q.QuestionText.Contains("{QNO}"))
+                                {
+                                    <label class="form-label opensureveyQuestion">@Html.Raw(q.QuestionText.Replace("{QNO}", questionNo.ToString()))</label>
+
+                                    <br />
+                                }
+                                else
+                                {
+                                    <label class="form-label opensureveyQuestion"><b>Q:</b> @Html.Raw(q.QuestionText)</label>
+
+                                    <br />
+                                }
+
+
+
+
+                                @switch (q.QuestionType)
+                                {
+
+                                    case QuestionType.Text:
+                                        <input type="text" name="answers[@q.Id]" value="@existingText" class="form-control" />
+                                        break;
+
+                                    case QuestionType.Multiline:
+                                        <textarea name="answers[@q.Id]" class="form-control">@existingText</textarea>
+                                        break;
+
+                                    case QuestionType.SingleChoice:
+                                        foreach (var opt in q.Options)
+                                        {
+                                            answerwqId = q.Id.ToString() + "_" + opt.Id.ToString();
+                                            char letter = (char)('a' + answerindex);
+                                            <div class="opensureveyAnswer form-check   @q.Id @answerwqId">
+                                                <input type="radio" name="answers[@q.Id]" @(existingText == opt.OptionText ? "checked" : "") value="@opt.OptionText"
+                                                       class="form-check-input rcl" answeridwquid="@answerwqId" rbgid="@q.Id" />
+                                                <label class="@answerwqId">
+                                                    <b>Option @letter.ToString().ToUpper()</b>: @Html.Raw(opt.OptionText)  <br />
+                                                    @if (!string.IsNullOrEmpty(opt.Explanation))
+                                                    {
+                                                    <small class="opensureveyAnswerExplanation">@Html.Raw(opt.Explanation.Replace("<p><br></p>", ""))</small>
+                                                    }
+                                                </label>
+                                            </div>
+                                            answerindex += 1;
+                                        }
+                                        break;
+
+                                    case QuestionType.MultipleChoice:
+                                        foreach (var opt in q.Options)
+                                        {
+                                            answerwqId = q.Id.ToString() + "_" + opt.Id.ToString();
+                                            char letter = (char)('a' + answerindex);
+                                            var selected = (existingText ?? "").Split('|', System.StringSplitOptions.RemoveEmptyEntries).ToHashSet(StringComparer.OrdinalIgnoreCase);
+                                            <div class="opensureveyAnswer form-check   @q.Id @answerwqId">
+                                                <input type="checkbox" name="answers[@q.Id]" checkid="@opt.Id" value="@opt.OptionText" @(selected.Contains(opt.OptionText) ? "checked" : "")
+                                                       class=" form-check-input  ccl" />
+
+                                                <label>
+                                                    <b>Option @letter.ToString().ToUpper()</b>: @Html.Raw(opt.OptionText)  <br />
+                                                    @if (!string.IsNullOrEmpty(opt.Explanation))
+                                                    {
+                                                        <small class="opensureveyAnswerExplanation">@Html.Raw(opt.Explanation.Replace("<p><br></p>", ""))</small>
+                                                    }
+                                                </label>
+                                            </div>
+                                            answerindex += 1;
+                                        }
+                                        break;
+
+                                    case QuestionType.FileUpload:
+                                        if (!string.IsNullOrWhiteSpace(existingFile))
+                                        {
+                                            <div class="mb-2">
+                                                <a href="@existingFile" target="_blank" class="btn btn-sm btn-outline-secondary">View current file</a>
+                                            </div>
+                                        }
+                                        <input type="file" name="file_@q.Id" class="form-control" />
+                                        break;
+                                }
+                            </div>
+                            <input id="btn_@q.Id" class="opensurveybackbtn" style="display:none" onclick="showOptions(@q.Id)" type="button" value="Back" />
+                        </div>
+                    }
+                </div>
+                i++;
+            }
+
+
+
+
+        </div>
+        <div class="col-12">
+
+            <p class="paraCommon opensureveyFooterNote">@Html.Raw(ViewBag.FormCategory.FooterNote)</p>
+        </div>
+
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+
+            @if (!ViewBag.IsAuthenticated)
+            {
+                <div>
+
+                    <input asp-for="UserName" class="input-form-control txtwhobg" placeholder="Contact Details *" required />
+                </div>
+                <div>
+
+                    <input asp-for="Password" type="password" class="input-form-control txtwhobg" placeholder="Password *" required />
+                </div>
+            }
+            <div class="mb-3">
+
+                <button type="submit" id="btn" class="btn btn-primary">Save, Submit & Share</button>
+            </div>
+
+            <div style="display:flex">
+                <div class="col-5 col-lg-5 col-md-5 col-sm-12">
+                </div>
+                <div class="col-4 col-lg-4 col-md-4 col-sm-12" style="  display:inline-flex">
+                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("https://greenjobs.digital/visitor/opensurvey/8")&title=@Html.Encode("Green Jobs")&description=@Html.Encode("Green Jobs:"+ @ViewBag.FormCategory.FormCategory)"><img src="~/images/facebook.jpg" width="32" /> </a>
+                    <a target="_blank" href="https://wa.me/?text=@Html.Encode("Green Jobs :"+ @ViewBag.FormCategory.FormCategory)%20https://greenjobs.digital/visitor/opensurvey/8"><img src="~/images/whatsapp.jpg" width="32" /> </a>
+                    <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://greenjobs.digital/visitor/opensurvey/8&title=@Html.Encode("Green Jobs")&summary=@Html.Encode("Green Jobs:"+ @ViewBag.FormCategory.FormCategory)&source=greenjobs.digital"><img src="~/images/linkedin.png" width="32" /> </a>
+                    <a href="mailto:?subject=@Html.Encode(ViewBag.FormCategory.FormCategory)&body=https://greenjobs.digital/visitor/opensurvey/8"><img src="~/images/mail.png" width="32" /></a>
+                </div>
+                <div class="col-4 col-lg-4 col-md-4 col-sm-12">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="mt-3" style="border:1px solid grey">
+            <b>Dear Academics,</b> <br />
+            Would you like to make this profile public and display it on our website.
+            If yes, Click here  <input type="checkbox" id="chkPublic" name="chkPublic" /> and see you public profile.<br />
+            Note: You can withdraw this any time later in your profile settings.
+
+        </div>
+
+    </form>
+</div>
+@section Scripts
+{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function() {
+            $('.rcl').on('change',  function() {
+                var answeridwquid = $(this).attr('answeridwquid');
+
+               var rbgid = $(this).attr('rbgid');
+               $('.'+ rbgid).hide();
+                $('.'+ answeridwquid).show();
+               $('#btn_'+rbgid ).show();
+            });
+        });
+
+        function showOptions(rbgid)
+        {
+             $('.'+ rbgid).show();
+             $('#btn_'+rbgid ).hide();
+             $('.'+rbgid).prop('checked', false);
+        }
+    </script>
+}

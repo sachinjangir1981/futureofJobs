@@ -1,0 +1,72 @@
+﻿@using JobPortal.Models;
+
+@model WpPost
+@{
+    ViewBag.Title = "Trending News";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    WpPostCategory wpPostCategory = ViewBag.Category != null ? (WpPostCategory)ViewBag.Category : new WpPostCategory();
+}
+
+ @section HeaderImage
+{
+    <div class="headerImage2">
+        @if (!string.IsNullOrEmpty(wpPostCategory.ImageUrl))
+        {
+            <img src="~/images/snippet/@wpPostCategory.ImageUrl" />
+        }
+    </div>
+}
+<div style="text-align:center; margin-top:-50px;">
+<img src="~/images/news-icon.png" id="imgLogo" style=" padding:10px 10px 10px 10px; max-width:150px" />
+</div>
+@if (Model != null)
+{
+    <div style="text-align:center; padding-left:20px; padding-right:20px">
+       
+        
+        @if (!string.IsNullOrEmpty(Model.CoverImage)){
+            <div class="bglogin">
+            <img src="~/images/snippet/@Model.CoverImage"  id="imgLogo" style="max-width:80%; max-height:380px; padding:10px 10px 10px 10px" />
+            </div>
+        }
+
+        <h2 class="tnheading" style="text-transform:uppercase"> @Model.Title</h2>
+        <div style="text-align:center ">
+            <span class="headingSubTitle"><b>@Model.OSource   </b>  </span>
+        </div>
+       
+    </div>
+
+
+    <div class="dvpoll" style="padding-left:20px; padding-right:20px; margin-bottom:20px">
+
+        <div class="row Question">
+            <div class="col-12 col-lg-12 col-sm-12 col-md-12">
+                <div class="row">
+                    <div class="col-12 col-lg-12 col-sm-12 col-md-12" style="border-bottom:1px solid #808080; padding-bottom:10px;">
+                        @Html.Raw(Model.PostContent.Replace("href=\\", "href="))
+                    </div>
+                    <div style="font-size:13px;font-weight:600">
+                        Note: If the link doesn’t open directly, simply copy the URL and paste it into your browser.
+                    </div>
+                </div>
+                <div class="flip-card">
+                    <div class="row">
+
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xm-12" style="margin:2px auto 2px auto; text-align:center;">
+                            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=@Html.Encode("http://hellokisan.org/Visitor/TrendingNews/"+@Model.PKID)&title=@Html.Encode("Green Jobs")&description=@Html.Encode("Trending News")"><img src="~/images/facebook.jpg" width="32" /> </a>
+                            <a target="_blank" href="https://wa.me/?text=@Html.Encode("Green Jobs : Trending News")%20http://hellokisan.org/Visitor/TrendingNews/@Model.PKID"><img src="~/images/whatsapp.jpg" width="32" /> </a>
+                            <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http://hellokisan.org/Visitor/TrendingNews/@Model.PKID&title=@Html.Encode("Green Jobs")&summary=@Html.Encode("Green Jobs : Trending News")&source=hellokisan.org"><img src="~/images/linkedin.png" width="32" /> </a>
+                            <a href="mailto:?subject=HELLO%20KISAN%20POLLS%3A%20SHARE%20YOUR%20VOICE%20THAT%20MATTERS&body=http://hellokisan.org/Visitor/TrendingNews/@Model.PKID"><img src="~/images/mail.png" width="32" /></a>
+                            <a target="_blank" class="clSubscribe" href="https://hellokisan.org/subscribe-us/" target="_blank">Subscribe</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+}
+ 

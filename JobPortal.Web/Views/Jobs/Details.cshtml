@@ -1,0 +1,9 @@
+@model JobPortal.Domain.Models.Job
+@{ Layout = "/Views/Shared/_Layout.cshtml"; }
+<h2>@Model.Title</h2>
+<p><strong>Location:</strong> </p>
+<div>@Html.Raw(Model.Description)</div>
+<form method="post" action="/Applications/Apply">
+    <input type="hidden" name="jobId" value="@Model.Id" />
+    <button class="btn btn-primary mt-3" type="submit">Apply</button>
+</form>

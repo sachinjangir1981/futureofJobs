@@ -1,0 +1,50 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<ExhibitorDto>
+@{
+    ViewBag.Title = "Exhibitor List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div>
+    <form id="frmList" method="post" onchange="getData()">
+        <select id="id" name="id">
+            @if (ViewBag.RecType == 1){
+                <option value="1" selected>Indus food</option>
+            }
+            else
+            {
+                <option value="1">Indus food</option>
+            }
+
+            @if (ViewBag.RecType == 2)
+            {
+                <option value="2" selected>Gulf food</option>
+            }
+            else
+            {
+                <option value="2">Gulf food</option>
+            }
+        </select>
+    </form>
+</div>
+<table class="tbl">
+    
+    @foreach (var itm in Model)
+    {
+        <tr>
+            <td>@itm.Index </td>
+            <td>@itm.Titles </td>
+            <td>@itm.Category </td>
+            <td><a href="@itm.Website" class="btn-primary" target="_blank">Visit</a>  </td>
+        </tr>
+    }
+</table>
+@section Scripts
+{
+    <script type="text/javascript">
+        function getData() {
+            $('#frmList').submit();
+        }
+    </script>
+}

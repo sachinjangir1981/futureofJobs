@@ -1,0 +1,31 @@
+﻿@model IEnumerable<FormTypeCategory>
+@{
+
+    ViewData["Title"] = "View Categories";
+    Layout = "_LayoutAdmin";
+}
+<div class="container py-4">
+    <h2>Surveys</h2>
+
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>Title</th>
+
+                <th style="width:300px;">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.FormCategory</td>
+                    <td width="300">
+                        <a asp-action="ViewSurvey" asp-route-id="@item.Id" class="btn btn-sm btn-info">👁 View</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

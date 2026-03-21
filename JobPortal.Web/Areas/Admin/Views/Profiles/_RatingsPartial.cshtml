@@ -1,0 +1,44 @@
+﻿@model List<Dictionary<string, object>>
+
+@if (Model != null && Model.Any())
+{
+    <div>
+        <strong>Question List (Detailed Ratings):</strong>
+    </div>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Question List</th>
+                <th colspan="@Model.First().Keys.Count -1">Ratings</th>
+            </tr>
+            <tr>
+                @foreach (var col in Model.First().Keys)
+                {
+                    if (col != "Question")
+                    {
+                        <th>@col</th>
+                    }
+                    else
+                    {
+                        <th></th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var row in Model)
+            {
+                <tr>
+                    @foreach (var col in row.Keys)
+                    {
+                        <td>@row[col]</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No data found.</p>
+}

@@ -1,0 +1,160 @@
+﻿
+body {
+    /* font-family: Verdana;*/
+  
+    font-size: 14px;
+    background: #D9F3CD;
+    /*padding-top: 10px !important;*/
+}
+
+.container {
+    width: 850px;
+    /*padding: 0px 0px 0px 0px !important;*/
+}
+.timepass-details
+{
+    padding:0px 10px 0px 10px;
+    min-height:100vh;
+}
+.row > * {
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+}
+.h1head {
+  
+    font-size: 16.5px;
+    padding: 0px;
+    margin: 0px;
+    color: #000;
+    margin-left: 1px;
+    vertical-align: top;
+}
+
+.detaillistimage {
+    width: 95px !important;
+    padding:15px 10px 10px 10px;
+}
+
+.ulTP {
+   
+    list-style: none;
+    
+    overflow-y: scroll;
+    padding-left: 0px;
+    text-align:left;
+    padding-right:15px;
+}
+
+    .ulTP li {
+        padding: 10px 0px 10px 0px;
+        border-bottom: 1px solid #000;
+    }
+
+        .ulTP li a {
+            color: #000;
+            text-decoration: none;
+            text-align:left 
+        }
+
+.h3head {
+    
+    font-size: 14px;
+    padding: 0px;
+    margin: 0px;
+    color: #C01B2B;
+    margin-left: 10px;
+}
+
+.txt {
+    font-size: 14px;
+    line-height: 19px;
+}
+
+    .txt .row {
+        padding: 5px 25px 5px 20px;
+    }
+
+.name {
+    font-size: 18px;
+    line-height: 19px;
+}
+
+    .name p {
+        margin-bottom: 5px !important;
+    }
+
+.sphead {
+    color: #C01B2B;
+    display: block;
+    width: 100%;
+    padding-bottom: 5px;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.member {
+    transform: rotate(-90deg);
+   
+    /*writing-mode: vertical-rl;*/
+    text-orientation: mixed;
+    left: 414px;
+    top: 220px;
+    float: right;
+    position: absolute;
+    background-color: #C01B2B;
+    color: #fff;
+    padding: 20px 15px 20px 15px;
+    font-weight: 700;
+}
+
+.bg {
+    /*background-image: url('/images/newsbg.png');
+                     background-image: url('/images/hello-kisan1.jpeg');*/
+    opacity: 0.9;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.margin10 {
+    margin-top: 10px;
+}
+
+.row {
+    margin-right: 0px;
+    margin-left: 0px;
+}
+
+.prev {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.headimage {
+    display: block;
+    text-align: center
+}
+
+#html-content-holder {
+    background: #fff;
+}
+
+@media only screen and (max-width: 480px) {
+    .body-content {
+        padding-left: 0px !important;
+        padding-right: 0px !important;
+    }
+
+    .container {
+        padding-right: 0px !important;
+        padding-left: 0px !important;
+    }
+
+    .detaillistimage
+        {
+        width:65px !important;
+    }
+}
+ 

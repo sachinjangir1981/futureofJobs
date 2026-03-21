@@ -1,0 +1,339 @@
+﻿.btn {
+    border: 1px solid #ccc;
+}
+
+#imgLogo {
+    max-width: 150px;
+}
+
+@media only screen and (min-width: 481px) {
+    body {
+        background: #cef0ff;
+    }
+
+    .dvpoll {
+        background: #cef0ff;
+        padding: 15px 10px 15px 10px;
+        margin-left: auto;
+    }
+
+    .Question {
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #000;
+        border-radius: 25px 25px 25px 25px;
+        margin: 20px 20px 20px 20px;
+    }
+
+    #imgLogo {
+        width: 150px;
+    }
+
+    .heading {
+        font-size: 20px;
+        font-weight: 400;
+        font-style: italic;
+    }
+
+    .subheading {
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .nextbtn {
+        border: 1px solid #000;
+        margin: 1px 5px 1px 5px;
+    }
+
+    .dvMainColor {
+        display: inline-flex;
+        margin: 15px 15px 15px 15px;
+    }
+}
+
+input[type="radio"], input[type="checkbox"] {
+    margin: 4px 4px 4px !important;
+}
+
+.clColor {
+    height: 13px;
+    width: 13px;
+    padding: 5px 5px 5px 5px;
+    margin: 3px 5px 5px 5px;
+}
+
+
+
+.poll_res_brdr {
+    border-left: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    margin-left: 20px;
+    margin-bottom: 0px;
+    padding: 15px 15px 0 0;
+}
+
+.clearfix {
+    display: block;
+}
+
+.progress {
+    height: 7px;
+    float: left;
+    margin-right: 10px;
+    border-radius: 0px;
+}
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    font-size: 0;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.poll_results {
+    margin: 0px 0px 0px 0px !important;
+    padding: 0px 0px 0px 0px !important;
+}
+
+.btnVote {
+    text-align: center;
+    padding: 10px 20px 10px 20px;
+    border-radius: 20px;
+    background: #cef0ff;
+}
+
+
+
+/* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
+.flip-card {
+    min-height: 150px;
+    perspective: 1000px; /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+/* .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }*/
+
+/* Position the front and back side */
+.flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-card-front {
+}
+
+/* Style the back side */
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+
+@media only screen and (max-width: 480px) {
+    body {
+        background: #cef0ff;
+        padding-top: 10px !important;
+    }
+
+    .dvpoll {
+        background: #cef0ff;
+        padding: 10px 0px 15px 0px;
+        margin-left: auto;
+    }
+
+    .Question {
+        padding: 20px 10px 20px 10px;
+        background-color: #fff;
+        border: 1px solid #000;
+        border-radius: 25px 25px 25px 25px;
+        margin: 0px 0px 20px 0px;
+    }
+
+    #imgLogo {
+        width: 100px;
+    }
+
+    .heading {
+        font-size: 16px;
+        font-style: italic;
+    }
+
+    .subheading {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .nextbtn {
+        border: 1px solid #000;
+    }
+
+    .dvMainColor {
+        display: inline-flex;
+        margin: 15px 5px 15px 5px;
+    }
+
+    #imgLogo {
+        max-width: 70px;
+    }
+}
+
+
+
+
+/* Hide the default radio input */
+.custom-radio-group input[type="radio"] {
+    /* Make it visually hidden but still accessible for screen readers and keyboard navigation */
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none; /* Prevents interaction with the hidden input directly */
+}
+
+/* Style the label to look like the radio button */
+.custom-radio-group label {
+    display: inline-flex; /* Use flexbox for easy alignment of custom dot/icon */
+    align-items: center;
+    position: relative; /* Needed for positioning the custom dot/icon */
+    padding-left: 25px; /* Space for the custom radio circle */
+    cursor: pointer;
+    /*font-family: sans-serif;*/
+    color: #333;
+}
+
+    /* Create the custom radio circle using ::before pseudo-element */
+    .custom-radio-group label::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px; /* Size of the custom circle */
+        height: 18px;
+        border: 2px solid #48b41d; /* Border color for unchecked state */
+        border-radius: 50%; /* Makes it a circle */
+        background-color: #fff;
+        box-sizing: border-box; /* Include padding and border in width/height */
+        transition: all 0.2s ease-in-out; /* Smooth transition for changes */
+    }
+
+/* Style the custom radio dot/fill using ::after pseudo-element when checked */
+.custom-radio-group input[type="radio"]:checked + label::before {
+    border-color: #48b41d; /* Border color when checked */
+    background-color: #48b41d; /* Fill color when checked */
+}
+
+.custom-radio-group label::after {
+    content: '';
+    position: absolute;
+    left: 4px; /* Adjust to center the dot within the circle */
+    top: 50%;
+    transform: translateY(-50%) scale(0); /* Start hidden and scaled down */
+    width: 10px; /* Size of the inner dot */
+    height: 10px;
+    background-color: #fff; /* Color of the inner dot */
+    border-radius: 50%;
+    transition: transform 0.2s ease-in-out; /* Smooth transition for the dot */
+}
+
+.custom-radio-group input[type="radio"]:checked + label::after {
+    transform: translateY(-50%) scale(1); /* Show the dot when checked */
+}
+
+/* Optional: Add hover and focus styles for better UX */
+.custom-radio-group label:hover::before {
+    border-color: #0056b3;
+}
+
+.custom-radio-group input[type="radio"]:focus + label::before {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.5); /* Outline for focus state */
+}
+
+/* Optional: Style for disabled state */
+.custom-radio-group input[type="radio"]:disabled + label {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/*   Check Box Styling */
+
+
+.checkbox-container {
+    display: block;
+    position: relative;
+    padding-left: 25px; /* Space for the custom checkbox */
+     
+    margin-bottom: 12px; 
+    cursor: pointer;
+    font-size: 16px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+    /* Hide the browser's default checkbox */
+    .checkbox-container input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 0;
+        width: 0;
+    }
+
+/* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 16px;
+    width: 16px;
+    /* background-color: #19ff40;*/
+    border: 4px solid #19ff40; /* Default border color: Red */
+    border-radius: 4px; /* Slightly rounded corners for the checkbox */
+}
+
+/* When the checkbox is checked, change the background and border color */
+.checkbox-container input:checked ~ .checkmark {
+    background-color: #19ff40; /* A base blue, we'll override the border/checkmark below */
+    border-color: #19ff40; /* Checked border color: Green */
+}
+
+/* Create the checkmark (indicator) when checked */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the checkmark */
+.checkbox-container .checkmark:after {
+    left: 2px;
+    top: -1px;
+    width: 5px;
+    height: 10px;
+    border: solid green; /* Checkmark color: Green */
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

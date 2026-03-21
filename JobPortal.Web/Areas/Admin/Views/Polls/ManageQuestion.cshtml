@@ -1,0 +1,88 @@
+﻿@model JobPortal.Models.Questions
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "_LayoutAdmin";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/summernote-bs4.min.css" rel="stylesheet">
+
+  
+ 
+<form id="frmForm" asp-action="ManageQuestion" asp-controller="Polls"  method="post" enctype="multipart/form-data">
+   
+    <div class="form-horizontal">
+        <h4> Add/Edit Question</h4>
+       
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-12">
+                @Html.HiddenFor(model => model.PKID)
+                @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "form-label" })
+
+                @Html.TextAreaFor(model => model.Question,  new { @class = "form-control summernote hide"   })
+                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+
+
+            </div>
+ 
+            <div   class="col-md-12">
+                @Html.LabelFor(model => model.DisplayOrder, htmlAttributes: new { @class = "form-label" })
+
+                @Html.EditorFor(model => model.DisplayOrder, new { htmlAttributes = new { @class = "form-control", @type = "numeric" } })
+                @Html.ValidationMessageFor(model => model.DisplayOrder, "", new { @class = "text-danger" })
+
+            </div>
+
+            <div class="col-md-12">
+               
+                @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "form-label" })
+
+                @Html.CheckBoxFor(model => model.IsActive,   new { @style ="border:1px solid #000"}  )
+
+            </div>
+
+
+            <div class="col-md-12">
+
+                <b>Category</b>
+                <br />
+                @Html.ListBox("Category", new List<SelectListItem>(ViewBag.CategoryList),   new { @class = "form-control", @style="min-height:230px !important" }  )
+
+            </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+
+                    <input id="btnSubmit" type="submit"   value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+    </div>
+ </form>
+
+
+
+ @section Scripts {
+    <script src="~/js/summernote-bs4.min.js"></script>
+    <script src="~/js/summernote-local.js"></script>
+<script>
+    $(document).ready(function () {
+       
+
+        $('.navbar-brand').removeClass("active");
+        $('#apoll').addClass("active");
+        // $('#btnSubmit').click(function () {
+        //     var content = $('#Question').summernote('code');
+
+        //     $('#Question').val(content);
+        //     console.log(content);
+        //     $("#frmForm").submit();
+        //     // Do something with the content, e.g., send it to the server
+        // });
+    });
+
+</script>
+}

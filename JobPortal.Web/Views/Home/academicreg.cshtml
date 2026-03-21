@@ -1,0 +1,49 @@
+﻿@using JobPortal.Web.Models;
+
+@model List<LibraryModel>
+@{
+    ViewBag.Title = "Library";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@Html.Partial("_Breadcrumb")
+@section HeaderImage
+{
+    <div class="headerImage2">
+        <img src="~/images/jobs-new.png" />
+    </div>
+}
+ 
+<div class="hometext bgacademiclandingbgNew" style="margin-top:-90px; min-height:99vh;">
+    <ul class="ulBreadcrumb" style="padding-top:90px;">
+        <li><a href="/">Home <span class="fa fa-angle-right"></span></a></li>
+    </ul>
+    <img src="/images/academics.jpeg" width="100%">
+
+    
+    <p class="commonPara" style="margin-top:10px;">
+        Most academic institutions today are doing many good things, but very few have paused to ask how they actually look when seen through the lens of future talent, employers, and society. <br />
+     </p>
+     <p class="commonPara" style="text-align:left">
+         This space is meant to slow things down and bring clarity. Before you talk about rankings, reforms, or the future of education, it helps to pause and reflect.<br />
+     </p>
+    <p class="commonPara" style="text-align:left">
+         This space invites academic institutions to look inward; first to understand their own DNA as seen by the outside world, and then to reflect on leadership priorities that will shape what comes next.
+    </p>
+    <p class="commonPara" style="padding:20px 20px 5px 20px">
+        <b><span   style="font-size:21px">Leadership Reflections </span> </b>
+        <span> <a href="/home/leadership_reflections" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></span>
+    </p>
+    
+    <p class="commonPara" style="padding:5px 20px 5px 20px">
+        <b><span style="font-size:21px">Which Door Can Rewrite the Institution’s DNA? </span> </b>
+        <span> <a href="/home/institution_dna" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></span>
+    </p>
+    <p class="commonPara" style="padding:5px 20px 5px 20px">
+        <b><span style="font-size:21px">Getting Students to Campus</span> </b>
+        <span> <a href="/home/student_to_campus" class="homeImage"><img src="~/images/click_here_3.png" width="70px" /></a></span>
+    </p>
+   
+    <p class="commonPara"></p>
+    <p class="commonPara"></p>
+</div>

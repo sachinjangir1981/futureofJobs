@@ -1,0 +1,35 @@
+﻿@model IEnumerable<JobPortal.Domain.Models.Skill>
+@{
+    ViewData["Title"] = "Skills";
+    Layout = "_LayoutAdmin";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <h2>Skills</h2>
+    <a class="btn btn-success" asp-action="Create">+ Add Skill</a>
+</div>
+
+<table class="table table-bordered">
+    <thead class="table-light">
+        <tr>
+            <th>Skill</th>
+            <th>Category</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.Name</td>
+                <td>@s.SkillCategory?.Name</td>
+                <td>@s.IsActive</td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

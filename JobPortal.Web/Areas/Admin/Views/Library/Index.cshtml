@@ -1,0 +1,311 @@
+﻿@using JobPortal.Web.Models;
+@model List<LibraryCategoryModel>
+@{
+    Layout = "_LayoutAdmin";
+ 
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <h4> Manage Library Items</h4>
+</div>
+
+ <div style="float:right">
+    <a href="/admin/Library/Create" class="btn btn-primary">Create New</a>
+
+</div>  
+<table id="myTable" class="table table-striped">
+    <tr>
+        <th width="50px">SNO</th>
+        <th>Title</th>
+        <th  width="100px"></th>
+        <th width="100px">Items</th>
+        <th width="100px">Duplicate</th>
+    </tr>
+
+    @foreach (var itm in Model)
+    {
+
+
+            <tr>
+                <td>@itm.TLevel </td>
+                <td style="text-align:left">
+                @itm.Title
+                </td>
+                     <td width="150px">
+                
+                                      <a href="/admin/Library/Create/@itm.PKID" class="btn btn-primary">Create New</a>
+ 
+                    </td>
+                <td width="100px">
+                @if (itm.childCount == 0 || itm.LibraryItemCount > 0)
+                {
+                            <button class="btn btn-info" onclick="loadmore(@itm.PKID, '@itm.TLevel' )">Items</button>
+                }
+                </td>
+                <td width="100px">
+                @if (itm.childCount == 0)
+                {
+                            <button class="btn btn-warning" onclick="DuplicateCategory(@itm.PKID)">Duplicate</button>
+                }
+                </td>
+            </tr>
+       @if (itm.childCount == 0 || itm.LibraryItemCount >0)
+        {
+            var dvId = "customerDetailsContainer_" + itm.PKID.ToString();
+                    <tr>
+
+                        <td colspan="5">
+                            <div id="@dvId"  width="100%" style="border:1px solid #000; display:none">
+                               
+                            </div>
+                        </td>
+                    </tr>
+        }
+  
+
+
+    }
+</table>
+
+@* <partial name="_LibraryItemByCategoryId" action="GetAllLibraryItemsByCategoryId" id="@itm.PKID"></partial> *@
+
+@section Scripts
+{
+<script>
+    $(document).ready(function () {
+        $('#example').DataTable({
+            "paging": true,
+            "lengthChange": true,
+            "searching": true,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+     });
+    $(document).ready(function() {
+      // Let's assume you have some data from a previous state or a server
+      const previousValues = {
+              id:0,
+        displayOrder:  0,
+        level1: 0,
+        level2: 0,
+        level3: 0
+      };
+
+      // Click handler for the button that opens the modal
+          $('.openpopup').on('click', function() {
+        // Set the previous values in the form fields using jQuery
+        $('#displayOrder').val($(this).attr("displayOrder"));
+                    $('#level1').val($(this).attr("ddlCategory0"));
+                    $('#level2').val($(this).attr("ddlCategory1"));
+                    $('#level3').val($(this).attr("ddlCategory2"));
+                    $('#level3').val($(this).attr("ddlCategory3"));
+                $('#hidId').val($(this).attr("pkid"));
+                    console.log($(this).attr("displayOrder"));
+        // Manually open the Bootstrap modal using jQuery
+        const myModal = new bootstrap.Modal(document.getElementById('orderModal'));
+        myModal.show();
+      });
+
+      // Click handler for the "Save changes" button inside the modal
+      $('#saveChangesBtn').on('click', function() {
+        // Get the updated values from the form fields
+        const updatedValues = {
+                            id: $('#hidId').val(),
+          displayOrder: $('#displayOrder').val(),
+              level1: $('#ddlCategory0').val(),
+              level2: $('#ddlCategory1').val(),
+              level3: $('#ddlCategory2').val(),
+              level4: $('#ddlCategory3').val(),
+        };
+
+        // Log the updated values to the console
+        console.log('Updated values:', updatedValues);
+
+        // Here you would use AJAX (e.g., $.ajax or fetch) to send the data to your server
+        // Example using $.ajax (a jQuery method):
+                $.ajax({
+                                type: "POST",
+                                    url: "/admin/Library/UpdateLevel",
+                                        data: updatedValues,
+                                dataType: "json",
+                                success: function (data) {
+                                    window.location.reload();
+                                },
+                                error: function () {
+                                    console.log("error");
+                                }
+                            });
+
+
+        // Close the modal after a successful save (for this example, we just hide it)
+        const myModal = bootstrap.Modal.getInstance(document.getElementById('orderModal'));
+        if (myModal) {
+          myModal.hide();
+        }
+      });
+    });
+</script>
+
+<script>
+
+
+    function OpenPopup(obj)
+    {
+
+    // Set the previous values in the form fields using jQuery
+    $('#displayOrder').val($(obj).attr("displayOrder"));
+                $('#level1').val($(obj).attr("ddlCategory0"));
+                $('#level2').val($(obj).attr("ddlCategory1"));
+                $('#level3').val($(obj).attr("ddlCategory2"));
+                $('#level3').val($(obj).attr("ddlCategory3"));
+            $('#hidId').val($(obj).attr("pkid"));
+                console.log($(obj).attr("displayOrder"));
+    // Manually open the Bootstrap modal using jQuery
+    const myModal = new bootstrap.Modal(document.getElementById('orderModal'));
+    myModal.show();
+
+    }
+
+      $(document).ready(function () {
+          $('.navbar-brand').removeClass("active");
+          $('#atlibrary').addClass("active");
+      });
+
+      function DuplicateItem(id, catId) {
+          if (confirm('Are you sure to duplicate this item?')) {
+              $.ajax({
+                  type: "POST",
+                  url: "/admin/Library/Duplicate",
+                  data: "id=" + id,
+                  dataType: "json",
+                  success: function (data) {
+                     // window.location.reload();
+                     loadmore(catId);
+                  },
+                  error: function () {
+                      console.log("error");
+                  }
+              });
+          }
+      }
+
+      function Deleteitem(id) {
+          if (confirm('Are you sure to delete this record?')) {
+              $.ajax({
+                  type: "POST",
+                  url: "/admin/Library/Delete",
+                  data: "id=" + id,
+                  dataType: "json",
+                  success: function (data) {
+                      window.location.reload();
+                  },
+                  error: function () {
+                      console.log("error");
+                  }
+              });
+          }
+      }
+
+       function copywithJquery(btnId,containerid) {
+
+          var temp = $("<input>");
+          $("body").append(temp);
+          temp.val($('#' + containerid).html()).select();
+          document.execCommand("copy");
+          temp.remove();
+          console.log(btnId);
+          $('.copylink').html('Copy Link');
+          $('#' + btnId).html(  'Copied');
+      }
+
+      function updateCategory( id,  categoryId)
+    {
+              if(confirm('Are you sure to update category?'))
+              {
+                    $.ajax({
+                        type: "POST",
+                        url: "/admin/Library/UpdateCategory",
+                        data: { id: id, categoryId: categoryId },
+                        dataType: "json",
+                        success: function (data) {
+                            window.location.reload();
+                        },
+                        error: function () {
+                            console.log("error");
+                        }
+                    });
+              }
+    }
+
+
+
+          function loadmore(categoryId, catsno) {
+              var dvid ="customerDetailsContainer_"+ categoryId;
+
+              $.ajax({
+                      url: '@Url.Action("ProductList", "Library")', // Use Url.Action to generate the correct URL
+                  type: 'GET',
+                    data: { id: categoryId, CatSNO : catsno },
+                  success: function(result) {
+                      $('#'+dvid).html(result); // Place the returned partial view into the container
+                      $('#'+dvid).show();
+                  },
+                  error: function(xhr, status, error) {
+                // Use this to see what went wrong
+                console.error("AJAX Error:", status, error);
+                console.error("Response Text:", xhr.responseText);
+                alert('Error loading products. Check console for details.');
+            }
+              });
+          };
+
+
+           function GetCategoryByParentCategoryId(parentddlId, childddlId) {
+                var parentCategoryId = $('#'+parentddlId).val();
+                var childDropdown = $('#'+childddlId);
+
+              $.ajax({
+                      url: "/admin/Library/GetCategoriesByParent",  // Use Url.Action to generate the correct URL
+                  type: 'GET',
+                    data: { id: parentCategoryId },
+                  success: function(result) {
+                      console.log(result);
+                    childDropdown.empty().append('<option value="">Select</option>');
+                    $.each(result, function(index, category) {
+                        childDropdown.append($('<option>', {
+                            value: category.pkid,
+                            text: category.title
+                        }));
+                    });
+                  },
+                  error: function(xhr, status, error) {
+                // Use this to see what went wrong
+                console.error("AJAX Error:", status, error);
+                console.error("Response Text:", xhr.responseText);
+                alert('Error loading products. Check console for details.');
+            }
+              });
+          };
+
+          function DuplicateCategory(id) {
+          if (confirm('Are you sure to duplicate category with all above hierarchy?')) {
+              $.ajax({
+                  type: "POST",
+                  url: "/admin/Library/DuplicateCategory",
+                  data: "id=" + id,
+                  dataType: "json",
+                  success: function (data) {
+                      window.location.reload();
+
+                  },
+                  error: function () {
+                      console.log("error");
+                  }
+              });
+          }
+      }
+</script>
+}
