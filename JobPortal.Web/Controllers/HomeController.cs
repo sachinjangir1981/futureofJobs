@@ -28,10 +28,11 @@ public class HomeController : Controller
     private readonly ICuratedJobs _curatedJobs;
     private readonly ITimePassCategory _timePassCategory;
     private readonly IMyform _myform;
+    private readonly IFormPaymentRepository _formPayment;
     public HomeController(AppDbContext context, ILogger<HomeController> logger, ILibrary library, ILibraryCategory libraryCategory,
-        IServey servey, IContactForms contactForms, ILeadershipReflection leadershipReflection, UserManager<ApplicationUser> um, 
-        SignInManager<ApplicationUser> sm, IOneMinute IOneMinute, ICuratedJobs curatedJobs, 
-        ITimePassCategory timePassCategory, IMyform myform )
+        IServey servey, IContactForms contactForms, ILeadershipReflection leadershipReflection, UserManager<ApplicationUser> um,
+        SignInManager<ApplicationUser> sm, IOneMinute IOneMinute, ICuratedJobs curatedJobs,
+        ITimePassCategory timePassCategory, IMyform myform, IFormPaymentRepository formPayment)
     {
         _sm = sm;
         _context = context;
@@ -46,6 +47,7 @@ public class HomeController : Controller
         _curatedJobs = curatedJobs;
         _timePassCategory = timePassCategory;
         _myform = myform;
+        _formPayment = formPayment;
     }
     public IActionResult Index(string returnUrl = null)
     {
@@ -249,7 +251,7 @@ public class HomeController : Controller
 
     public IActionResult Greenjob_Curated_Job_Listing()
     {
-        var itms =  _curatedJobs.GetAll(false);
+        var itms = _curatedJobs.GetAll(false);
         return View(itms);
     }
 
@@ -481,21 +483,21 @@ public class HomeController : Controller
         return View();
     }
 
-   
 
-  
+
+
     public async Task<IActionResult> leadership_reflections_dashboard(string id)
     {
-         
+
         bool isAuthenticated = User.Identity.IsAuthenticated;
         ViewBag.IsAuthenticated = isAuthenticated;
         if (isAuthenticated && string.IsNullOrEmpty(id))
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             var currentUserName = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
-           // ApplicationUser user = await _um.FindByNameAsync(currentUserName);
+            // ApplicationUser user = await _um.FindByNameAsync(currentUserName);
 
-            var model = _leadershipReflection.GetByUserId(Guid.Parse(currentUserName),1);
+            var model = _leadershipReflection.GetByUserId(Guid.Parse(currentUserName), 1);
             if (model == null)
             {
                 model = new LeadershipReflection();
@@ -506,13 +508,13 @@ public class HomeController : Controller
         if (!string.IsNullOrEmpty(id))
         {
             Guid leadership = Guid.Parse(id);
-            var model = _leadershipReflection.GetByURId(leadership,1);
+            var model = _leadershipReflection.GetByURId(leadership, 1);
             if (model == null)
             {
                 model = new LeadershipReflection();
                 model.PostDate = DateOnly.FromDateTime(DateTime.Now);
             }
-                return View(model);
+            return View(model);
         }
         else
         {
@@ -686,7 +688,7 @@ public class HomeController : Controller
             var currentUserName = currentUser.FindFirst(ClaimTypes.NameIdentifier).Value;
             // ApplicationUser user = await _um.FindByNameAsync(currentUserName);
 
-            var model = _leadershipReflection.GetByUserId(Guid.Parse(currentUserName),2 );
+            var model = _leadershipReflection.GetByUserId(Guid.Parse(currentUserName), 2);
             if (model == null)
             {
                 model = new LeadershipReflection();
@@ -764,9 +766,9 @@ public class HomeController : Controller
     {
         if (User?.Identity != null && User.Identity.IsAuthenticated)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier) ;
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             ViewBag.UserName = User.Identity.Name;
-            if(User.IsInRole("Student/JobSeeker") )
+            if (User.IsInRole("Student/JobSeeker"))
             {
                 ViewBag.Role = 1;
             }
@@ -790,9 +792,9 @@ public class HomeController : Controller
             {
                 ViewBag.Role = 6;
             }
-            else  
+            else
             {
-                ViewBag.Role = 1    ;
+                ViewBag.Role = 1;
             }
             // use userId here
             ViewBag.UserId = userId;
@@ -830,15 +832,136 @@ public class HomeController : Controller
             {
                 Status = true,
                 Message = "Error! Please login to load data",
-                
+
             };
             // user is not logged in
             return Json(data);
         }
-        
 
-       
 
+
+
+    }
+
+    public IActionResult AddAmount()
+    {
+        if (User?.Identity != null && User.Identity.IsAuthenticated)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.UserName = User.Identity.Name;
+            if (User.IsInRole("Student/JobSeeker"))
+            {
+                ViewBag.Role = 1;
+            }
+            else if (User.IsInRole("Employer"))
+            {
+                ViewBag.Role = 2;
+            }
+            else if (User.IsInRole("Academics"))
+            {
+                ViewBag.Role = 3;
+            }
+            else if (User.IsInRole("Intern"))
+            {
+                ViewBag.Role = 4;
+            }
+            else if (User.IsInRole("Mid-Career"))
+            {
+                ViewBag.Role = 5;
+            }
+            else if (User.IsInRole("Silver-Talent"))
+            {
+                ViewBag.Role = 6;
+            }
+            else
+            {
+                ViewBag.Role = 1;
+            }
+            // use userId here
+            ViewBag.UserId = userId;
+            ViewBag.Balance = _formPayment.GetUserCurrentBalance(Guid.Parse(userId));
+            return View();
+        }
+        else
+        {
+            // user is not logged in
+            return RedirectToAction("Login", "Account");
+        }
+    }
+
+    public IActionResult MyLedger()
+    {
+        if (User?.Identity != null && User.Identity.IsAuthenticated)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            ViewBag.UserName = User.Identity.Name;
+            
+            // use userId here
+            ViewBag.UserId = userId;
+            ViewBag.Balance = _formPayment.GetUserCurrentBalance(Guid.Parse(userId));
+            var lst = _formPayment.GetAllLedgerDetailByUserId(Guid.Parse(userId));
+            return View(lst);
+        }
+        else
+        {
+            // user is not logged in
+            return RedirectToAction("Login", "Account");
+        }
+    }
+
+    [HttpPost]
+    public IActionResult AddAmount(IFormCollection coll)
+    {
+        if (User?.Identity != null && User.Identity.IsAuthenticated)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int roleId = 1;
+            if (User.IsInRole("Student/JobSeeker"))
+            {
+                roleId = 1;
+            }
+            else if (User.IsInRole("Employer"))
+            {
+                roleId = 2;
+            }
+            else if (User.IsInRole("Academics"))
+            {
+                roleId = 3;
+            }
+            else if (User.IsInRole("Intern"))
+            {
+                roleId = 4;
+            }
+            else if (User.IsInRole("Mid-Career"))
+            {
+                roleId = 5;
+            }
+            else if (User.IsInRole("Silver-Talent"))
+            {
+                roleId = 6;
+            }
+            else
+            {
+                roleId = 1;
+            }
+            UserLedger ledger = new UserLedger();
+            ledger.UserId = Guid.Parse(userId);
+            ledger.Credit = Convert.ToDecimal(coll["Amount"]);
+            ledger.Debit = 0;   
+            ledger.Particular = "Added amount through my account section";
+                ledger.RoleId = roleId;
+                ledger.CouponId = 0;
+                ledger.RcdInsTs = DateTime.Now.ToString();
+                ledger.RcdUpdt = DateTime.Now.ToString();
+            _formPayment.AddCredit(ledger);
+ 
+            return RedirectToAction("MyLedger");
+        }
+        else
+        {
+            // user is not logged in
+            return RedirectToAction("Login", "Account");
+        }
     }
 }
 

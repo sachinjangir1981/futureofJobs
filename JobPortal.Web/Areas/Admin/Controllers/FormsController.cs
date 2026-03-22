@@ -303,7 +303,7 @@ public class FormsController : Controller
 
     public IActionResult Categories()
     {
-        var list = _db.FormTypeCategory
+        var list = _db.FormTypeCategory.Where(m=>m.Id >5)
             .OrderBy(c => c.DisplayOrder)
             .ToList();
         return View(list);

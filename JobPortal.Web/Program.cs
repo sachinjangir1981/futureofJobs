@@ -79,7 +79,8 @@ builder.Services.AddScoped<ILeadershipReflection, LeadershipReflectionServices>(
 builder.Services.AddScoped<ITimePassCategory, TimePassCategoryServices>();
 builder.Services.AddScoped<ICuratedJobs, CuratedJobServices>();
 builder.Services.AddScoped<IMyform, MyformServices>();
-
+builder.Services.AddScoped<IFormFeeRepository, FormFeeRepository>();
+builder.Services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
 
 builder.Services.Configure<FormOptions>(o =>
 {

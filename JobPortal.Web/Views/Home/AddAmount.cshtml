@@ -1,0 +1,20 @@
+﻿@using JobPortal.Web.Models;
+
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <h2>Update Form Fee</h2>
+    <form asp-action="AddAmount" method="post">
+        <div class="mb-3">
+            <label class="form-label">Current Balance</label>
+            @ViewBag.Balance
+        </div>
+        <div class="mb-3">
+            <label for="Amount" class="form-label">Amount</label>
+            <input type="number" step="1" class="form-control" id="Amount" name="Amount" required />
+        </div>
+        <button type="submit" class="btn btn-primary">Add To Wallet</button>
+    </form>
+</div>

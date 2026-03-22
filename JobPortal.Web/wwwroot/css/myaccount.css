@@ -7,13 +7,13 @@
 }
 
 #dvAllForms {
-    height: 200px;
+    min-height: 200px;
     overflow-y: auto;
     border: 5px solid #d7d7d7;
 }
 
 #dvMyForms {
-    height: 200px;
+    min-height: 200px;
     overflow-y: auto;
     border: 5px solid #d7d7d7;
 }

@@ -1,0 +1,200 @@
+﻿@using JobPortal.Web.Models
+@model IEnumerable<FormFee>
+@{
+
+    ViewData["Title"] = "View Forms";
+    Layout = "_LayoutAdmin";
+    int serialNumber = 1;
+    int roleId = ViewBag.RoleId;
+}
+<div class="container py-4">
+    <h2>Form Fee Update</h2>
+    <div class="row" style="padding:10px">
+        <div class="col-2">Select Role</div>
+        <div class="col-10">
+            <form id="frmroles">
+                <select id="id" name="id" class="form-select" onchange="javascript:submitForm()">
+                    @if (roleId == 1)
+                    {
+                        <option value="1" selected>Student/JobSeeker</option>
+                    }
+                    else
+                    {
+                        <option value="1">Student/JobSeeker</option>
+                    }
+                    @if (roleId == 2)
+                    {
+                        <option value="2" selected>Employer</option>
+                    }
+                    else
+                    {
+                        <option value="2">Employer</option>
+                    }
+                    @if (roleId == 3)
+                    {
+                        <option value="3" selected>Academics</option>
+                    }
+                    else
+                    {
+                        <option value="3">Academics</option>
+                    }
+                    @if (roleId == 4)
+                    {
+                        <option value="4" selected>Intern</option>
+                    }
+                    else
+                    {
+                        <option value="4">Intern</option>
+                    }
+                    @if (roleId == 5)
+                    {
+                        <option value="5" selected>Mid-Career</option>
+                    }
+                    else
+                    {
+                        <option value="5">Mid-Career</option>
+                    }
+                    @if (roleId == 6)
+                    {
+                        <option value="6" selected>Silver-Talent</option>
+                    }
+                    else
+                    {
+                        <option value="6">Silver-Talent</option>
+                    }
+
+                </select>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>SNO</th>
+                        <th>Category</th>
+                        <th width="140">FT Fee</th>
+                        <th width="140">Fee</th>
+                        <th style="width:200px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td width="25">@serialNumber</td>
+                            <td>@item.FormTitle</td>
+                            <td width="140"><input type="number" id="txtft_@item.Id" value="@item.FTFeeAmount" /> </td>
+                            <td width="140"><input type="number" id="txt_@item.Id" value="@item.FeeAmount" /> </td>
+
+
+                            <td width="100">
+                                <button onclick="javascript:update(@item.Id)" class="btn btn-sm btn-primary">Update</button>
+                                <button onclick="javascript:getpricehistory(@item.Id)" class="btn btn-sm btn-secondary">History</button>
+                            </td>
+
+
+                        </tr>
+                        serialNumber += 1;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">History</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="closemodal()"><span>&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <table id="tblHistory" width="100%" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>First Time Fee</th>
+                            <th>Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="closemodal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        function submitForm() {
+            $('#frmroles').submit();
+        }
+
+        function update(id) {
+            var fee = $('#txt_' + id).val();
+            var ftfee = $('#txtft_' + id).val();
+            var roleid = $('#id').val();
+            $.ajax({
+                url: '@Url.Action("UpdateFormFee", "AdminAccounts")',
+                type: 'POST',
+                data: { Id: id, FeeAmount: fee,FTFeeAmount: ftfee, RoleId:roleid },
+                success: function (response) {
+                    alert(response.message);
+                },
+                error: function (xhr, status, error) {
+                    alert('Error updating fee: ' + error);
+                }
+            });
+        }
+
+        function getpricehistory(frmid){
+         var roleid = $('#id').val();
+          $.ajax({
+                url: '@Url.Action("GetFeeChangeHistory", "AdminAccounts")',
+                type: 'POST',
+                data: { Id: frmid,   RoleId:roleid },
+                success: function (response) {
+                   console.log(response);
+
+                        var tbody = $("#tblHistory tbody");
+
+                        // ✅ Clear existing rows
+                        tbody.empty();
+
+                        // ✅ Loop through JSON and append rows
+                        $.each(response.data, function (index, item) {
+
+                            var row = "<tr>" +
+                                        "<td>" + item.rcdIndsTs + "</td>" +
+                                        "<td>" + item.ftFeeAmount.toFixed(2) + "</td>" +
+                                        "<td>" + item.feeAmount.toFixed(2) + "</td>" +
+                                      "</tr>";
+
+                            tbody.append(row);
+                        });
+
+                        $('#myModal').modal("show");
+                },
+                error: function (xhr, status, error) {
+                    alert('Error updating fee: ' + error);
+                }
+            });
+        }
+
+        function closemodal()
+        {
+            $('#myModal').modal("hide");
+        }
+    </script>
+}

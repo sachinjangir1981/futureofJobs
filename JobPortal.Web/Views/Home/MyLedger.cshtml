@@ -1,0 +1,51 @@
+﻿@using JobPortal.Web.Models
+@model IEnumerable<UserLedger>
+@{
+
+    ViewData["Title"] = "View Forms";
+    Layout = "_Layout";
+    int serialNumber = 1;
+
+}
+<div class="container py-4" style="min-height:98vh">
+    <div class="row" style="padding:10px">
+        <div class="col-6">
+            <b>Total Balance : @ViewBag.Balance</b>
+        </div>
+        <div class="col-6" style="text-align:right">
+            <a href="/home/addamount" class="btn btn-primary" >Add</a>
+            </div>
+    </div>
+    <div class="row" style="max-height:350px; overflow-y:auto">
+        <div class="col-12">
+            <table class="table table-bordered table-striped">
+                <thead class="table-light">
+                    <tr>
+                        <th>SNO</th>
+                        <th>Date</th>
+                        <th>Particular</th>
+                        <th>Credit</th>
+                        <th>Debit</th>
+                        <th>Total</th>
+
+                    </tr>
+                </thead>
+                <tbody >
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td width="25">@serialNumber</td>
+                            <td>@item.RcdInsTs</td>
+                            <td>@item.Particular</td>
+                            <td>@item.Credit</td>
+                            <td>@item.Debit</td>
+                            <td>@item.TotalAmount</td>
+                        </tr>
+                        serialNumber += 1;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>

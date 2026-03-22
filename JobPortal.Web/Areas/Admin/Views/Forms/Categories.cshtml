@@ -3,6 +3,7 @@
 
     ViewData["Title"] = "View Categories";
     Layout = "_LayoutAdmin";
+    int serialNumber = 1;
 }
 <div class="container py-4">
     <h2>Form</h2>
@@ -11,6 +12,7 @@
     <table class="table table-bordered table-striped">
         <thead class="table-light">
             <tr>
+                <th>SNO</th>
                 <th>Category</th>
                 <th width="100">Form</th>
                 <th width="100">Active</th>
@@ -21,6 +23,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td width="25">@serialNumber</td>
                     <td>@item.FormCategory</td>
 
                     <td width="100"><a class="nav-link" href="/Admin/Forms/Sections/@item.Id">Sections</a></td>
@@ -41,6 +44,7 @@
 
                     
                 </tr>
+                serialNumber += 1;
             }
         </tbody>
     </table>
