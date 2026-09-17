@@ -1,47 +1,71 @@
 @model JobPortal.Web.ViewModels.RegisterModel;
-@{ Layout = "/Views/Shared/_Layout.cshtml"; }
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
 
 @section HeaderImage
 {
-<div class="headerImage2">
-
-</div>
+    <div class="headerImage2">
+    </div>
 }
 <form id="frmLoginregister" method="post">
-    <div class="bgregister row" style="margin-top:-90px; padding:20px 10px 20px 10px; height:95vh;">
+    <div class="bgregister row" style=" margin-top:-90px; padding:20px 10px 50px 10px; height:99vh;">
 
-        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top:60px;padding-left:8%; padding-right:8%;">
+        <div class="col-md-12 col-sm-12 col-xs-12" style="height:95vh; overflow-y:auto; padding-bottom:50px; margin-top:60px;padding-left:8%; padding-right:8%;">
 
             @Html.ValidationSummary(true, "Please fix the following errors.", new { @class = "text-danger" })
-            
             <div class="mb-3">
                 <label></label>
-                <input asp-for="Name" class="input-form-control txtwhobg" placeholder="Name" required />
+                <input class="input-form-control txtwhobg" disabled="disabled" value="@ViewBag.CurrentDate" />
+            </div>
+            <div class="mb-3">
+                <label>
+                    <a href="javascript:showPinSelector(0);" style="font-size: 14px;color:#000;text-decoration:none">
+                        <span class="fas fa-map-marker" style="font-size: 14px;"></span>Drop the pin
+                    </a>
+                </label>
+                <input type="hidden" id="hidPin" name="hidPin" />
+                <input asp-for="FullAddress" class="input-form-control txtwhobg" />
+                <input type="hidden" id="Location" name="Location" />
+                <input type="hidden" id="Country" name="Country" />
+                <input type="hidden" id="City" name="City" />
+                <input type="hidden" id="StreetAddress" name="StreetAddress" />
+                <input type="hidden" id="hidviewport" name="hidviewport" />
+
 
             </div>
             <div class="mb-3">
                 <label></label>
+                <input asp-for="Institution" class="input-form-control txtwhobg" placeholder="Institution Name" required />
+            </div>
+
+            <div class="mb-3">
+                <label></label>
+                <input asp-for="Name" class="input-form-control txtwhobg" placeholder="Name" required />
+            </div>
+            <div class="mb-3">
+                <label></label>
                 <select name="Role" class="form-control txtwhobg">
-                    <option value="0"  >Select</option>
+                    <option value="0">Select</option>
                     @if (ViewBag.RoleId == 1)
                     {
                         <option value="1" selected>Student / Job Seeker</option>
                     }
                     else
                     {
-                        <option value="1" >Student / Job Seeker</option>
+                        <option value="1">Student / Job Seeker</option>
                     }
-                     @if (ViewBag.RoleId == 4)
+                    @if (ViewBag.RoleId == 4)
                     {
-                    <option value="4" selected>Intern</option>
+                        <option value="4" selected>Intern</option>
                     }
                     else
                     {
                         <option value="4">Intern</option>
                     }
-                     @if (ViewBag.RoleId == 5)
+                    @if (ViewBag.RoleId == 5)
                     {
-                    <option value="5" selected>Mid Career</option>
+                        <option value="5" selected>Mid Career</option>
                     }
                     else
                     {
@@ -49,71 +73,468 @@
                     }
                     @if (ViewBag.RoleId == 6)
                     {
-                    <option value="6" selected>Silver Talent</option>
+                        <option value="6" selected>Silver Talent</option>
                     }
                     else
                     {
                         <option value="6">Silver Talent</option>
                     }
-                     @if (ViewBag.RoleId == 2)
+                    @if (ViewBag.RoleId == 2)
                     {
-                    <option value="2" selected>Employer</option>
+                        <option value="2" selected>Employer</option>
                     }
                     else
                     {
                         <option value="2">Employer</option>
                     }
-                     @if (ViewBag.RoleId == 3)
+                    @if (ViewBag.RoleId == 3)
                     {
-                   <option value="3" selected>Academics</option>
+                        <option value="3" selected>Academics</option>
                     }
                     else
                     {
                         <option value="3">Academics</option>
                     }
-                            
-                       </select>
-   
-          </div>
-         
-           <div class="mb-3">
-            <label></label>
-             <input asp-for=Phone  class="input-form-control txtwhobg" placeholder="Mobile" required />
-    
-          </div>
-              <div class="mb-3">
-                  <label></label><input asp-for="Email" class="input-form-control txtwhobg" placeholder="Email"  required />
-                 
-                  </div>
-          <div class="mb-3">
-              <label></label>
-              <input asp-for="Password"   type="password" placeholder="Password" class="input-form-control txtwhobg" />
-       
-          </div>
- 
-          <div class="buttondv ">
-               <button class="btn" style="display:none" type="submit">Register</button>
-                <button type="button" id="btnLogin" onclick="login()" class="btnregister btn">Log In</button>  <span class="btnregister btn">|</span>
+
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+                <label></label>
+                <input asp-for=Phone class="input-form-control txtwhobg" placeholder="Mobile" required />
+
+            </div>
+            <div class="mb-3">
+                <label></label><input asp-for="Email" class="input-form-control txtwhobg" placeholder="Email" required />
+
+            </div>
+            <div class="mb-3">
+                <label></label>
+                <input asp-for="Password" type="password" placeholder="Password" class="input-form-control txtwhobg" />
+
+            </div>
+
+            <div class="buttondv ">
+                <button class="btn" style="display:none" type="submit">Register</button>
+                @*   <button type="button" id="btnLogin" onclick="login()" class="btnregister btn">Log In</button>  <span class="btnregister btn">|</span> *@
                 <button type="button" id="btnRegister" onclick="register()" class="btnregister btn">Register</button>
             </div>
-       </div>
-       
+
+
+              <div>
+        @if (ViewBag.Registration != null)
+{
+    <div>
+        <table>
+            <tr>
+                <td width="50%"> 
+                    <select class="form-select">
+                         <option>Select Country</option>
+                        @foreach(var itm in ViewBag.Filters.Country)
+                        {
+                            <option>@itm</option>
+                        }
+                    </select>
+                </td>
+                <td width="50%"> 
+                     <select class="form-select">
+                          <option>Select State</option>
+                        @foreach(var itm in ViewBag.Filters.State)
+                        {
+                            <option>@itm</option>
+                        }
+                    </select>    
+                </td>
+                </tr>
+                 <tr>
+                <td  width="50%">  
+                    <select class="form-select">
+                        <option>Select City</option>
+                        @foreach(var itm in ViewBag.Filters.City)
+                        {
+                            <option>@itm</option>
+                        }
+                    </select>
+                </td>
+                <td  width="50%"> 
+                     <select class="form-select">
+                          <option>Select Institute</option>
+                        @foreach(var itm in ViewBag.Filters.Institute)
+                        {
+                            <option>@itm</option>
+                        }
+                    </select>    
+                </td>
+                </tr>
+                <tr>
+                <td  width="50%">  
+                     <input type="date" class="form-control" placeholder="From Date" />
+                </td>
+                <td  width="50%"> 
+                      <input type="date" class="form-control" placeholder="To Date" />  
+                </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" class="btn btn-primary" value="Search" /> 
+                        </td>
+                    </tr>
+            </table>
+         
+    </div>
+}
+    </div>
+
+        </div>
+      
 
     </div>
- 
+    
 </form>
+
+
+<!-- Modal   -->
+<div id="pinSelector" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Drop the pin</h4>
+                <button type="button" class="close btn-close" onclick="javascript:closePopup();" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Drag and drop the pin or tap on 'Set Current Location' to get your current location, where you like us to <span id="word">pick up</span> your car.</p>
+                <div style="text-align: center;">
+                    <images src="/images/throbber.gif" width="24px" id="throbber" class="hide" style="margin-bottom: 10px;" />
+                    <button type="button" id="btnSetLocation" class="btn btn-primary btn-sm" onclick="getLocation();" style="cursor: pointer; margin-bottom: 10px; background-color: #007FFF; border: 1px solid #007FFF;">Set Current Location</button>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="contact-map" style="height: 300px; margin-bottom: 20px; width: 100%;" id="map"></div>
+
+
+                    </div>
+                </div>
+                <small>Selected Location: <span id="selected_location"></span></small>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="javascript:closePopup();" style="cursor: pointer; margin-right: 15px;" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" style="cursor: pointer;" onclick="pinSelected();">Select</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 @section Scripts
 {
     <script type="text/javascript">
-     function login()
-     {
-       $('#frmLoginregister').attr('action', 'login');
-        $('#frmLoginregister').submit();
-     }
+          function login()
+          {
+            $('#frmLoginregister').attr('action', 'login');
+             $('#frmLoginregister').submit();
+          }
 
-     function register(){
-         $('#frmLoginregister').attr('action', 'register');
-        $('#frmLoginregister').submit();
-    }  
+          function register(){
+              $('#frmLoginregister').attr('action', 'register');
+             $('#frmLoginregister').submit();
+         }
+
+        function closePopup(){
+          $("#pinSelector").modal("hide");
+         }
     </script>
+    <script>
+        const API_KEY = "AIzaSyDMc1aTQo0n5Br2dGQCjFGfxKFEvCR1bSA";
+        var marker;
+        var map = null;
+        var currentLat = "";
+        var currentLng = "";
+        var myLatLng = { lat: 26.83214974154879, lng: 75.79557183900341 };
+        var selectedLat = "";
+        var selectedLng = "";
+        function initMap() {
+
+            if (currentLat != "" && currentLng != "") {
+                myLatLng.lat = parseFloat(currentLat);
+                myLatLng.lng = parseFloat(currentLng);
+            }
+
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 14,
+                center: myLatLng
+            });
+
+
+            updatePosition(myLatLng.lat, myLatLng.lng);
+            //if (currentLat!="" && currentLng!="") {
+            createMarker(myLatLng);
+            //}
+
+
+            google.maps.event.addListener(marker, 'dragend', function () {
+                map.setCenter(this.getPosition()); // Set map center to marker position
+                updatePosition(this.getPosition().lat(), this.getPosition().lng()); // update position display
+            });
+
+            google.maps.event.addListener(map, 'drag', function () {
+                marker.setPosition(this.getCenter()); // set marker position to map center
+                updatePosition(this.getCenter().lat(), this.getCenter().lng()); // update position display
+            });
+
+            google.maps.event.addListener(map, 'dragend', function () {
+                marker.setPosition(this.getCenter()); // set marker position to map center
+                updatePosition(this.getCenter().lat(), this.getCenter().lng()); // update position display
+            });
+
+        }
+
+        function resetMap() {
+
+            //map.setPosition(myLatLng);
+            map.setCenter(myLatLng);
+            marker.setPosition(myLatLng);
+
+        }
+
+        function updatePosition(lat, lng) {
+            selectedLat = lat;
+            selectedLng = lng;
+            $("#selected_location").html(lat.toFixed(5) + ', ' + lng.toFixed(5));
+        }
+
+
+        function createMarker(myLatLng) {
+            if (marker != undefined) {
+                return;
+            }
+            marker = new google.maps.Marker({
+                position: myLatLng,
+                draggable: true,
+                map: map,
+                title: 'Your location'
+            });
+        }
+
+        function setCurrentPosition() {
+            if (cPos != null) {
+                var ll = { lat: cPos.coords.latitude, lng: cPos.coords.longitude };
+                updatePosition(cPos.coords.latitude, cPos.coords.longitude);
+                map.setCenter(ll);
+                marker.setPosition(ll);
+            }
+            //x = "Latitude: " + position.coords.latitude +
+            //"<br>Longitude: " + position.coords.longitude;
+        }
+    </script>
+    <script>
+
+
+                var placeSearch, autocomplete, autocomplete2;
+                var componentForm = {
+                    street_number: 'short_name',
+                    route: 'long_name',
+                    locality: 'long_name',
+                    administrative_area_level_1: 'short_name',
+                    country: 'long_name',
+                    postal_code: 'short_name'
+                };
+
+                function initAutocomplete() {
+                    // Create the autocomplete object, restricting the search to geographical
+                    // location types.
+                            var options = {
+         types: ['('+$("#State").val()+')'],
+         componentRestrictions: {country: "us"}
+        };
+
+                    autocomplete = new google.maps.places.Autocomplete(
+                        (document.getElementById('Institution')),
+                        { types: ['geocode'], componentRestrictions: { country: "in"  } });
+
+                       if($('#hidviewport').val() !='')
+                       {
+                            autocomplete.setBounds($('#hidviewport').val());
+                        // Add strictBounds if you want to completely block results outside the city
+                         autocomplete.setOptions({ strictBounds: true });
+                       }
+                }
+
+                function fillInAddress() {
+                    // Get the place details from the autocomplete object.
+                    var place = autocomplete.getPlace();
+
+                    for (var component in componentForm) {
+                        document.getElementById(component).value = '';
+                        document.getElementById(component).disabled = false;
+                    }
+
+                    // Get each component of the address from the place details
+                    // and fill the corresponding field on the form.
+                    for (var i = 0; i < place.address_components.length; i++) {
+                        var addressType = place.address_components[i].types[0];
+                        if (componentForm[addressType]) {
+                            var val = place.address_components[i][componentForm[addressType]];
+                            document.getElementById(addressType).value = val;
+                        }
+                    }
+                }
+
+                // Bias the autocomplete object to the user's geographical location,
+                // as supplied by the browser's 'navigator.geolocation' object.
+                function geolocate() {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
+                            var geolocation = {
+                                lat: position.coords.latitude,
+                                lng: position.coords.longitude
+                            };
+                            var circle = new google.maps.Circle({
+                                center: geolocation,
+                                radius: position.coords.accuracy
+                            });
+                            autocomplete.setBounds(circle.getBounds());
+                        });
+                    }
+                }
+
+
+
+                var pinLocationFor = 0;
+                function showPinSelector(input) {
+                    hideThrobber();
+                    pinLocationFor = input;
+                    if (map == null) {
+                        setTimeout(initMap, 500);
+                    }
+                    else {
+                        resetMap();
+                    }
+
+
+
+
+                    $("#pinSelector").modal("show");
+                }
+
+                function pinSelected() {
+                    hideThrobber();
+
+                        $("#hidden").val("Pin: " + selectedLat.toFixed(5) + "," + selectedLng.toFixed(5));
+                     getAddressFromPin(selectedLat.toFixed(4), selectedLng.toFixed(4), API_KEY);
+
+
+                    $("#pinSelector").modal("hide");
+                }
+
+                function showThrobber() {
+                    $("#throbber").removeClass("hide"); throbber
+                    $("#btnSetLocation").addClass("hide");
+                }
+
+                function hideThrobber() {
+                    $("#throbber").addClass("hide");
+                    $("#btnSetLocation").removeClass("hide");
+
+                }
+
+
+                var cPos = null;
+                function getLocation() {
+                    if (navigator.geolocation) {
+                        showThrobber();
+                        navigator.geolocation.getCurrentPosition(showPosition, showError);
+                    } else {
+                        alert("Geolocation is not supported by this browser.");
+                    }
+                }
+                function showError(error) {
+                    hideThrobber();
+                    switch (error.code) {
+                        case error.PERMISSION_DENIED:
+                            alert("User denied the request for Geolocation.");
+                            break;
+                        case error.POSITION_UNAVAILABLE:
+                            alert("Location information is unavailable.");
+                            break;
+                        case error.TIMEOUT:
+                            alert("The request to get user location timed out.");
+                            break;
+                        case error.UNKNOWN_ERROR:
+                            alert("An unknown error occurred.");
+                            break;
+                    }
+                }
+                function showPosition(position) {
+                    hideThrobber();
+                    cPos = position;
+                    setCurrentPosition();
+
+                }
+
+                async function getAddressFromPin(lat, lng, apiKey) {
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`;
+
+            try {
+                console.log(url);
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.status === 'OK') {
+                    //const formattedAddress = data.results[0].formatted_address;
+                    function getComponent(type) {
+                        const component = components.find(c => c.types.includes(type));
+                        return component ? component.long_name : "";
+                    }
+                    const firstResult = data.results[0];
+                    const components = firstResult.address_components;
+                    const formattedAddress = firstResult.formatted_address;
+                    const city = getComponent("locality");
+                    const state = getComponent("administrative_area_level_1");
+                    const country = getComponent("country");
+                    $("#hidviewport").val(data.results[0].geometry.viewport);
+
+
+                    // Reconstructing street address
+                    const premise = getComponent("premise");
+                    const neighborhood = getComponent("neighborhood");
+                    const streetAddress = [premise, neighborhood].filter(Boolean).join(", ");
+                     $("#FullAddress").val(formattedAddress);
+                    console.log({
+                        Formatted: formattedAddress,
+                        City: city,
+                        State: state,
+                        Country: country,
+                        Street: streetAddress
+                    });
+                     $("#Country").val(country);
+                     $("#State").val(state);
+                     $("#City").val(city);
+                     $("#StreetAddress").val(streetAddress);
+                     $("#Institution").val(premise);
+
+
+
+                    console.log("Address:", data);
+                    console.log("Address:", formattedAddress);
+                    return formattedAddress;
+                } else {
+                    console.error("Error fetching address:", data);
+                }
+            } catch (error) {
+                console.error("Network error:", error);
+            }
+        }
+
+        // Example usage
+
+    </script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtS79DNoGGZhBkIQd_vyl5AYZufzop-ug&libraries=places&callback=initAutocomplete" async defer></script>
+
+
+
 }

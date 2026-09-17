@@ -4,8 +4,8 @@ using System.Data;
 
 namespace JobPortal.Web.Models
 {
-    public class UserLedger 
-    { 
+    public class UserLedger
+    {
         public int PKID { get; set; }
         public Guid UserId { get; set; }
         public int RoleId { get; set; }
@@ -37,8 +37,23 @@ namespace JobPortal.Web.Models
         public decimal FeeAmount { get; set; }
 
         public decimal FTFeeAmount { get; set; }
-        
 
+
+    }
+
+    public class UserFormFeeDetails
+    {
+        public int Id { get; set; }
+
+        public int FormId { get; set; }
+
+        public string FormName { get; set; }
+        public string RcdIndsTs { get; set; }
+        public decimal FeeAmount { get; set; }
+
+        public decimal FTFeeAmount { get; set; }
+        public decimal AvailableAmount { get; set; }
+        public bool IsFormFilledByUser { get; set; }
     }
 
 
@@ -48,9 +63,14 @@ namespace JobPortal.Web.Models
         int AddUpdateFormFee(FormFee formFee);
 
         List<FormFeeChangeHistory> GetFeeHistoryByRoleIdFormId(int roleId, int formId);
+
+        UserFormFeeDetails GetUserFormFeeDetails(int roleId, int formId, Guid userId);
+
+        int CheckforFeeSession(int formId, Guid userId, string sessionId);
+        int AddNewFeeSession(int formId, Guid userId, string sessionId);
     }
 
-  
+
 
     public class FormFeeRepository : IFormFeeRepository
     {
@@ -89,6 +109,45 @@ namespace JobPortal.Web.Models
             var result = _dapper.GetAll<FormFeeChangeHistory>($"FormFee_Master", dbparams, commandType: CommandType.StoredProcedure).ToList();
             return result;
         }
+
+        public UserFormFeeDetails GetUserFormFeeDetails(int roleId, int formId, Guid userid)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@action", "GetFormChargesAndAvailalbeAmountByUserId", DbType.String);
+            dbparams.Add("@RoleId", roleId, DbType.Int32);
+            dbparams.Add("@FormId", formId, DbType.Int32);
+            dbparams.Add("@UserId", userid, DbType.Guid);
+            var result = _dapper.GetAll<UserFormFeeDetails>($"FormFee_Master", dbparams, commandType: CommandType.StoredProcedure).FirstOrDefault();
+           if(result== null)
+            {
+                result = new UserFormFeeDetails();
+            }
+            return result;
+        }
+
+
+        public int CheckforFeeSession(int formId, Guid userId, string sessionId)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@action", "CHECK", DbType.String);
+            dbparams.Add("@sessionId", sessionId, DbType.String);
+            dbparams.Add("@FormId", formId, DbType.Int32);
+            dbparams.Add("@UserId", userId, DbType.Guid);
+            var result = _dapper.ExecuteScalar($"FormSessionsMaster", dbparams, commandType: CommandType.StoredProcedure);
+            return int.Parse(result.ToString());
+        }
+
+
+        public int AddNewFeeSession(int formId, Guid userId, string sessionId)
+        {
+            var dbparams = new DynamicParameters();
+            dbparams.Add("@action", "INSERT", DbType.String);
+            dbparams.Add("@sessionId", sessionId, DbType.String);
+            dbparams.Add("@FormId", formId, DbType.Int32);
+            dbparams.Add("@UserId", userId, DbType.Guid);
+            var result = _dapper.ExecuteScalar($"FormSessionsMaster", dbparams, commandType: CommandType.StoredProcedure);
+            return int.Parse(result.ToString());
+        }
     }
 
 
@@ -116,7 +175,7 @@ namespace JobPortal.Web.Models
             var result = _dapper.GetAll<UserLedger>($"UserLedger_Master", dbparams, commandType: CommandType.StoredProcedure).ToList();
             return result;
         }
-        public int AddCredit(UserLedger modal) 
+        public int AddCredit(UserLedger modal)
         {
             var dbparams = new DynamicParameters();
             dbparams.Add("@action", "CREDIT", DbType.String);
@@ -150,6 +209,6 @@ namespace JobPortal.Web.Models
             var result = _dapper.ExecuteScalar($"UserLedger_Master", dbparams, commandType: CommandType.StoredProcedure);
             return Convert.ToDecimal(result);
         }
- 
+
     }
 }

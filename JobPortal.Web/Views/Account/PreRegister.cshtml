@@ -1,0 +1,136 @@
+﻿@using JobPortal.Web.Models;
+@model JobPortal.Web.ViewModels.RegisterModel;
+@{
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+@section HeaderImage
+{
+    <div class="headerImage2">
+    </div>
+}
+<form id="frmLoginregister" method="post">
+    <div class="bgregister row" style=" margin-top:-90px; padding:20px 10px 50px 10px; height:99vh;">
+
+        <div class="col-md-12 col-sm-12 col-xs-12" style="height:95vh; overflow-y:auto; padding-bottom:50px; margin-top:60px;padding-left:2%; padding-right:2%;">
+
+
+            @if (ViewBag.Registration != null)
+            {
+                <div>
+                    <table>
+                        <tr>
+                            <td width="50%">
+                                <select id="cntr" name="cntr" class="form-select">
+                                    <option value="-1">Select Country</option>
+                                    @foreach (var itm in ViewBag.Filters.Country)
+                                    {
+                                        if (ViewBag.Country == itm)
+                                        {
+                                            <option value="@itm" selected>@itm</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@itm">@itm</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td width="50%">
+                                <select id="stt" name="stt" class="form-select">
+                                    <option value="-1">Select State</option>
+                                    @foreach (var itm in ViewBag.Filters.State)
+                                    {
+                                        if (ViewBag.State == itm)
+                                        {
+                                            <option value="@itm" selected>@itm</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@itm">@itm</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%">
+                                <select id="cty" name="cty" class="form-select">
+                                    <option value="-1">Select City</option>
+                                    @foreach (var itm in ViewBag.Filters.City)
+                                    {
+                                        if (ViewBag.City == itm)
+                                        {
+                                            <option value="@itm" selected>@itm</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@itm">@itm</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                            <td width="50%">
+                                <select id="inst" name="inst" class="form-select">
+                                    <option value="-1">Select Institute</option>
+                                    @foreach (var itm in ViewBag.Filters.Institute)
+                                    {
+                                        if (ViewBag.Institution == itm)
+                                        {
+                                            <option value="@itm" selected>@itm</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@itm">@itm</option>
+                                        }
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="50%">
+                                <input type="date" id="frmDt" value="@ViewBag.FrmDt" name="frmDt" class="form-control" placeholder="From Date" />
+                            </td>
+                            <td width="50%">
+                                <input type="date" id="tdt" value="@ViewBag.Tdt" name="tdt" class="form-control" placeholder="To Date" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <input type="submit" class="btn btn-primary" value="Search" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="tbl" style="width:100%; font-size:13px">
+                        @foreach (PreRegistration itm in ViewBag.Registration)
+                        {
+                            <tr>
+                                <td>
+                                    @itm.PKID
+                                </td>
+                                <td>
+                                    @String.Format("{0:dd/MM/yyyy}", itm.RcdInsTs)
+                                </td>
+                                <td>
+                                    @itm.RegName
+                                </td>
+                                <td>
+                                    @itm.EmailId
+                                </td>
+                                <td>
+                                    @itm.MobileNo
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            }
+
+
+        </div>
+
+
+    </div>
+
+</form>
+

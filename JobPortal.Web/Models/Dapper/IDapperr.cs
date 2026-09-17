@@ -13,5 +13,7 @@ namespace Dapper_ORM.Services
         object? ExecuteScalar(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         T Update<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+
+        SqlMapper.GridReader QueryMultiple(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
     }
 }

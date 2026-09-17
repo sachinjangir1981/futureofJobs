@@ -125,9 +125,7 @@
         }
 
     </ul>
-    @{
-        i = 0;
-    }
+   
     <!-- Section Content -->
     <form method="post" asp-action="OpenSurvey" asp-controller="visitor" enctype="multipart/form-data">
         <div class="tab-content mt-3" id="sectionTabContent">
@@ -136,7 +134,7 @@
             {
                 var questionlist = sect.Questions.OrderBy(m=>m.DisplayOrder);
                 <input type="hidden" name="FormCategoryId" value="@Model.FormCategoryId" />
-                <div class="tab-pane fade @(i == 0 ? "show active" : "")"
+                <div class="tab-pane fade show active @(i == 0 ? "show active" : "")"
                      id="section-@sect.Id" role="tabpanel">
 
                     @foreach (var q in questionlist)
@@ -256,7 +254,7 @@
 
 
         </div>
-        <div class="col-12">
+        <div class="col-12" id="premium-content-trigger">
 
             <p class="paraCommon opensureveyFooterNote">@Html.Raw(ViewBag.FormCategory.FooterNote)</p>
         </div>
@@ -306,6 +304,63 @@
 
     </form>
 </div>
+
+ 
+
+
+ 
+<div class="modal fade" id="chargeConfirmModal" tabindex="-1" role="dialog" aria-labelledby="chargeModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-light">
+                <h5 class="modal-title text-dark" id="chargeModalLabel">
+                    <i class="fas fa-exclamation-circle text-warning mr-2"></i> Confirm Charge
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>If you want to continue form filling, a small nominal charge will apply.</p>
+
+                <div class="alert alert-secondary mt-3 mb-0">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>First Time Form Fill Fee:</span>
+                        <span>@ViewBag.FormFee.FTFeeAmount</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Updating a filled form fee:</span>
+                        <span>@ViewBag.FormFee.FeeAmount</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Your available amount in wallet:</span>
+                        <span>@ViewBag.FormFee.AvailableAmount</span>
+                    </div>
+                    <hr>
+                     
+                </div>
+            </div>
+            <form asp-action="PayAmount" asp-route-Id ="@ViewBag.FormFee.FormId" asp-controller="home" method="post">
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancel</button>
+                    @if (ViewBag.AmountToPay > ViewBag.FormFee.AvailableAmount)
+                    {
+                        <a href="@Url.Action("AddAmount", "Home")" class="btn btn-warning">
+                            Add Money
+                        </a>
+                    }
+                <button type="submit" class="btn btn-primary" id="confirmChargeBtn">
+                        Confirm & Pay @ViewBag.AmountToPay
+                </button>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts
 {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -328,5 +383,57 @@
              $('#btn_'+rbgid ).hide();
              $('.'+rbgid).prop('checked', false);
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+          // 1. Create a flag so the modal only opens ONCE per page load
+          var hasModalOpened = false;
+          var needtopay =@ViewBag.NeedToPay;
+          var amttopay =@ViewBag.AmountToPay;
+          // 2. Identify the target div
+          var targetDiv = $('#premium-content-trigger');
+
+          // 3. Listen for the user scrolling
+          $(window).on('scroll', function() {
+
+            // If the modal has already opened, or the target div doesn't exist, do nothing
+            if (hasModalOpened || targetDiv.length === 0 || needtopay==0 || amttopay    ==0) {
+              return;
+            }
+
+            // Calculate the bottom of the user's screen
+            var windowBottom = $(window).scrollTop() + $(window).height();
+
+            // Calculate the top of the target div
+            var divTop = targetDiv.offset().top;
+
+            // 4. Trigger the modal if the bottom of the screen hits the top of the div
+            if (windowBottom >= divTop) {
+              $('#chargeConfirmModal').modal('show');
+              hasModalOpened = true; // Lock the flag so it doesn't keep firing
+            }
+
+          });
+
+          // Optional: Scroll the user back up a bit if they click "Cancel"
+          $('#chargeConfirmModal').on('hidden.bs.modal', function () {
+            // You can redirect them, or scroll them up 500 pixels away from the premium area
+            $('html, body').animate({
+                scrollTop: targetDiv.offset().top - 800
+            }, 500);
+
+            // If you want them to be able to trigger it again if they scroll back down,
+            // uncomment the line below:
+            // hasModalOpened = false;
+          });
+        });
+                $(document).ready(function() {
+          // Target any button with data-dismiss="modal" or the close class
+          $('[data-dismiss="modal"], .close').on('click', function() {
+            // Replace '#chargeConfirmModal' with the actual ID of your modal
+            $('#chargeConfirmModal').modal('hide');
+          });
+        });
     </script>
 }

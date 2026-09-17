@@ -50,6 +50,13 @@ namespace Dapper_ORM.Services
             return db.Query<T>(sp, parms, commandType: commandType).ToList();
         }
 
+        public SqlMapper.GridReader QueryMultiple(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        {
+            var db = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            // QueryMultiple is used to fetch multiple result sets (e.g., Tables[0], Tables[1])
+            return db.QueryMultiple(sp, parms, commandType: commandType);
+        }
+
         public DbConnection GetDbconnection()
         {
             return new SqlConnection(_config.GetConnectionString(Connectionstring));

@@ -81,6 +81,8 @@ builder.Services.AddScoped<ICuratedJobs, CuratedJobServices>();
 builder.Services.AddScoped<IMyform, MyformServices>();
 builder.Services.AddScoped<IFormFeeRepository, FormFeeRepository>();
 builder.Services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
+builder.Services.AddScoped<IPreRegistration, PreRegistrationRepository>();
+
 
 builder.Services.Configure<FormOptions>(o =>
 {
@@ -131,7 +133,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthorization();
 //app.UseMiddleware<ErrorLoggingMiddleware>();
 app.MapControllerRoute(
     name: "areas",

@@ -33,8 +33,9 @@ namespace JobPortal.Web.Controllers
         private readonly SignInManager<ApplicationUser> _sm;
         private readonly ITimePassCategory _timePassCategory;
         private readonly IMyform _myform;
+        private readonly IFormFeeRepository _fee;
         public VisitorController(AppDbContext db, IFileStorage files, UserManager<ApplicationUser> um, IServey servey, IDForms dForms, IWebHostEnvironment webHostEnvironment, ILibrary library,
-            ILibraryCategory libraryCategory, IOneMinute IOneMinute, IWpPostModel wpPostModel, SignInManager<ApplicationUser> sm, ITimePassCategory timePassCategory, IMyform myform)
+            ILibraryCategory libraryCategory, IOneMinute IOneMinute, IWpPostModel wpPostModel, SignInManager<ApplicationUser> sm, ITimePassCategory timePassCategory, IMyform myform, IFormFeeRepository fee)
         {
             _servey = servey;
             _webHostEnvironment = webHostEnvironment;
@@ -49,6 +50,7 @@ namespace JobPortal.Web.Controllers
             _files = files;
             _timePassCategory = timePassCategory;
             _myform = myform;
+            _fee = fee;
         }
 
         public IActionResult Index()
@@ -477,8 +479,14 @@ namespace JobPortal.Web.Controllers
         public async Task<IActionResult> OpenSurvey(int id, int? stepId, int? questionid)
         {
             ViewBag.Msg = "";
+            ViewBag.NeedToPay = 0;
             try
             {
+                if (HttpContext.Session.GetString("SessionId") is null)
+                {
+                    HttpContext.Session.SetString("SessionId", Guid.NewGuid().ToString());
+                }
+                string sessionId = HttpContext.Session.GetString("SessionId");
                 ViewBag.ViewOnly =  questionid.HasValue ;
                 bool isAuthenticated = User.Identity.IsAuthenticated;
                 ViewBag.IsAuthenticated = isAuthenticated;
@@ -489,6 +497,35 @@ namespace JobPortal.Web.Controllers
                     userId = Guid.Empty.ToString();
                     var frmCategory = _db.FormTypeCategory.Where(m => m.Id == id).FirstOrDefault();
                 ViewBag.FormCategory = frmCategory;
+                int roleId = 0;
+                if (User.IsInRole("Student/JobSeeker"))
+                {
+                    roleId = 1;
+                }
+                else if (User.IsInRole("Employer"))
+                {
+                    roleId = 2;
+                }
+                else if (User.IsInRole("Academics"))
+                {
+                    roleId = 3;
+                }
+                else if (User.IsInRole("Intern"))
+                {
+                    roleId = 4;
+                }
+                else if (User.IsInRole("Mid-Career"))
+                {
+                    roleId = 5;
+                }
+                else if (User.IsInRole("Silver-Talent"))
+                {
+                    roleId = 6;
+                }
+                else
+                {
+                    roleId = 1;
+                }
                 if (frmCategory != null)
                 {
                     if (frmCategory.ForRole == 1)
@@ -508,13 +545,18 @@ namespace JobPortal.Web.Controllers
                         ViewBag.InstitureName = "";
                     }
                 }
-
+               //ViewBag.FormFee =   _fee.GetUserFormFeeDetails(roleId, id, Guid.Parse(userId));
+               //ViewBag.NeedToPay = _fee.CheckforFeeSession(id, Guid.Parse(userId), sessionId);
+                var formFeeDetails = _fee.GetUserFormFeeDetails(roleId, id, Guid.Parse(userId));
+                int IsNeedTopay = _fee.CheckforFeeSession(id, Guid.Parse(userId), sessionId);
+                ViewBag.FormFee = formFeeDetails;
+                ViewBag.NeedToPay = IsNeedTopay;
+                ViewBag.AmountToPay = IsNeedTopay == 0 ? formFeeDetails.FTFeeAmount : formFeeDetails.FeeAmount;
                 var sections = await _db.FormSections
                     .Where(s => s.IsActive && s.FormTypeCategoryId == id)
                     .Include(s => s.Questions)
                         .ThenInclude(q => q.Options)
                     .OrderBy(s => s.DisplayOrder)
-                    
                     .ToListAsync();
 
                 var answers = new List<FormAnswer>();

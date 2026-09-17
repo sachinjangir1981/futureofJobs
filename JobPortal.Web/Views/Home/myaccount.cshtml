@@ -4,7 +4,7 @@
 
 @{
     Layout = "/Views/Shared/_Layout.cshtml";
-
+    int serialNumber = 1;
     string dvId = "";
     string topcss = "genzlibrarytopbg";
     string maincss = "bgGenzlibrary";
@@ -91,7 +91,7 @@
     <p class="paraCommon " style="">
         <div class="logininfo text-overlay">Welcome  <br /> @ViewBag.UserName <br />
 
-            <div style="padding-top:20px">  <b>Please click to fill the form.</b> <br /></div>
+            <div style="padding-top:10px">  <b>Please click to fill the form.</b> <br /></div>
         </div>
 
       
@@ -145,6 +145,54 @@
 
         </p>
         }
+
+    @if (ViewBag.Ledger != null && ViewBag.Ledger.Count > 0)
+    {
+        <div class="paraCommon" style="background-color:#FEF1D39C">
+            <b>My Ledger</b> <br />
+            <div class="row" style="padding:10px">
+                <div class="col-6">
+                    <b>Total Balance : @ViewBag.Balance</b>
+                </div>
+                <div class="col-6" style="text-align:right">
+                    <a href="/home/addamount" style="background:#FDF0D2;font-size:14px; padding:0px 10px 2px 10px;text-decoration:none">Add to wallet</a>
+                </div>
+            </div>
+            <div id="dvMyForms">
+                <table class="table table-bordered table-striped" style="font-size:11px !important">
+                    <thead class="table-light">
+                        <tr>
+                            <th>SNO</th>
+                            <th>Date</th>
+                            <th>Particular</th>
+                            <th>Credit</th>
+                            <th>Debit</th>
+                            <th>Total</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ViewBag.Ledger)
+                        {
+                            <tr>
+                                <td width="25">@serialNumber</td>
+                                <td>@item.RcdInsTs</td>
+                                <td>@item.Particular</td>
+                                <td>@item.Credit</td>
+                                <td>@item.Debit</td>
+                                <td>@item.TotalAmount</td>
+                            </tr>
+                            serialNumber += 1;
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+
+
+
+        </div>
+    }
         
     <p class="paraCommon"></p>
 </div>
@@ -232,4 +280,4 @@
          function closemodel() {
         $('#shareModal').modal('hide');
     } 
-</script>
+</script>   

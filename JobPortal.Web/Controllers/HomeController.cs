@@ -29,10 +29,11 @@ public class HomeController : Controller
     private readonly ITimePassCategory _timePassCategory;
     private readonly IMyform _myform;
     private readonly IFormPaymentRepository _formPayment;
+    private readonly IFormFeeRepository _fee;
     public HomeController(AppDbContext context, ILogger<HomeController> logger, ILibrary library, ILibraryCategory libraryCategory,
         IServey servey, IContactForms contactForms, ILeadershipReflection leadershipReflection, UserManager<ApplicationUser> um,
         SignInManager<ApplicationUser> sm, IOneMinute IOneMinute, ICuratedJobs curatedJobs,
-        ITimePassCategory timePassCategory, IMyform myform, IFormPaymentRepository formPayment)
+        ITimePassCategory timePassCategory, IMyform myform, IFormPaymentRepository formPayment, IFormFeeRepository fee)
     {
         _sm = sm;
         _context = context;
@@ -48,6 +49,7 @@ public class HomeController : Controller
         _timePassCategory = timePassCategory;
         _myform = myform;
         _formPayment = formPayment;
+        _fee = fee;
     }
     public IActionResult Index(string returnUrl = null)
     {
@@ -799,6 +801,11 @@ public class HomeController : Controller
             // use userId here
             ViewBag.UserId = userId;
             var lst = _myform.GetAll(Guid.Parse(userId));
+
+            ViewBag.UserId = userId;
+            ViewBag.Balance = _formPayment.GetUserCurrentBalance(Guid.Parse(userId));
+            ViewBag.Ledger = _formPayment.GetAllLedgerDetailByUserId(Guid.Parse(userId));
+
             return View(lst);
         }
         else
@@ -900,6 +907,9 @@ public class HomeController : Controller
             ViewBag.UserId = userId;
             ViewBag.Balance = _formPayment.GetUserCurrentBalance(Guid.Parse(userId));
             var lst = _formPayment.GetAllLedgerDetailByUserId(Guid.Parse(userId));
+
+
+
             return View(lst);
         }
         else
@@ -947,15 +957,82 @@ public class HomeController : Controller
             UserLedger ledger = new UserLedger();
             ledger.UserId = Guid.Parse(userId);
             ledger.Credit = Convert.ToDecimal(coll["Amount"]);
-            ledger.Debit = 0;   
+            ledger.Debit = 0;
             ledger.Particular = "Added amount through my account section";
-                ledger.RoleId = roleId;
-                ledger.CouponId = 0;
-                ledger.RcdInsTs = DateTime.Now.ToString();
-                ledger.RcdUpdt = DateTime.Now.ToString();
+            ledger.RoleId = roleId;
+            ledger.CouponId = 0;
+            ledger.RcdInsTs = DateTime.Now.ToString();
+            ledger.RcdUpdt = DateTime.Now.ToString();
             _formPayment.AddCredit(ledger);
- 
-            return RedirectToAction("MyLedger");
+
+            return RedirectToAction("MyAccount");
+        }
+        else
+        {
+            // user is not logged in
+            return RedirectToAction("Login", "Account");
+        }
+    }
+
+
+    [HttpPost]
+    public IActionResult PayAmount(int Id)
+    {
+        if (User?.Identity != null && User.Identity.IsAuthenticated)
+        {
+            if (HttpContext.Session.GetString("SessionId") is null)
+            {
+                HttpContext.Session.SetString("SessionId", Guid.NewGuid().ToString());
+            }
+            string sessionId = HttpContext.Session.GetString("SessionId");
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            int roleId = 1;
+            if (User.IsInRole("Student/JobSeeker"))
+            {
+                roleId = 1;
+            }
+            else if (User.IsInRole("Employer"))
+            {
+                roleId = 2;
+            }
+            else if (User.IsInRole("Academics"))
+            {
+                roleId = 3;
+            }
+            else if (User.IsInRole("Intern"))
+            {
+                roleId = 4;
+            }
+            else if (User.IsInRole("Mid-Career"))
+            {
+                roleId = 5;
+            }
+            else if (User.IsInRole("Silver-Talent"))
+            {
+                roleId = 6;
+            }
+            else
+            {
+                roleId = 1;
+            }
+
+            var formFeeDetails = _fee.GetUserFormFeeDetails(roleId, Id, Guid.Parse(userId));
+             int IsNeedTopay = _fee.CheckforFeeSession(Id, Guid.Parse(userId), sessionId);
+            ViewBag.FormFee = formFeeDetails;
+            ViewBag.NeedToPay = IsNeedTopay;
+            Decimal amountToPay = IsNeedTopay == 0 ? formFeeDetails.FTFeeAmount : formFeeDetails.FeeAmount;
+            UserLedger ledger = new UserLedger();
+            ledger.UserId = Guid.Parse(userId);
+            ledger.Credit = 0;
+            ledger.Debit = amountToPay;
+            ledger.Particular = string.Format("Amount INR {0} paid for {1} record in Form - {2} ", amountToPay, (formFeeDetails.IsFormFilledByUser==false? "insert a new":"update an existing"), formFeeDetails.FormName);
+            ledger.RoleId = roleId;
+            ledger.CouponId = 0;
+            ledger.RcdInsTs = DateTime.Now.ToString();
+            ledger.RcdUpdt = DateTime.Now.ToString();
+            _formPayment.AddDebit(ledger);
+            _fee.AddNewFeeSession(Id, Guid.Parse(userId), sessionId);
+            return RedirectToAction("OpenSurvey","Visitor", new { id = Id });
         }
         else
         {

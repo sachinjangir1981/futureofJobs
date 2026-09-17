@@ -1,33 +1,61 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
 using JobPortal.Infrastructure.Data;
+using JobPortal.Web.Models;
 using JobPortal.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Win32;
+using System.Security.Claims;
 
 namespace JobPortal.Web.Controllers;
 public class AccountController : Controller
 {
     private readonly UserManager<ApplicationUser> _um;
     private readonly SignInManager<ApplicationUser> _sm;
+    private readonly IPreRegistration _preReg;
     private readonly AppDbContext _db;
 
-    public AccountController(UserManager<ApplicationUser> um, SignInManager<ApplicationUser> sm, AppDbContext db)
+    public AccountController(UserManager<ApplicationUser> um, SignInManager<ApplicationUser> sm, IPreRegistration preReg, AppDbContext db)
     {
-        _um = um; _sm = sm; _db = db;
+        _um = um; _sm = sm; _preReg = preReg; _db = db;
+    }
+
+    [Authorize(Roles = "Admin")]
+    public IActionResult PreRegister(string? cntr, string? stt, string? cty, string? inst, string? frmDt, string? tdt)
+    {
+        if (User.Identity?.IsAuthenticated == true)
+        {
+            ViewBag.Country = cntr == null ? "0" : cntr;
+            ViewBag.City = cty == null ? "0" : cty;
+            ViewBag.State = stt == null ? "0" : stt;
+            ViewBag.Institution = inst == null ? "0" : inst;
+            ViewBag.Tdt = tdt;
+            ViewBag.FrmDt = frmDt;
+            ViewBag.Registration = _preReg.GetAll(country: cntr, state: stt, city: cty, intitute: inst, dtStart: frmDt, dtEnd: tdt);
+            ViewBag.Filters = _preReg.GetDistinctList();
+            return View();
+        }
+        else
+        {
+            return RedirectToAction("Login");
+        }
     }
 
     public IActionResult Register(int? id)
     {
-        ViewBag.RoleId = id.HasValue ? id.Value :0;
+        ViewBag.RoleId = id.HasValue ? id.Value : 0;
         RegisterModel register = new RegisterModel();
+        ViewBag.CurrentDate = DateTime.UtcNow.AddMinutes(330).ToString("dd-MM-yyyy");
+
+
         return View(register);
     }
 
     [HttpPost]
     public async Task<IActionResult> Register(RegisterModel register)
     {
-       
-        string role2 = register.Role,  name= register.Name,  phone= register.Phone,  email= register.Email,  password = register.Password;
+
+        string role2 = register.Role, name = register.Name, phone = register.Phone, email = register.Email, password = register.Password;
 
         string role = "Student/JobSeeker";
 
@@ -58,19 +86,22 @@ public class AccountController : Controller
         else
             role = "Student/JobSeeker";
 
+
+        _preReg.Add(new PreRegistration { EmailId = email, RegName = name, MobileNo = phone, FullAddress = register.FullAddress, Country = register.Country, State = register.State, City = register.City, StreetAddress = register.StreetAddress, Premises = register.Placename, Institution = register.Institution, RcdInsTs = DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss") });
+
         var user = new ApplicationUser { UserName = email, Email = email };
         var r = await _um.CreateAsync(user, password);
         string error = "";
         if (!r.Succeeded)
         {
-            
+
             foreach (var e in r.Errors)
                 ModelState.AddModelError("", e.Description);
 
             return View(register);
         }
-         
-         await _um.AddClaimAsync(user, new Claim("AccountType", role));
+
+        await _um.AddClaimAsync(user, new Claim("AccountType", role));
         if ((await _um.GetRolesAsync(user)).Count > 0)
         {
             await _um.RemoveFromRoleAsync(user, role);
@@ -78,28 +109,28 @@ public class AccountController : Controller
         await _um.AddToRoleAsync(user, role);
 
 
-       await _sm.SignInAsync(user, false);
+        await _sm.SignInAsync(user, false);
 
-       
+
         int profileId = 0;
         Guid userId = Guid.Parse(user.Id.ToString());
         if (role == "Employer")
         {
             if (!_db.EmployerProfiles.Any(p => p.UserId == userId))
             {
-               var emp = _db.EmployerProfiles.Add(new Domain.Models.EmployerProfile { UserId = userId, Email=register.Email, FullName = register.Name, Phone = register.Phone, RecType=1 });
+                var emp = _db.EmployerProfiles.Add(new Domain.Models.EmployerProfile { UserId = userId, Email = register.Email, FullName = register.Name, Phone = register.Phone, RecType = 1 });
                 await _db.SaveChangesAsync();
                 profileId = emp.Entity.Id;
             }
             return RedirectToAction("MyAccount", "Home");
             //  return RedirectToAction("Edit", "Profile", new { area = "Employer", id = profileId });
         }
-        else if (role == "Student/JobSeeker" || role== "Mid-Career" || role== "Intern" || role == "Silver-Talent")
+        else if (role == "Student/JobSeeker" || role == "Mid-Career" || role == "Intern" || role == "Silver-Talent")
         {
-            
+
             if (!_db.JobSeekerProfiles.Any(p => p.UserId == userId))
             {
-               var stu =  _db.JobSeekerProfiles.Add(new Domain.Models.JobSeekerProfile { UserId = userId,  FullName = register.Name, Phone=register.Phone, ProfileName ="My Profile 1", RcdInsTs= DateTime.UtcNow, RcdUpdtTs=DateTime.UtcNow });
+                var stu = _db.JobSeekerProfiles.Add(new Domain.Models.JobSeekerProfile { UserId = userId, FullName = register.Name, Phone = register.Phone, ProfileName = "My Profile 1", RcdInsTs = DateTime.UtcNow, RcdUpdtTs = DateTime.UtcNow });
                 await _db.SaveChangesAsync();
                 profileId = stu.Entity.Id;
             }
@@ -123,11 +154,12 @@ public class AccountController : Controller
         return View();
     }
 
-    public IActionResult Login(string returnUrl = null) {
+    public IActionResult Login(string returnUrl = null)
+    {
         return View();
         //return RedirectToAction("Index", "Home", new { returnUrl =returnUrl});
-    } 
-     
+    }
+
 
     [HttpGet]
     public IActionResult ChooseRole() => View();
@@ -154,20 +186,20 @@ public class AccountController : Controller
             int profileId = 0;
             if (!_db.EmployerProfiles.Any(p => p.UserId == userId))
             {
-               var emp =  _db.EmployerProfiles.Add(new JobPortal.Domain.Models.EmployerProfile { UserId = userId });
-               
+                var emp = _db.EmployerProfiles.Add(new JobPortal.Domain.Models.EmployerProfile { UserId = userId });
+
                 await _db.SaveChangesAsync();
                 profileId = emp.Entity.Id;
             }
-            return RedirectToAction("Index", "Dashboard", new { area = "Employer"});
+            return RedirectToAction("Index", "Dashboard", new { area = "Employer" });
         }
         else if (role == "Student/JobSeeker")
         {
             var profileId = 0;
             if (!_db.JobSeekerProfiles.Any(p => p.UserId == userId))
             {
-               
-                var student  = _db.JobSeekerProfiles.Add(new JobPortal.Domain.Models.JobSeekerProfile { UserId = userId });
+
+                var student = _db.JobSeekerProfiles.Add(new JobPortal.Domain.Models.JobSeekerProfile { UserId = userId });
                 await _db.SaveChangesAsync();
                 profileId = student.Entity.Id;
             }
@@ -189,7 +221,7 @@ public class AccountController : Controller
     {
         if (!ModelState.IsValid)
         {
-            return RedirectToAction("Register",model);
+            return RedirectToAction("Login", model);
         }
 
         var result = await _sm.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
@@ -203,8 +235,8 @@ public class AccountController : Controller
 
 
             if (accountType == "Admin")
-                return RedirectToAction("Dashboard", "Admin");
-            else  
+                return RedirectToAction("Index", "Home");
+            else
                 return RedirectToAction("MyAccount", "Home");
 
             //if (accountType == "Employer")
@@ -222,6 +254,6 @@ public class AccountController : Controller
         }
 
         ModelState.AddModelError("", "Invalid login attempt.");
-        return RedirectToAction("Register", model); // View(model); // For popup we’ll inject error
+        return RedirectToAction("Login", model); // View(model); // For popup we’ll inject error
     }
 }
