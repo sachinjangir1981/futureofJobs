@@ -1,10 +1,12 @@
 ﻿@using JobPortal.Models;
+@using JobPortal.Web.Models;
 
 @model WpPost
 @{
     ViewBag.Title = "Trending News";
     Layout = "~/Views/Shared/_Layout.cshtml";
     WpPostCategory wpPostCategory = ViewBag.Category != null ? (WpPostCategory)ViewBag.Category : new WpPostCategory();
+    string hl = Context.Request.Query["hl"];
 }
 
  @section HeaderImage
@@ -30,7 +32,7 @@
             </div>
         }
 
-        <h2 class="tnheading" style="text-transform:uppercase"> @Model.Title</h2>
+        <h2 class="tnheading" style="text-transform:uppercase"> @HighlightHelper.HighlightText(Model.Title, hl)</h2>
         <div style="text-align:center ">
             <span class="headingSubTitle"><b>@Model.OSource   </b>  </span>
         </div>
@@ -44,7 +46,7 @@
             <div class="col-12 col-lg-12 col-sm-12 col-md-12">
                 <div class="row">
                     <div class="col-12 col-lg-12 col-sm-12 col-md-12" style="border-bottom:1px solid #808080; padding-bottom:10px;">
-                        @Html.Raw(Model.PostContent.Replace("href=\\", "href="))
+                        @HighlightHelper.HighlightHtml(Model.PostContent.Replace("href=\\", "href="), hl)
                     </div>
                     <div style="font-size:13px;font-weight:600">
                         Note: If the link doesn’t open directly, simply copy the URL and paste it into your browser.

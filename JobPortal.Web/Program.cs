@@ -82,6 +82,7 @@ builder.Services.AddScoped<IMyform, MyformServices>();
 builder.Services.AddScoped<IFormFeeRepository, FormFeeRepository>();
 builder.Services.AddScoped<IFormPaymentRepository, FormPaymentRepository>();
 builder.Services.AddScoped<IPreRegistration, PreRegistrationRepository>();
+builder.Services.AddScoped<ISiteSearchService, SiteSearchService>();
 
 
 builder.Services.Configure<FormOptions>(o =>
@@ -135,6 +136,11 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 //app.UseMiddleware<ErrorLoggingMiddleware>();
+app.MapControllerRoute(
+    name: "sharedprofile",
+    pattern: "s/{token}",
+    defaults: new { controller = "SharedProfile", action = "Index" });
+
 app.MapControllerRoute(
     name: "areas",
     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");

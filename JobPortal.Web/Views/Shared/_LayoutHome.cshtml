@@ -18,6 +18,18 @@
             text-align: center;
             padding-right: 10px;
         }
+
+        /* Make the hamburger menu overlay the page instead of pushing content down */
+        #mainNavbar {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            z-index: 1050;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            border-radius: 4px;
+        }
     </style>
      
 </head>
@@ -30,12 +42,12 @@
                 <div class="row m-2">
                     <div class="col-3" style="text-align:left">
                         <a class="navbar-brand headerlogoHome" href="/">
-                        <img src="~/images/gjob-logo.png" /> <span style="display:block; margin:-8px 5px auto"><b>For a World Beyond Degrees & Marks…</b></span>
+                        <img src="~/images/gjob-logo.png" /> <span style="display:block; margin:-8px 5px auto"><b>For a World Beyond Degrees & Marks</b></span>
                         </a>
                     </div>
              
                     <div class="col-9" style="text-align:right;float:right">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding-left:20px;float:right">
+                    <nav class="navbar navbar-light bg-light" style="padding-left:20px;float:right;position:relative">
                         <!-- Toggler button (required for mobile) -->
                         <button class="navbar-toggler" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#mainNavbar"
@@ -51,6 +63,13 @@
                             @*  <ul class="navbar-nav ">
                         <li class="nav-item"><a class="nav-link" href="/Jobs">Jobs</a></li>
                     </ul> *@
+
+                            <form method="get" asp-controller="Search" asp-action="Index" class="px-3 pt-2 pb-1">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" name="q" class="form-control" placeholder="Search..." />
+                                    <button class="btn btn-outline-secondary" type="submit"><i class="fa fa-search"></i></button>
+                                </div>
+                            </form>
 
                             <ul class="navbar-nav ms-auto" style="padding-right:20px">
                                 @if (User.Identity.IsAuthenticated)

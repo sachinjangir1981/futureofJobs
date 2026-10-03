@@ -44,10 +44,10 @@ namespace Dapper_ORM.Services
             return db.Query<T>(sp, parms, commandType: commandType).FirstOrDefault();
         }
 
-        public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)
+        public List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, int? commandTimeout = null)
         {
             using IDbConnection db = new SqlConnection(_config.GetConnectionString(Connectionstring));
-            return db.Query<T>(sp, parms, commandType: commandType).ToList();
+            return db.Query<T>(sp, parms, commandType: commandType, commandTimeout: commandTimeout).ToList();
         }
 
         public SqlMapper.GridReader QueryMultiple(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure)

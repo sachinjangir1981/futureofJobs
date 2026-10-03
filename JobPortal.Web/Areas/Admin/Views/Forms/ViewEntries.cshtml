@@ -14,7 +14,7 @@
             <tr>
                 <th>User</th>
 
-                <th style="width:150;">Actions</th>
+                <th style="width:300px;">Actions</th>
             </tr>
 
         </thead>
@@ -24,7 +24,10 @@
                 <tr>
                     <td>@itm.UserName </td>
 
-                    <td width="150">   <a asp-action="ViewData" asp-route-id="@ViewBag.FormId" asp-route-userId="@itm.UserId" class="btn btn-sm btn-secondary"> View Data</a>  </td>
+                    <td width="300">
+                        <a asp-action="ViewData" asp-route-id="@ViewBag.FormId" asp-route-userId="@itm.UserId" class="btn btn-sm btn-secondary"> View Data</a>
+                        <a asp-area="Admin" asp-controller="AdminFormSubmissions" asp-action="ViewSubmission" asp-route-userId="@itm.UserId" asp-route-formIds="@ViewBag.FormId" class="btn btn-sm btn-primary"> View Submission</a>
+                    </td>
                 </tr>
 
 

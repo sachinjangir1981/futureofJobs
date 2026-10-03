@@ -1,0 +1,227 @@
+@using JobPortal.Web.AdminForms
+@using JobPortal.Domain.Models
+@using JobPortal.Infrastructure.Data
+@model List<AdminFormSubmissionListItem>
+@{
+    ViewData["Title"] = "Form Submissions";
+    Layout = "_LayoutAdmin";
+    var forms = ViewBag.Forms as List<FormTypeCategory>;
+    var filterUsers = ViewBag.Users as List<ApplicationUser>;
+    var selectedFormIds = ViewBag.FormId as List<int> ?? new List<int>();
+    bool hasFiltered = ViewBag.HasFiltered;
+}
+<div class="container-fluid py-4">
+    <h2>Form Submissions</h2>
+    <p class="text-muted">Which users have filled which forms.</p>
+
+    <form method="get" class="row g-2 mb-3">
+        <input type="hidden" name="filtered" value="1" />
+        <input type="hidden" name="userId" id="userIdHidden" value="@ViewBag.UserId" />
+        <div class="col-auto position-relative">
+            <input type="text" id="userSearchBox" name="search" value="@ViewBag.Search" class="form-select"
+                   placeholder="Select a user, or type to search by name or email" autocomplete="off" style="min-width:340px;" />
+            <div id="userSuggestions" class="list-group position-absolute w-100" style="z-index:1050; display:none; max-height:260px; overflow-y:auto;"></div>
+        </div>
+        <div class="col-auto">
+            <select name="formId" id="formIdSelect" class="form-select" multiple size="6" style="min-width:280px;">
+                <option value="" selected="@(!selectedFormIds.Any())">All Forms</option>
+                @if (forms != null)
+                {
+                    foreach (var f in forms)
+                    {
+                        <option value="@f.Id" selected="@selectedFormIds.Contains(f.Id)">@f.FormCategory</option>
+                    }
+                }
+            </select>
+            <div class="form-text">Select a user first. Ctrl/Cmd-click to pick multiple forms.</div>
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Filter</button>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-12">
+            @if (!hasFiltered)
+            {
+                <div class="alert alert-info">Search for a user above and click <strong>Filter</strong> to see their form submissions.</div>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped">
+                    <thead class="table-light">
+                        <tr>
+                            <th>User</th>
+                            <th>Form</th>
+                            <th style="width:170px;">Answered / Total Questions</th>
+                            <th>Last Submitted</th>
+                            <th style="width:100px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (!Model.Any())
+                        {
+                            <tr><td colspan="5" class="text-center text-muted">No form submissions found.</td></tr>
+                        }
+                        @foreach (var item in Model)
+                        {
+                            var viewAllUrl = Url.Action("ViewSubmission", new { userId = item.UserId })
+                                + (selectedFormIds.Any() ? "&" + string.Join("&", selectedFormIds.Select(id => "formIds=" + id)) : "");
+                            var rowCount = Math.Max(item.FormIds.Count, 1);
+                            for (var i = 0; i < rowCount; i++)
+                            {
+                                var hasForm = i < item.FormIds.Count;
+                                <tr>
+                                    @if (i == 0)
+                                    {
+                                        <td rowspan="@rowCount">
+                                            @(string.IsNullOrEmpty(item.Email) ? item.UserName : item.Email)
+                                            @if (item.FormIds.Count > 1)
+                                            {
+                                                <a class="small" href="@viewAllUrl">View all forms</a>
+                                            }
+                                        </td>
+                                    }
+                                    @if (hasForm)
+                                    {
+                                        var formId = item.FormIds[i];
+                                        <td>
+                                            @(i < item.FormNames.Count ? item.FormNames[i] : "Form #" + formId)
+                                            @if (item.FormVersions.TryGetValue(formId, out var versions) && versions.Count > 1)
+                                            {
+                                                <div class="mt-1">
+                                                    @foreach (var ver in versions)
+                                                    {
+                                                        <a class="btn btn-sm btn-outline-secondary py-0 me-1"
+                                                           href="@Url.Action("ViewSubmission", new { userId = item.UserId, formIds = new[] { formId }, versionId = ver.Id })">@ver.Label &middot; @ver.CreatedAt.ToString("dd/MM/yy")</a>
+                                                    }
+                                                </div>
+                                            }
+                                        </td>
+                                        <td>@(item.FormAnswerCounts.TryGetValue(formId, out var cnt) ? cnt : 0) / @(item.FormTotalQuestions.TryGetValue(formId, out var tot) ? tot : 0)</td>
+                                    }
+                                    else
+                                    {
+                                        <td></td>
+                                        <td>@item.AnsweredQuestions</td>
+                                    }
+                                    @if (i == 0)
+                                    {
+                                        <td rowspan="@rowCount">@item.LastSubmittedAt.ToString("dd/MM/yyyy hh:mm tt")</td>
+                                    }
+                                    <td>
+                                        <a class="btn btn-sm btn-primary" href="@(hasForm ? Url.Action("ViewSubmission", new { userId = item.UserId, formIds = new[] { item.FormIds[i] } }) : viewAllUrl)">View</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        const allUsers = [
+        @if (filterUsers != null)
+        {
+            foreach (var u in filterUsers)
+            {
+                <text>{ id: '@u.Id', name: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(u.UserName ?? "")), email: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(u.Email ?? "")) },</text>
+            }
+        }
+        ];
+
+        // userId -> [{ id, name }] of the forms that user has filled.
+        const userForms = @Html.Raw(System.Text.Json.JsonSerializer.Serialize((object)ViewBag.UserFormsJson));
+
+        const searchBox = document.getElementById('userSearchBox');
+        const userIdHidden = document.getElementById('userIdHidden');
+        const suggestionsBox = document.getElementById('userSuggestions');
+        const formIdSelect = document.getElementById('formIdSelect');
+
+        function resetFormFilterToAll() {
+            Array.from(formIdSelect.options).forEach(function (o) { o.selected = (o.value === ''); });
+        }
+
+        function populateFormOptions(userId) {
+            formIdSelect.innerHTML = '';
+            const allOption = document.createElement('option');
+            allOption.value = '';
+            allOption.textContent = 'All Forms';
+            allOption.selected = true;
+            formIdSelect.appendChild(allOption);
+
+            (userForms[userId] || []).forEach(function (f) {
+                const opt = document.createElement('option');
+                opt.value = f.id;
+                opt.textContent = f.name;
+                formIdSelect.appendChild(opt);
+            });
+        }
+
+        // Keep "All Forms" mutually exclusive with picking specific forms.
+        formIdSelect.addEventListener('change', function () {
+            const options = Array.from(formIdSelect.options);
+            const allOption = options.find(function (o) { return o.value === ''; });
+            const othersSelected = options.some(function (o) { return o.value !== '' && o.selected; });
+
+            if (othersSelected && allOption.selected) {
+                allOption.selected = false;
+            } else if (!othersSelected) {
+                allOption.selected = true;
+            }
+        });
+
+        function renderSuggestions(matches) {
+            suggestionsBox.innerHTML = '';
+            if (matches.length === 0) {
+                suggestionsBox.style.display = 'none';
+                return;
+            }
+            matches.forEach(function (u) {
+                const item = document.createElement('button');
+                item.type = 'button';
+                item.className = 'list-group-item list-group-item-action';
+                item.textContent = u.email || u.name;
+                item.addEventListener('click', function () {
+                    searchBox.value = u.email || u.name;
+                    userIdHidden.value = u.id;
+                    populateFormOptions(u.id);
+                    suggestionsBox.style.display = 'none';
+                });
+                suggestionsBox.appendChild(item);
+            });
+            suggestionsBox.style.display = 'block';
+        }
+
+        function showUsers(query) {
+            const q = query.trim().toLowerCase();
+            renderSuggestions(allUsers.filter(function (u) {
+                return q.length === 0 || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q);
+            }));
+        }
+
+        searchBox.addEventListener('input', function () {
+            userIdHidden.value = '';
+            resetFormFilterToAll();
+            showUsers(searchBox.value);
+        });
+
+        // Opening the box lists every user; once one is picked, reopening shows the full list again.
+        function openUserList() {
+            showUsers(userIdHidden.value ? '' : searchBox.value);
+        }
+        searchBox.addEventListener('focus', openUserList);
+        searchBox.addEventListener('click', openUserList);
+
+        document.addEventListener('click', function (e) {
+            if (!suggestionsBox.contains(e.target) && e.target !== searchBox) {
+                suggestionsBox.style.display = 'none';
+            }
+        });
+    </script>
+}

@@ -1,0 +1,125 @@
+@using JobPortal.Web.Models
+@model SiteSearchResults
+@{
+    Layout = "/Views/Shared/_LayoutHome.cshtml";
+    ViewData["Title"] = "Search";
+
+    string WithHighlight(string url) => url + (url.Contains('?') ? "&" : "?") + "hl=" + Uri.EscapeDataString(Model.Query);
+}
+<div style="padding-left:10px;padding-right:10px;">
+<div class="mb-4">
+    <form method="get" asp-controller="Search" asp-action="Index">
+        <div class="input-group">
+            <input type="text" name="q" class="form-control" value="@Model.Query" placeholder="Search jobs, articles, forms..." />
+            <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+    </form>
+</div>
+
+@if (string.IsNullOrWhiteSpace(Model.Query))
+{
+    <p class="text-muted">Type something above to search across jobs, library articles, blog posts and forms.</p>
+}
+else if (Model.TotalCount == 0)
+{
+    <p class="text-muted">No results found for "<strong>@Model.Query</strong>".</p>
+}
+else
+{
+    <p class="text-muted">@Model.TotalCount result(s) for "<strong>@Model.Query</strong>"</p>
+
+    @if (Model.Jobs.Any())
+    {
+        <h5 class="mt-4">Jobs</h5>
+        <div class="list-group mb-3">
+            @foreach (var j in Model.Jobs)
+            {
+                <a class="list-group-item list-group-item-action" href="@WithHighlight("/Jobs/Details/" + j.Id)">
+                    <strong>@HighlightHelper.HighlightText(j.Title, Model.Query)</strong>
+                </a>
+            }
+        </div>
+    }
+
+    @if (Model.LibraryItems.Any())
+    {
+        <h5 class="mt-4">Library</h5>
+        <div class="list-group mb-3">
+            @foreach (var item in Model.LibraryItems)
+            {
+                <a class="list-group-item list-group-item-action" href="@WithHighlight(item.Url)">
+                    <strong>@HighlightHelper.HighlightText(item.Title, Model.Query)</strong>
+                    @if (!string.IsNullOrEmpty(item.Snippet))
+                    {
+                        <div class="text-muted small">@HighlightHelper.HighlightText(item.Snippet, Model.Query)</div>
+                    }
+                </a>
+            }
+        </div>
+    }
+
+    @if (Model.BlogPosts.Any())
+    {
+        <h5 class="mt-4">Articles</h5>
+        <div class="list-group mb-3">
+            @foreach (var item in Model.BlogPosts)
+            {
+                <a class="list-group-item list-group-item-action" href="@WithHighlight(item.Url)">
+                    <strong>@HighlightHelper.HighlightText(item.Title, Model.Query)</strong>
+                    @if (!string.IsNullOrEmpty(item.Snippet))
+                    {
+                        <div class="text-muted small">@HighlightHelper.HighlightText(item.Snippet, Model.Query)</div>
+                    }
+                </a>
+            }
+        </div>
+    }
+
+    @if (Model.Forms.Any())
+    {
+        <h5 class="mt-4">Forms</h5>
+        <div class="list-group mb-3">
+            @foreach (var item in Model.Forms)
+            {
+                <a class="list-group-item list-group-item-action" href="@item.Url">
+                    <strong>@HighlightHelper.HighlightText(item.Title, Model.Query)</strong>
+                    @if (!string.IsNullOrEmpty(item.Snippet))
+                    {
+                        <div class="text-muted small">@HighlightHelper.HighlightText(item.Snippet, Model.Query)</div>
+                    }
+                </a>
+            }
+        </div>
+    }
+
+    @if (Model.QuestionCategories.Any())
+    {
+        <h5 class="mt-4">Poll Categories</h5>
+        <div class="list-group mb-3">
+            @foreach (var item in Model.QuestionCategories)
+            {
+                <a class="list-group-item list-group-item-action" href="@WithHighlight(item.Url)">
+                    <strong>@HighlightHelper.HighlightText(item.Title, Model.Query)</strong>
+                    @if (!string.IsNullOrEmpty(item.Snippet))
+                    {
+                        <div class="text-muted small">@HighlightHelper.HighlightText(item.Snippet, Model.Query)</div>
+                    }
+                </a>
+            }
+        </div>
+    }
+
+    @if (Model.Polls.Any())
+    {
+        <h5 class="mt-4">Polls</h5>
+        <div class="list-group mb-3">
+            @foreach (var item in Model.Polls)
+            {
+                <a class="list-group-item list-group-item-action" href="@WithHighlight(item.Url)">
+                    <strong>@HighlightHelper.HighlightText(item.Title, Model.Query)</strong>
+                </a>
+            }
+        </div>
+    }
+}
+</div>

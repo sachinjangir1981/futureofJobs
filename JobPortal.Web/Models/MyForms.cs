@@ -67,7 +67,7 @@ namespace JobPortal.Web.Models
         public int GetFormSessionId(string sessionId, int formId, Guid userId)
         {
             var dbparams = new DynamicParameters();
-           
+
             dbparams.Add("@action", "INSERT", DbType.String);
             dbparams.Add("@SessionId", sessionId, DbType.String);
             dbparams.Add("@FormId", formId, DbType.Int32);

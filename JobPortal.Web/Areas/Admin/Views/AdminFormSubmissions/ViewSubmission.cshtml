@@ -1,0 +1,167 @@
+@using JobPortal.Web.AdminForms
+@using JobPortal.Domain.Models
+@model AdminUserSubmissionsDetail
+@{
+    ViewData["Title"] = "View Submissions";
+    Layout = "_LayoutAdmin";
+    var requestedFormIds = ViewBag.RequestedFormIds as List<int> ?? new List<int>();
+    var shareLinks = ViewBag.ShareLinks as List<AdminShareLink> ?? new List<AdminShareLink>();
+
+    List<string> stExt = new List<string>();
+    stExt.Add("jpg");
+    stExt.Add("png");
+    stExt.Add("jpeg");
+    stExt.Add("gif");
+}
+<div class="container-fluid py-4">
+    <a asp-action="Index" class="btn btn-sm btn-outline-secondary mb-3">&larr; Back to Form Submissions</a>
+
+    <h2 class="mb-4">@(string.IsNullOrEmpty(Model.Email) ? Model.UserName : Model.Email)</h2>
+
+    <div class="card mb-4">
+        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+            <strong>Share this view</strong>
+            <form method="post" asp-action="GenerateShareLink" class="d-inline">
+                <input type="hidden" name="userId" value="@Model.UserId" />
+                @foreach (var fid in requestedFormIds)
+                {
+                    <input type="hidden" name="formIds" value="@fid" />
+                }
+                <button type="submit" class="btn btn-sm btn-success">Generate 24h Share Link</button>
+            </form>
+        </div>
+        <div class="card-body">
+            <p class="text-muted small mb-2">
+                Anyone with a share link can view exactly what's shown on this page &mdash; no login required.
+                Links expire automatically 24 hours after creation, or you can revoke one below immediately.
+            </p>
+            @if (!shareLinks.Any())
+            {
+                <p class="text-muted mb-0">No active share links for this user.</p>
+            }
+            else
+            {
+                <table class="table table-sm mb-0">
+                    <thead>
+                        <tr>
+                            <th>Link</th>
+                            <th>Expires</th>
+                            <th style="width:90px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var link in shareLinks)
+                        {
+                            var shareUrl = $"{Context.Request.Scheme}://{Context.Request.Host}/s/{link.Token}";
+                            <tr>
+                                <td><code>@shareUrl</code></td>
+                                <td>@link.ExpiresAt.ToLocalTime().ToString("dd/MM/yyyy hh:mm tt")</td>
+                                <td>
+                                    <form method="post" asp-action="RevokeShareLink" class="d-inline">
+                                        <input type="hidden" name="id" value="@link.Id" />
+                                        <input type="hidden" name="userId" value="@Model.UserId" />
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">Revoke</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+
+    @if (!Model.Forms.Any())
+    {
+        <div class="alert alert-warning">This user hasn't filled any forms.</div>
+    }
+
+    @foreach (var frm in Model.Forms)
+    {
+        <h4 class="mt-4">@frm.FormName</h4>
+        @if (frm.Versions.Any())
+        {
+            <div class="mb-2">
+                <span class="text-muted small me-2">Versions:</span>
+                @foreach (var ver in frm.Versions)
+                {
+                    <a href="@Url.Action("ViewSubmission", new { userId = Model.UserId, formIds = requestedFormIds.ToArray(), versionId = ver.Id })"
+                       class="btn btn-sm @(ver.Id == frm.SelectedVersionId ? "btn-primary" : "btn-outline-secondary")">@ver.Label &middot; @ver.CreatedAt.ToString("dd/MM/yy HH:mm")</a>
+                }
+            </div>
+        }
+        @if (!frm.Sections.Any())
+        {
+            <div class="alert alert-warning">No sections found for this form.</div>
+        }
+        @foreach (var sec in frm.Sections)
+        {
+            <div class="card mb-3">
+                <div class="card-header bg-light">
+                    <strong>@sec.Title</strong>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-bordered mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th style="width:45%;">Question</th>
+                                <th>Answer</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var q in sec.Questions)
+                            {
+                                var isAnswered = q.QuestionType == QuestionType.FileUpload ? !string.IsNullOrEmpty(q.FilePath) : !string.IsNullOrEmpty(q.DisplayAnswer);
+                                <tr>
+                                    <td>
+                                        <span class="badge bg-secondary">#@q.QuestionId</span>
+                                        @Html.Raw(q.QuestionText)
+                                        @if ((q.QuestionType == QuestionType.SingleChoice || q.QuestionType == QuestionType.MultipleChoice) && q.Options.Any())
+                                        {
+                                            <div class="text-muted small mt-1">
+                                                Options: @Html.Raw(string.Join(", ", q.Options.Select(o => o.OptionText)))
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="@(isAnswered ? "text-success" : "text-danger")">
+                                        @if (q.QuestionType == QuestionType.FileUpload)
+                                        {
+                                            if (!string.IsNullOrEmpty(q.FilePath))
+                                            {
+                                                string fileext = q.FilePath.ToLower().Substring(q.FilePath.LastIndexOf(".") + 1);
+                                                int i = stExt.FirstOrDefault(x => x == fileext).Count();
+                                                if (i > 0)
+                                                {
+                                                    <img src="@q.FilePath" width="100" height="100" />
+                                                }
+                                                <a href="@q.FilePath" target="_blank">View uploaded file</a>
+                                            }
+                                            else
+                                            {
+                                                <span>No file uploaded</span>
+                                            }
+                                        }
+                                        else if (string.IsNullOrEmpty(q.DisplayAnswer))
+                                        {
+                                            <span>No answer</span>
+                                        }
+                                        else if (q.QuestionType == QuestionType.SingleChoice || q.QuestionType == QuestionType.MultipleChoice)
+                                        {
+                                            @* Choice answers are made of admin-authored option text, safe to render raw *@
+                                            @Html.Raw(q.DisplayAnswer)
+                                        }
+                                        else
+                                        {
+                                            @* Free-typed by whoever filled the form - kept HTML-encoded to avoid stored XSS in the admin panel *@
+                                            @q.DisplayAnswer
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+</div>

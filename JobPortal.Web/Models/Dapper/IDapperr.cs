@@ -8,7 +8,7 @@ namespace Dapper_ORM.Services
     {
         DbConnection GetDbconnection();
         T Get<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
-        List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+        List<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure, int? commandTimeout = null);
         int Execute(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         object? ExecuteScalar(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
         T Insert<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);

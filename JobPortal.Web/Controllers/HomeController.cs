@@ -1017,21 +1017,26 @@ public class HomeController : Controller
             }
 
             var formFeeDetails = _fee.GetUserFormFeeDetails(roleId, Id, Guid.Parse(userId));
-             int IsNeedTopay = _fee.CheckforFeeSession(Id, Guid.Parse(userId), sessionId);
+            int IsNeedTopay = _fee.CheckforFeeSession(Id, Guid.Parse(userId), sessionId);
             ViewBag.FormFee = formFeeDetails;
             ViewBag.NeedToPay = IsNeedTopay;
-            Decimal amountToPay = IsNeedTopay == 0 ? formFeeDetails.FTFeeAmount : formFeeDetails.FeeAmount;
-            UserLedger ledger = new UserLedger();
-            ledger.UserId = Guid.Parse(userId);
-            ledger.Credit = 0;
-            ledger.Debit = amountToPay;
-            ledger.Particular = string.Format("Amount INR {0} paid for {1} record in Form - {2} ", amountToPay, (formFeeDetails.IsFormFilledByUser==false? "insert a new":"update an existing"), formFeeDetails.FormName);
-            ledger.RoleId = roleId;
-            ledger.CouponId = 0;
-            ledger.RcdInsTs = DateTime.Now.ToString();
-            ledger.RcdUpdt = DateTime.Now.ToString();
-            _formPayment.AddDebit(ledger);
-            _fee.AddNewFeeSession(Id, Guid.Parse(userId), sessionId);
+
+            if (IsNeedTopay == 1)
+            {
+                Decimal amountToPay = formFeeDetails.IsFormFilledByUser ? formFeeDetails.FeeAmount : formFeeDetails.FTFeeAmount;
+                UserLedger ledger = new UserLedger();
+                ledger.UserId = Guid.Parse(userId);
+                ledger.Credit = 0;
+                ledger.Debit = amountToPay;
+                ledger.Particular = string.Format("Amount INR {0} paid for {1} record in Form - {2} ", amountToPay, (formFeeDetails.IsFormFilledByUser==false? "insert a new":"update an existing"), formFeeDetails.FormName);
+                ledger.RoleId = roleId;
+                ledger.CouponId = 0;
+                ledger.RcdInsTs = DateTime.Now.ToString();
+                ledger.RcdUpdt = DateTime.Now.ToString();
+                _formPayment.AddDebit(ledger);
+                _fee.AddNewFeeSession(Id, Guid.Parse(userId), sessionId);
+            }
+
             return RedirectToAction("OpenSurvey","Visitor", new { id = Id });
         }
         else

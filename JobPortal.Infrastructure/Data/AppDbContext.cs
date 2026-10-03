@@ -40,6 +40,8 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
     public DbSet<JobSkill> JobSkills { get; set; } = null!;
     public DbSet<JobSeekerSkill> JobSeekerSkills { get; set; } = null!;
 
+    public DbSet<AdminShareLink> AdminShareLinks => Set<AdminShareLink>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -188,7 +190,14 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
             .HasForeignKey(j => j.CityId)
             .OnDelete(DeleteBehavior.Restrict);
 
-    } 
+        builder.Entity<AdminShareLink>(e =>
+        {
+            e.HasKey(l => l.Id);
+            e.HasIndex(l => l.Token).IsUnique();
+            e.Property(l => l.Token).HasMaxLength(64).IsRequired();
+        });
+
+    }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

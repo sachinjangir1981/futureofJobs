@@ -306,7 +306,27 @@ public class FormsController : Controller
         var list = _db.FormTypeCategory.Where(m=>m.Id >5)
             .OrderBy(c => c.DisplayOrder)
             .ToList();
-        return View(list);
+
+        var categoryRoles = list.ToDictionary(
+            cat => cat.Id,
+            cat => _myform.GetAllRolesByFormId(cat.Id).Where(r => r.IsChecked == 1).ToList());
+
+        var grouped = _myform.GetAllRolesByFormId(0)
+            .Select(role => new CategoriesByRole
+            {
+                RoleName = role.RoleName,
+                Forms = list.Where(cat => categoryRoles[cat.Id].Any(r => r.RoleId == role.RoleId)).ToList()
+            })
+            .Where(g => g.Forms.Count > 0)
+            .ToList();
+
+        var unassigned = list.Where(cat => categoryRoles[cat.Id].Count == 0).ToList();
+        if (unassigned.Count > 0)
+        {
+            grouped.Add(new CategoriesByRole { RoleName = "Not Assigned to Any Role", Forms = unassigned });
+        }
+
+        return View(grouped);
     }
 
     public IActionResult CreateCategory()
@@ -679,5 +699,11 @@ public class FormsController : Controller
 
         return View(grouped);
     }
+}
+
+public class CategoriesByRole
+{
+    public string RoleName { get; set; }
+    public List<FormTypeCategory> Forms { get; set; }
 }
 

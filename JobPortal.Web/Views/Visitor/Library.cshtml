@@ -7,6 +7,7 @@
     string serialNo = "";
     int padding = 0;
     string paddingstr = "";
+    string hl = Context.Request.Query["hl"];
 }
 
 
@@ -28,11 +29,11 @@
 
 
         <div class="subhead"  >
-            <b>@Model.Title</b>
+            <b>@HighlightHelper.HighlightText(Model.Title, hl)</b>
         </div>
 
         <div class="description">
-            @Html.Raw(Model.Content)
+            @HighlightHelper.HighlightHtml(Model.Content, hl)
 
         </div>
 

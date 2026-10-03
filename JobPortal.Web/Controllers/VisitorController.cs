@@ -551,7 +551,7 @@ namespace JobPortal.Web.Controllers
                 int IsNeedTopay = _fee.CheckforFeeSession(id, Guid.Parse(userId), sessionId);
                 ViewBag.FormFee = formFeeDetails;
                 ViewBag.NeedToPay = IsNeedTopay;
-                ViewBag.AmountToPay = IsNeedTopay == 0 ? formFeeDetails.FTFeeAmount : formFeeDetails.FeeAmount;
+                ViewBag.AmountToPay = formFeeDetails.IsFormFilledByUser ? formFeeDetails.FeeAmount : formFeeDetails.FTFeeAmount;
                 var sections = await _db.FormSections
                     .Where(s => s.IsActive && s.FormTypeCategoryId == id)
                     .Include(s => s.Questions)
@@ -572,8 +572,14 @@ namespace JobPortal.Web.Controllers
                     answers = await _db.FormAnswers
                    .Where(a => a.UserId == userId)
                    .ToListAsync();
+
+                    // Each submit in a new session is a new version; prefill from the newest answer per question.
+                    answers = answers
+                        .GroupBy(a => a.QuestionId)
+                        .Select(g => g.OrderByDescending(a => a.FormSessionEntryId).ThenByDescending(a => a.Id).First())
+                        .ToList();
                 }
-               
+
 
 
 
@@ -596,14 +602,14 @@ namespace JobPortal.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> OpenSurvey(FormVmVisitor model, Dictionary<int, string> answers, List<IFormFile> files, string actionType, int formCategoryId)
+        public async Task<IActionResult> OpenSurvey(FormVmVisitor model, Dictionary<int, string> answers, string actionType, int formCategoryId)
         {
             //var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            string role = "JobSeeker";
+            string role = "Student/JobSeeker";
             var FormCategory = _db.FormTypeCategory.Where(m => m.Id == formCategoryId).FirstOrDefault();
             if(FormCategory !=null)
             {
-                  role = FormCategory.ForRole  == 1 ? "JobSeeker" : (FormCategory.ForRole == 2 ? "Employer" : (FormCategory.ForRole == 3 ? "Academics" : "Normal"));
+                  role = FormCategory.ForRole  == 1 ? "Student/JobSeeker" : (FormCategory.ForRole == 2 ? "Employer" : (FormCategory.ForRole == 3 ? "Academics" : "Student/JobSeeker"));
             }
 
             var userId = Guid.Empty.ToString();
@@ -615,14 +621,10 @@ namespace JobPortal.Web.Controllers
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.UserName };
                 var r = await _um.CreateAsync(user, model.Password);
-                string error = "";
                 if (!r.Succeeded)
                 {
-
-                    foreach (var e in r.Errors)
-                        ModelState.AddModelError("", e.Description);
-
-                    return View();
+                    TempData["Message"] = string.Join(" ", r.Errors.Select(e => e.Description));
+                    return RedirectToAction("OpenSurvey", new { id = formCategoryId });
                 }
 
                 await _um.AddClaimAsync(user, new Claim("AccountType", role));
@@ -661,7 +663,7 @@ namespace JobPortal.Web.Controllers
             foreach (var ans in answers)
             {
                 var existing = await _db.FormAnswers
-                    .FirstOrDefaultAsync(a => a.UserId == userId && a.QuestionId == ans.Key);
+                    .FirstOrDefaultAsync(a => a.UserId == userId && a.QuestionId == ans.Key && a.FormSessionEntryId == formSessionId);
 
                 if (existing != null)
                 {
@@ -688,18 +690,20 @@ namespace JobPortal.Web.Controllers
             }
 
             // File uploads
-            foreach (var file in files)
+            var uploadsDir = Path.Combine(_webHostEnvironment.WebRootPath, "uploads");
+            Directory.CreateDirectory(uploadsDir);
+            foreach (var file in Request.Form.Files)
             {
                 if (file.Length > 0)
                 {
                     var qId = int.Parse(file.Name.Replace("file_", ""));
-                    var path = Path.Combine("wwwroot/uploads", file.FileName);
+                    var path = Path.Combine(uploadsDir, file.FileName);
 
                     using (var stream = new FileStream(path, FileMode.Create))
                         await file.CopyToAsync(stream);
 
                     var existing = await _db.FormAnswers
-                        .FirstOrDefaultAsync(a => a.UserId == userId && a.QuestionId == qId);
+                        .FirstOrDefaultAsync(a => a.UserId == userId && a.QuestionId == qId && a.FormSessionEntryId == formSessionId);
 
                     if (existing != null)
                     {
@@ -715,7 +719,8 @@ namespace JobPortal.Web.Controllers
                             QuestionId = qId,
                             FilePath = "/uploads/" + file.FileName,
                             SubmittedAt = DateTime.UtcNow,
-                            IsDraft = isDraft
+                            IsDraft = isDraft,
+                            FormSessionEntryId = formSessionId
                         });
                     }
                 }
