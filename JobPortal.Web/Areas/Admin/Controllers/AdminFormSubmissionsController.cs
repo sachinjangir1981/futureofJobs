@@ -15,16 +15,20 @@ namespace JobPortal.Web.Areas.Admin.Controllers
     {
         private readonly AppDbContext _db;
         private readonly UserManager<ApplicationUser> _um;
+        private readonly JobPortal.Web.AdminAccess.IAdminAccessService _access;
 
-        public AdminFormSubmissionsController(AppDbContext db, UserManager<ApplicationUser> um)
+        public AdminFormSubmissionsController(AppDbContext db, UserManager<ApplicationUser> um, JobPortal.Web.AdminAccess.IAdminAccessService access)
         {
             _db = db;
             _um = um;
+            _access = access;
         }
 
         public async Task<IActionResult> Index(int[]? formId, string? userId, string? search)
         {
             bool hasFiltered = Request.Query.ContainsKey("filtered");
+
+            var access = await _access.GetAsync();
 
             var raw = await _db.FormAnswers
                 .Where(a => !a.IsDraft)
@@ -44,6 +48,11 @@ namespace JobPortal.Web.Areas.Admin.Controllers
                 .GroupBy(q => q.Section.FormTypeCategoryId)
                 .Select(g => new { FormId = g.Key, Count = g.Count() })
                 .ToDictionaryAsync(x => x.FormId, x => x.Count);
+
+            if (access.IsFormScoped)
+                raw = raw.Where(a => access.CanAccessForm(a.FormId)).ToList();
+            if (access.IsUserScoped)
+                raw = raw.Where(a => access.CanAccessUser(a.UserId)).ToList();
 
             var formNames = await _db.FormTypeCategory.ToDictionaryAsync(f => f.Id, f => f.FormCategory);
 
@@ -182,7 +191,8 @@ namespace JobPortal.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> ViewSubmission(string userId, int[]? formIds, int? versionId)
         {
-            var requestedFormIds = (formIds ?? Array.Empty<int>()).Where(id => id != 0).ToList();
+            var access = await _access.GetAsync();
+            var requestedFormIds = access.RestrictForms((formIds ?? Array.Empty<int>()).Where(id => id != 0));
             var vm = await FormSubmissionBuilder.BuildAsync(_db, _um, userId, requestedFormIds, versionId);
             if (vm == null)
                 return NotFound();
@@ -199,7 +209,8 @@ namespace JobPortal.Web.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> GenerateShareLink(string userId, int[]? formIds)
         {
-            var requestedFormIds = (formIds ?? Array.Empty<int>()).Where(id => id != 0).ToList();
+            var access = await _access.GetAsync();
+            var requestedFormIds = access.RestrictForms((formIds ?? Array.Empty<int>()).Where(id => id != 0));
 
             var link = new AdminShareLink
             {

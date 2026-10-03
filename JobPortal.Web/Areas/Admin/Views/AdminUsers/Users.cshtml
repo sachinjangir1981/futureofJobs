@@ -1,0 +1,104 @@
+@using JobPortal.Infrastructure.Data
+@using JobPortal.Web.AdminAccess
+@model List<ApplicationUser>
+@{
+    ViewData["Title"] = "Admin Users";
+    Layout = "_LayoutAdmin";
+    var assignments = ViewBag.Assignments as Dictionary<string, AdminUserSubRole> ?? new Dictionary<string, AdminUserSubRole>();
+    var subRoles = ViewBag.SubRoles as List<AdminSubRole> ?? new List<AdminSubRole>();
+    var currentUserId = ViewBag.CurrentUserId as string;
+}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Admin Users</h2>
+        <a asp-action="SubRoles" class="btn btn-outline-secondary">Sub-Roles</a>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-header bg-light"><strong>Add an admin</strong></div>
+        <div class="card-body">
+            <form asp-action="AddAdmin" method="post" class="row g-2">
+                <div class="col-auto">
+                    <input type="text" name="email" class="form-control" placeholder="Registered user's email" style="min-width:300px;" required />
+                </div>
+                <div class="col-auto">
+                    <select name="subRoleId" class="form-select">
+                        <option value="0">Super Admin (full access)</option>
+                        @foreach (var r in subRoles)
+                        {
+                            <option value="@r.Id">@r.Name</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <input type="datetime-local" name="validUntil" class="form-control" title="Sub-role ends at (India time). Not needed for Super Admin." />
+                </div>
+                <div class="col-auto"><button type="submit" class="btn btn-success">Add admin</button></div>
+            </form>
+            <div class="form-text">The person must already have an account. This only grants admin access; their login and password are untouched. A sub-role needs an end date and time (India time); Super Admin has none.</div>
+        </div>
+    </div>
+
+    <table class="table table-bordered table-striped align-middle">
+        <thead class="table-light">
+            <tr><th>Admin</th><th style="width:640px;">Access</th><th style="width:120px;">Actions</th></tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model)
+            {
+                var uid = u.Id.ToString();
+                assignments.TryGetValue(uid, out var assignment);
+                var current = assignment?.SubRoleId ?? 0;
+                var expired = assignment != null && assignment.ValidUntil <= DateTime.UtcNow;
+                var isMe = uid == currentUserId;
+                <tr>
+                    <td>@(u.Email ?? u.UserName)@if (isMe) { <span class="badge bg-info text-dark ms-1">you</span> }</td>
+                    <td>
+                        <form asp-action="AssignSubRole" method="post" class="d-flex gap-2">
+                            <input type="hidden" name="userId" value="@uid" />
+                            <select name="subRoleId" class="form-select form-select-sm" disabled="@isMe">
+                                <option value="0" selected="@(current == 0)">Super Admin (full access)</option>
+                                @foreach (var r in subRoles)
+                                {
+                                    <option value="@r.Id" selected="@(current == r.Id)">@r.Name@(r.IsActive ? "" : " (inactive)")</option>
+                                }
+                            </select>
+                            <input type="datetime-local" name="validUntil" class="form-control form-control-sm" style="max-width:210px;"
+                                   value="@AdminTime.ToInput(assignment?.ValidUntil)" disabled="@isMe" title="Sub-role ends at (India time)" />
+                            <button type="submit" class="btn btn-sm btn-primary" disabled="@isMe">Save</button>
+                        </form>
+                        @if (assignment != null)
+                        {
+                            <div class="small mt-1 @(expired ? "text-danger" : "text-muted")">
+                                @(expired ? "Expired" : "Active until") @AdminTime.Display(assignment.ValidUntil)
+                            </div>
+                            <div class="small mt-1">
+                                Users they can see:
+                                @(assignment.AllUsersAccess ? "All users" : assignment.Users.Count + " selected")
+                                &middot; <a asp-action="VisibleUsers" asp-route-userId="@uid">Choose users</a>
+                            </div>
+                        }
+                    </td>
+                    <td>
+                        @if (!isMe)
+                        {
+                            <form asp-action="RemoveAdmin" method="post" onsubmit="return confirm('Remove admin access for this user?');">
+                                <input type="hidden" name="userId" value="@uid" />
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Remove</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

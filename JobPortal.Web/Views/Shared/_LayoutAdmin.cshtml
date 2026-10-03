@@ -1,8 +1,10 @@
 @{
     Layout = null;
 }
+@inject JobPortal.Web.AdminAccess.IAdminAccessService Access
 @{
     var currentPath = Context.Request.Path.Value?.ToLower();
+    var acc = await Access.GetAsync();
 }
 
 <!DOCTYPE html>
@@ -128,6 +130,8 @@
 
 
 
+@if (acc.CanView("Forms") || acc.CanView("FormFees"))
+{
              <li class="nav-item">
                 <a class="nav-link d-flex justify-content-between align-items-center"
                    data-bs-toggle="collapse" href="#formsMenu" role="button" aria-expanded="false" aria-controls="formsMenu">
@@ -137,14 +141,22 @@
                 <div class="collapse ms-3" id="formsMenu">
                     <ul class="nav flex-column">
                       
-                        <li><a class="nav-link" href="/Admin/Forms/Categories">Forms</a></li>
-                        <li><a class="nav-link" href="/Admin/AdminAccounts/Index">Form Fee</a></li>
+                        @if (acc.CanView("Forms")) { <li><a class="nav-link" href="/Admin/Forms/Categories">Forms</a></li> }
+                        @if (acc.CanView("FormFees")) { <li><a class="nav-link" href="/Admin/AdminAccounts/Index">Form Fee</a></li> }
                     </ul>
                 </div>
             </li>
+}
+
+@if (acc.CanView("FormSubmissions"))
+{
             <li class="nav-item"><a asp-controller="AdminFormSubmissions" asp-action="Index" class="nav-link "><i class="bi bi-card-checklist"></i> Form Submissions</a></li>
+}
+
            @*  <li class="nav-item"><a asp-controller="Forms" asp-action="Categories" class="nav-link "><i class="bi bi-people-fill"></i>Forms</a></li> *@
 
+@if (acc.CanView("Masters"))
+{
             <li class="nav-item">
                 <a class="nav-link d-flex justify-content-between align-items-center"
                    data-bs-toggle="collapse" href="#masterMenu" role="button" aria-expanded="false" aria-controls="masterMenu">
@@ -159,10 +171,14 @@
                     </ul>
                 </div>
             </li>
+}
+
 
             <!-- Applications with Submenu -->
            
 
+@if (acc.CanView("Polls"))
+{
             <li class="nav-item">
                 <a class="nav-link d-flex justify-content-between align-items-center"
                    data-bs-toggle="collapse" href="#pollMenu" role="button" aria-expanded="false" aria-controls="pollMenu">
@@ -176,7 +192,11 @@
                     </ul>
                 </div>
             </li>
+}
 
+
+@if (acc.CanView("Cms"))
+{
             <li class="nav-item">
                 <a class="nav-link d-flex justify-content-between align-items-center"
                    data-bs-toggle="collapse" href="#libraryMenu" role="button" aria-expanded="false" aria-controls="libraryMenu">
@@ -198,13 +218,32 @@
                     </ul>
                 </div>
             </li>
+}
+
+@if (acc.CanView("Jobs"))
+{
             <li class="nav-item"><a asp-controller="CuratedJobs" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>Curate Jobs</a></li>
+}
+
            @*  <li class="nav-item"><a asp-controller="QuestionForms" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>Survey</a></li>
             <li class="nav-item"><a asp-controller="OneMinute" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>One Minute</a></li>
             <li class="nav-item"><a asp-controller="InterestingSnippet" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>Interesting Snippet</a></li>
             <li class="nav-item"><a asp-controller="MyPoint" asp-action="index" class="nav-link "><i class="bi bi-briefcase-fill"></i>My Point</a></li> *@
+@if (acc.CanView("Profiles"))
+{
             <li class="nav-item"><a asp-controller="Profiles" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>User Porfiles</a></li>
+}
+
+@if (acc.CanView("Jobs"))
+{
             <li class="nav-item"><a asp-controller="Admin" asp-action="ManageJobs" class="nav-link "><i class="bi bi-briefcase-fill"></i> Manage Jobs</a></li>
+}
+@if (acc.IsSuperAdmin)
+{
+            <li class="nav-item"><a href="/Admin/AdminUsers/SubRoles" class="nav-link "><i class="bi bi-shield-lock"></i> Admin Sub-Roles</a></li>
+            <li class="nav-item"><a href="/Admin/AdminUsers/Users" class="nav-link "><i class="bi bi-person-gear"></i> Admin Users</a></li>
+}
+
            @*  <li class="nav-item">
                 <a class="nav-link d-flex justify-content-between align-items-center"
                    data-bs-toggle="collapse" href="#jobsMenu" role="button" aria-expanded="false" aria-controls="jobsMenu">
@@ -242,6 +281,10 @@
             @Html.Partial("_SidebarAdmin")
         </div>
         <main class="p-2 p-md-4">
+            @if (acc.AccessNotice != null)
+            {
+                <div class="alert alert-warning m-3">@acc.AccessNotice</div>
+            }
             @RenderBody()
         </main>
     </div>

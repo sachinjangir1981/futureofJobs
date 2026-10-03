@@ -1,0 +1,79 @@
+@using JobPortal.Web.AdminAccess
+@model List<AdminSubRole>
+@{
+    ViewData["Title"] = "Admin Sub-Roles";
+    Layout = "_LayoutAdmin";
+    var userCounts = ViewBag.UserCounts as Dictionary<int, int> ?? new Dictionary<int, int>();
+    string SectionTitle(string key) => AdminSections.Grantable.FirstOrDefault(s => s.Key == key).Title ?? key;
+}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Admin Sub-Roles</h2>
+        <div>
+            <a asp-action="Users" class="btn btn-outline-secondary">Admin Users</a>
+            <a asp-action="EditSubRole" class="btn btn-success">Add Sub-Role</a>
+        </div>
+    </div>
+
+    @if (TempData["Message"] != null)
+    {
+        <div class="alert alert-success">@TempData["Message"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <p class="text-muted">Admins with no sub-role assigned are Super Admins with full access. Use sub-roles to limit what other admins can open, whether they can edit, and which forms they can see.</p>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>Name</th>
+                <th>Sections</th>
+                <th>Forms</th>
+                <th style="width:90px;">Admins</th>
+                <th style="width:90px;">Active</th>
+                <th style="width:170px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!Model.Any())
+            {
+                <tr><td colspan="6" class="text-center text-muted">No sub-roles yet.</td></tr>
+            }
+            @foreach (var role in Model)
+            {
+                <tr>
+                    <td>
+                        <strong>@role.Name</strong>
+                        @if (!string.IsNullOrWhiteSpace(role.Description))
+                        {
+                            <div class="text-muted small">@role.Description</div>
+                        }
+                    </td>
+                    <td>
+                        @if (!role.Permissions.Any())
+                        {
+                            <span class="text-muted">None</span>
+                        }
+                        @foreach (var p in role.Permissions.OrderBy(p => p.Section))
+                        {
+                            <span class="badge @(p.AccessLevel == AdminSections.Full ? "bg-success" : "bg-secondary") me-1">@SectionTitle(p.Section).Split(" (")[0] &middot; @(p.AccessLevel == AdminSections.Full ? "Full" : "View")</span>
+                        }
+                    </td>
+                    <td>@(role.AllFormsAccess ? "All forms" : role.Forms.Count + " selected")</td>
+                    <td>@(userCounts.TryGetValue(role.Id, out var n) ? n : 0)</td>
+                    <td>@(role.IsActive ? "✔️" : "❌")</td>
+                    <td>
+                        <a asp-action="EditSubRole" asp-route-id="@role.Id" class="btn btn-sm btn-primary">✏️ Edit</a>
+                        <form asp-action="DeleteSubRole" asp-route-id="@role.Id" method="post" class="d-inline"
+                              onsubmit="return confirm('Delete this sub-role?');">
+                            <button type="submit" class="btn btn-sm btn-danger">🗑 Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,88 @@
+@using JobPortal.Web.AdminAccess
+@model JobPortal.Web.Areas.Admin.Controllers.SubRoleEditVm
+@{
+    ViewData["Title"] = Model.Id > 0 ? "Edit Sub-Role" : "Add Sub-Role";
+    Layout = "_LayoutAdmin";
+    var forms = ViewBag.Forms as List<FormTypeCategory> ?? new List<FormTypeCategory>();
+}
+<div class="container py-4" style="max-width:900px;">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="EditSubRole" method="post">
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label">Name</label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label">Description</label>
+            <input asp-for="Description" class="form-control" />
+        </div>
+        <div class="form-check mb-4">
+            <input asp-for="IsActive" class="form-check-input" />
+            <label asp-for="IsActive" class="form-check-label">Active (inactive sub-roles have no access)</label>
+        </div>
+
+        <h5>Section access</h5>
+        <p class="text-muted small">View lets the admin open pages and read data. Full also allows creating, editing, deleting and sharing.</p>
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr><th>Section</th><th style="width:140px;">None</th><th style="width:140px;">View</th><th style="width:140px;">Full</th></tr>
+            </thead>
+            <tbody>
+                @foreach (var s in AdminSections.Grantable)
+                {
+                    var level = Model.Levels.TryGetValue(s.Key, out var l) ? l : 0;
+                    <tr>
+                        <td>@s.Title</td>
+                        <td><input type="radio" name="Levels[@s.Key]" value="0" checked="@(level == 0)" /></td>
+                        <td><input type="radio" name="Levels[@s.Key]" value="@AdminSections.View" checked="@(level == AdminSections.View)" /></td>
+                        <td><input type="radio" name="Levels[@s.Key]" value="@AdminSections.Full" checked="@(level == AdminSections.Full)" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h5 class="mt-4">Form scope</h5>
+        <p class="text-muted small">Applies to Forms and Form Submissions. Scoped admins can't create new forms.</p>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="AllFormsAccess" id="allForms" value="true" checked="@Model.AllFormsAccess" />
+            <label class="form-check-label" for="allForms">All forms</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="AllFormsAccess" id="selectedForms" value="false" checked="@(!Model.AllFormsAccess)" />
+            <label class="form-check-label" for="selectedForms">Only selected forms</label>
+        </div>
+        <span asp-validation-for="FormIds" class="text-danger"></span>
+        <div id="formList" class="border rounded p-2 mb-4" style="max-height:320px; overflow-y:auto;">
+            @foreach (var f in forms)
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="FormIds" id="form_@f.Id" value="@f.Id" checked="@Model.FormIds.Contains(f.Id)" />
+                    <label class="form-check-label" for="form_@f.Id">@f.FormCategory</label>
+                </div>
+            }
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="SubRoles" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        const formList = document.getElementById('formList');
+        function syncFormList() {
+            const all = document.getElementById('allForms').checked;
+            formList.style.opacity = all ? 0.5 : 1;
+            formList.querySelectorAll('input').forEach(function (i) { i.disabled = all; });
+        }
+        document.getElementById('allForms').addEventListener('change', syncFormList);
+        document.getElementById('selectedForms').addEventListener('change', syncFormList);
+        syncFormList();
+    </script>
+}

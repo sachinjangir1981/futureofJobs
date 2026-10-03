@@ -1,4 +1,4 @@
-﻿using JobPortal.Domain.Models;
+using JobPortal.Domain.Models;
 using JobPortal.Infrastructure.Data;
 using JobPortal.Infrastructure.Services;
 using JobPortal.Web.Models;
@@ -23,9 +23,11 @@ public class FormsController : Controller
     private readonly AppDbContext _db;
     private readonly ICompareServices _compareServices;
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly JobPortal.Web.AdminAccess.IAdminAccessService _access;
     public FormsController(AppDbContext db, ICompareServices compareServices,
-        IWebHostEnvironment webHostEnvironment, IMyform myform)
+        IWebHostEnvironment webHostEnvironment, IMyform myform, JobPortal.Web.AdminAccess.IAdminAccessService access)
     {
+        _access = access;
         _db = db;
         _compareServices = compareServices;
         _webHostEnvironment = webHostEnvironment;
@@ -301,10 +303,13 @@ public class FormsController : Controller
         return View(vm);
     }
 
-    public IActionResult Categories()
+    public async Task<IActionResult> Categories()
     {
+        var access = await _access.GetAsync();
         var list = _db.FormTypeCategory.Where(m=>m.Id >5)
             .OrderBy(c => c.DisplayOrder)
+            .AsEnumerable()
+            .Where(c => access.CanAccessForm(c.Id))
             .ToList();
 
         var categoryRoles = list.ToDictionary(
@@ -600,7 +605,8 @@ public class FormsController : Controller
     public async Task<IActionResult> Compare(int id)
     {
         var compareFormData = await _compareServices.CompareData(id, "","0");
-        var userList  = await _compareServices.GetUserListByFormId(id);
+        var access = await _access.GetAsync();
+        var userList  = (await _compareServices.GetUserListByFormId(id)).Where(u => access.CanAccessUser(u.UserId)).ToList();
        // userList.Insert(0, new UserListForCompare { UserId = "", UserName  = "Select User" });
         ViewBag.UserList = userList;
         return View(compareFormData);
@@ -647,7 +653,8 @@ public class FormsController : Controller
     public async Task<IActionResult> ViewEntries(int id)
     {
         ViewBag.FormId = id;
-        var userList = await _compareServices.GetUserListByFormId(id,isDataEntryOnly: true);
+        var access = await _access.GetAsync();
+        var userList = (await _compareServices.GetUserListByFormId(id,isDataEntryOnly: true)).Where(u => access.CanAccessUser(u.UserId)).ToList();
         return View(userList);
     }
 

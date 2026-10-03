@@ -34,7 +34,9 @@ builder.Services.AddSession(options =>
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // Use HTTPS
 });
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<JobPortal.Web.AdminAccess.IAdminAccessService, JobPortal.Web.AdminAccess.AdminAccessService>();
+builder.Services.AddControllersWithViews(o => o.Filters.Add<JobPortal.Web.AdminAccess.AdminAccessFilter>());
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

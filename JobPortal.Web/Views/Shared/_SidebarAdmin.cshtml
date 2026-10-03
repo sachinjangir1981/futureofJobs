@@ -1,6 +1,8 @@
-﻿
+
 @* Views/Shared/_Sidebar.cshtml *@
 @using Microsoft.AspNetCore.Mvc.Rendering
+@inject JobPortal.Web.AdminAccess.IAdminAccessService Access
+@{ var acc = await Access.GetAsync(); }
 
 <!-- Offcanvas for small screens -->
 <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar" aria-labelledby="mobileSidebarLabel">
@@ -17,6 +19,8 @@
                     </a>
                 </li>
 
+@if (acc.CanView("Forms"))
+{
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center"
                        data-bs-toggle="collapse" href="#formsMenu" role="button" aria-expanded="false" aria-controls="formsMenu">
@@ -34,8 +38,16 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item"><a asp-controller="AdminFormSubmissions" asp-action="Index" class="nav-link "><i class="bi bi-card-checklist"></i> Form Submissions</a></li>
+}
 
+@if (acc.CanView("FormSubmissions"))
+{
+                <li class="nav-item"><a asp-controller="AdminFormSubmissions" asp-action="Index" class="nav-link "><i class="bi bi-card-checklist"></i> Form Submissions</a></li>
+}
+
+
+@if (acc.CanView("Masters"))
+{
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center"
                        data-bs-toggle="collapse" href="#masterMenu" role="button" aria-expanded="false" aria-controls="masterMenu">
@@ -50,10 +62,14 @@
                         </ul>
                     </div>
                 </li>
+}
+
 
                 <!-- Applications with Submenu -->
 
 
+@if (acc.CanView("Polls"))
+{
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center"
                        data-bs-toggle="collapse" href="#pollMenu" role="button" aria-expanded="false" aria-controls="pollMenu">
@@ -67,7 +83,11 @@
                         </ul>
                     </div>
                 </li>
+}
 
+
+@if (acc.CanView("Cms"))
+{
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center"
                        data-bs-toggle="collapse" href="#libraryMenu" role="button" aria-expanded="false" aria-controls="libraryMenu">
@@ -87,8 +107,23 @@
                         </ul>
                     </div>
                 </li>
+}
+
+@if (acc.CanView("Profiles"))
+{
                 <li class="nav-item"><a asp-controller="Profiles" asp-action="index" class="nav-link "><i class="bi bi-people-fill"></i>User Porfiles</a></li>
+}
+
+@if (acc.CanView("Jobs"))
+{
                 <li class="nav-item"><a asp-controller="Admin" asp-action="ManageJobs" class="nav-link "><i class="bi bi-briefcase-fill"></i> Manage Jobs</a></li>
+}
+@if (acc.IsSuperAdmin)
+{
+                <li class="nav-item"><a href="/Admin/AdminUsers/SubRoles" class="nav-link text-white"><i class="bi bi-shield-lock"></i> Admin Sub-Roles</a></li>
+                <li class="nav-item"><a href="/Admin/AdminUsers/Users" class="nav-link text-white"><i class="bi bi-person-gear"></i> Admin Users</a></li>
+}
+
             </ul>
 
             <div class="mt-auto p-3">

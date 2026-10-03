@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using JobPortal.Domain.Models;
@@ -41,6 +41,11 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
     public DbSet<JobSeekerSkill> JobSeekerSkills { get; set; } = null!;
 
     public DbSet<AdminShareLink> AdminShareLinks => Set<AdminShareLink>();
+    public DbSet<AdminSubRole> AdminSubRoles => Set<AdminSubRole>();
+    public DbSet<AdminSubRolePermission> AdminSubRolePermissions => Set<AdminSubRolePermission>();
+    public DbSet<AdminSubRoleForm> AdminSubRoleForms => Set<AdminSubRoleForm>();
+    public DbSet<AdminUserSubRole> AdminUserSubRoles => Set<AdminUserSubRole>();
+    public DbSet<AdminUserSubRoleUser> AdminUserSubRoleUsers => Set<AdminUserSubRoleUser>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -195,6 +200,40 @@ public class AppDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid
             e.HasKey(l => l.Id);
             e.HasIndex(l => l.Token).IsUnique();
             e.Property(l => l.Token).HasMaxLength(64).IsRequired();
+        });
+
+        builder.Entity<AdminSubRole>(e =>
+        {
+            e.Property(r => r.Name).HasMaxLength(100).IsRequired();
+            e.Property(r => r.Description).HasMaxLength(500);
+            e.HasIndex(r => r.Name).IsUnique();
+        });
+
+        builder.Entity<AdminSubRolePermission>(e =>
+        {
+            e.Property(p => p.Section).HasMaxLength(50).IsRequired();
+            e.HasIndex(p => new { p.SubRoleId, p.Section }).IsUnique();
+            e.HasOne(p => p.SubRole).WithMany(r => r.Permissions).HasForeignKey(p => p.SubRoleId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<AdminSubRoleForm>(e =>
+        {
+            e.HasIndex(f => new { f.SubRoleId, f.FormTypeCategoryId }).IsUnique();
+            e.HasOne(f => f.SubRole).WithMany(r => r.Forms).HasForeignKey(f => f.SubRoleId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<AdminUserSubRole>(e =>
+        {
+            e.Property(u => u.UserId).HasMaxLength(64).IsRequired();
+            e.HasIndex(u => u.UserId).IsUnique();
+            e.HasOne(u => u.SubRole).WithMany().HasForeignKey(u => u.SubRoleId).OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<AdminUserSubRoleUser>(e =>
+        {
+            e.Property(u => u.TargetUserId).HasMaxLength(64).IsRequired();
+            e.HasIndex(u => new { u.AssignmentId, u.TargetUserId }).IsUnique();
+            e.HasOne(u => u.Assignment).WithMany(a => a.Users).HasForeignKey(u => u.AssignmentId).OnDelete(DeleteBehavior.Cascade);
         });
 
     }

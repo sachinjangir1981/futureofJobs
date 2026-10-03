@@ -4,6 +4,7 @@ using JobPortal.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JobPortal.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20261003064949_AddAdminUserSubRoleValidUntil")]
+    partial class AddAdminUserSubRoleValidUntil
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,9 +152,6 @@ namespace JobPortal.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<bool>("AllUsersAccess")
-                        .HasColumnType("bit");
-
                     b.Property<int>("SubRoleId")
                         .HasColumnType("int");
 
@@ -171,30 +171,6 @@ namespace JobPortal.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("AdminUserSubRoles");
-                });
-
-            modelBuilder.Entity("JobPortal.Domain.Models.AdminUserSubRoleUser", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AssignmentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("TargetUserId")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AssignmentId", "TargetUserId")
-                        .IsUnique();
-
-                    b.ToTable("AdminUserSubRoleUsers");
                 });
 
             modelBuilder.Entity("JobPortal.Domain.Models.Category", b =>
@@ -1047,17 +1023,6 @@ namespace JobPortal.Infrastructure.Migrations
                     b.Navigation("SubRole");
                 });
 
-            modelBuilder.Entity("JobPortal.Domain.Models.AdminUserSubRoleUser", b =>
-                {
-                    b.HasOne("JobPortal.Domain.Models.AdminUserSubRole", "Assignment")
-                        .WithMany("Users")
-                        .HasForeignKey("AssignmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Assignment");
-                });
-
             modelBuilder.Entity("JobPortal.Domain.Models.City", b =>
                 {
                     b.HasOne("JobPortal.Domain.Models.State", "State")
@@ -1293,11 +1258,6 @@ namespace JobPortal.Infrastructure.Migrations
                     b.Navigation("Forms");
 
                     b.Navigation("Permissions");
-                });
-
-            modelBuilder.Entity("JobPortal.Domain.Models.AdminUserSubRole", b =>
-                {
-                    b.Navigation("Users");
                 });
 
             modelBuilder.Entity("JobPortal.Domain.Models.FormQuestion", b =>

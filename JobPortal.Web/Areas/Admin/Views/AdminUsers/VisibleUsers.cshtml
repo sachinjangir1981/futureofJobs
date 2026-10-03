@@ -1,0 +1,66 @@
+@model JobPortal.Web.Areas.Admin.Controllers.VisibleUsersVm
+@{
+    ViewData["Title"] = "Visible Users";
+    Layout = "_LayoutAdmin";
+    var selected = new HashSet<string>(Model.SelectedUserIds, StringComparer.OrdinalIgnoreCase);
+}
+<div class="container py-4" style="max-width:800px;">
+    <h2>Users @Model.AdminEmail can see</h2>
+    <p class="text-muted">Limits whose form submissions this admin sees in Form Submissions, Entries and Compare. It is separate from the form scope on their sub-role.</p>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">@TempData["Error"]</div>
+    }
+
+    <form asp-action="VisibleUsers" method="post">
+        <input type="hidden" name="userId" value="@Model.AdminUserId" />
+
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="allUsers" id="allUsers" value="true" checked="@Model.AllUsers" />
+            <label class="form-check-label" for="allUsers">All users</label>
+        </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="radio" name="allUsers" id="someUsers" value="false" checked="@(!Model.AllUsers)" />
+            <label class="form-check-label" for="someUsers">Only selected users</label>
+        </div>
+
+        <div id="userPicker">
+            <input type="text" id="userFilter" class="form-control mb-2" placeholder="Search users" autocomplete="off" />
+            <div class="border rounded p-2 mb-2" style="max-height:360px; overflow-y:auto;" id="userList">
+                @foreach (var u in Model.Candidates)
+                {
+                    <div class="form-check user-row" data-label="@u.Label.ToLower()">
+                        <input class="form-check-input" type="checkbox" name="selected" id="u_@u.Id" value="@u.Id" checked="@selected.Contains(u.Id)" />
+                        <label class="form-check-label" for="u_@u.Id">@u.Label</label>
+                    </div>
+                }
+            </div>
+            <div class="form-text mb-3">Only users who have started a form are listed. Search narrows the list; ticked users stay selected.</div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a asp-action="Users" class="btn btn-outline-secondary">Cancel</a>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script>
+        const picker = document.getElementById('userPicker');
+        function syncPicker() {
+            const all = document.getElementById('allUsers').checked;
+            picker.style.opacity = all ? 0.5 : 1;
+            picker.querySelectorAll('input').forEach(function (i) { i.disabled = all; });
+        }
+        document.getElementById('allUsers').addEventListener('change', syncPicker);
+        document.getElementById('someUsers').addEventListener('change', syncPicker);
+        document.getElementById('userFilter').addEventListener('input', function () {
+            const q = this.value.trim().toLowerCase();
+            document.querySelectorAll('.user-row').forEach(function (r) {
+                r.style.display = r.dataset.label.includes(q) ? '' : 'none';
+            });
+        });
+        syncPicker();
+    </script>
+}
